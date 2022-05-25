@@ -16,6 +16,8 @@ are still a work-in-progress.
 The `fases` project is still incomplete as some utilities are missing, here's 
 what `fases` currently provides:
 
+- `ls` (incomplete);
+
 - `cat`;
 
 - `yes`.

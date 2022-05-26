@@ -16,11 +16,25 @@ are still a work-in-progress.
 The `fases` project is still incomplete as some utilities are missing, here's 
 what `fases` currently provides:
 
-- `ls` (incomplete);
+(n: not implemented, i: implemented)
 
-- `cat`;
+- `ls`
+  
+  - [i] Lists files.
+  
+  - [n] Other options.
 
-- `yes`.
+- `cat`
+
+  - [i] Prints file to stdin.
+  
+  - [n] `-u`.
+
+- `yes`
+  
+  - [i] Spams 'y'.
+  
+  - [i] Spams any other string specified by the user.
 
 Other utilities are still in the making. Help is greatly appreciated.
 

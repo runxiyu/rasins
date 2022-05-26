@@ -20,32 +20,6 @@
 #include <string.h>  /* To check for arguments */
 #include <stdbool.h> /* For 'true' and 'false' and the 'bool' variable type */
 
-bool checkargs(char *args[], int nbargs) {
-	/* Check for arguments in each array item */
-	for(int i = 1; i <= nbargs; i++)
-	{
-		if(!strncmp(args[i], "-", 1))
-		{
-			if(!strncmp(args[i], "-A", 2)) 
-			{
-				printf("AAAA\n");
-				return true;
-			}
-			else
-			{
-				printf("no such arg");
-			}
-		}
-		/*if(!strcmp(args[i], "-A")) {
-			printf("-A triggered");
-			return true;
-		} else {
-			printf("no");
-		}*/
-	}
-	return false;
-}
-
 int listdir(char *directoryname) {
 	DIR *dir; /* Define 'dir' */
 	struct dirent *directory;
@@ -76,17 +50,32 @@ int listdir(char *directoryname) {
 int main(int argc, char *argv[]) {
 	/* Check for arguments */
 	if(argc >= 2) {
-		if (!strcmp(argv[1], "--help")) {
-			/* Print the help message */
-			printf("Ferass' Base System.\n");
-			printf("\n");
-			printf("Usage: %s [DIR/FILE]\n", argv[0]);
-			printf("\n");
-			printf("List files and directories in DIR or list FILE.\n");
-			printf("\n");
+		char args[26];    /* Number of supported arguments */
+		int usedargs = 0; /* Number of used arguments */
+		for(int i = 1; argv[i]; i++) { /* For loop */
+			if(argv[i][usedargs + 1] == 'A') { 
+				args[usedargs] = 'A';
+				usedargs++;
+			}
+			if(argv[i][usedargs + 1] == 'h') {
+				/* Print the help message */
+				printf("Ferass' Base System.\n");
+				printf("\n");
+				printf("Usage: %s [DIR/FILE]\n", argv[0]);
+				printf("\n");
+				printf("List files and directories in DIR or list FILE.\n");
+				printf("\n");
+				exit(0);
+			}
 		}
-		else {
+		if(usedargs == 0) /* If no valid options have been found */
+		{
+			/* Use the first argument as the directory or file */
 			listdir(argv[1]);
+		}
+		else
+		{
+			printf("%c %c\n", args[0], args[1]); /* Placeholder */
 		}
 	}
 	else if(argc == 1)

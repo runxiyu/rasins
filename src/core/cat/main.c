@@ -32,30 +32,31 @@ int main(int argc, char *argv[]) {
 		}
 		else {
 			FILE *file; /* Define 'file' */
-			char s;
+			char s[512];
 			file=fopen(argv[1], "r"); /* Open the file in read-only mode */
-			if(file==NULL) /* Check if the file has been opened successfully */
+			if(file == NULL) /* Check if the file has been opened successfully */
 			{
 				printf("cat: %s: No such file or directory\n", argv[1]);
 				exit(1); /* If not, exit. */
 			}
-			do
+			while(fgets(s, 512, file) != NULL)
 			{
-				s=getc(file);
+				s[strcspn(s, "\n")] = 0; /* Remove trailing newline */
 				/* Print the file's contents line by line to stdout */
-				printf("%c", s); 
+				puts(s); 
 			}
-		while(s!=EOF); /* Until the end of the file */
-		fclose(file); /* Close the file */
+			fclose(file); /* Close the file */
 		}
 	}
 	else if(argc == 1)
 	{
 		/* Enter in a loop where each line typed gets printed to stdout */
 		while(1) {
-			char stdin_char;
-			scanf("%s", &stdin_char);
-			printf("%s\n", &stdin_char);
+			/* Read user output */
+			char input[80];
+			fgets(input, 80, stdin);
+			/* Print it */
+			printf("%s", input);
 		}
 	}
 	return 0;

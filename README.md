@@ -42,7 +42,7 @@ Other utilities are still in the making. Help is greatly appreciated.
 
 You have to compile each utility separately, for example to compile `cat`:
 
-	$ cd src/core/cat
+	$ cd src/cat
 	$ make
 
 And to install it, you have to run:

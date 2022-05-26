@@ -21,7 +21,7 @@
 int main(int argc, char *argv[]) {
 	/* Check for arguments */
 	if(argc == 2) {
-		if (!strcmp(argv[1], "--help")) {
+		if (!strcmp(argv[1], "-h") || !strcmp(argv[2], "-h")) {
 			/* Print the help message */
 			printf("Ferass' Base System.\n");
 			printf("\n");

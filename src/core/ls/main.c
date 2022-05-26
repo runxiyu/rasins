@@ -14,10 +14,37 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-#include <stdio.h>  /* To print the file's contents to stdout */
-#include <dirent.h> /* For opening directories */
-#include <stdlib.h> /* For the exit() function */
-#include <string.h> /* To check for arguments */
+#include <stdio.h>   /* To print the file's contents to stdout */
+#include <dirent.h>  /* For opening directories */
+#include <stdlib.h>  /* For the exit() function */
+#include <string.h>  /* To check for arguments */
+#include <stdbool.h> /* For 'true' and 'false' and the 'bool' variable type */
+
+bool checkargs(char *args[], int nbargs) {
+	/* Check for arguments in each array item */
+	for(int i = 1; i <= nbargs; i++)
+	{
+		if(!strncmp(args[i], "-", 1))
+		{
+			if(!strncmp(args[i], "-A", 2)) 
+			{
+				printf("AAAA\n");
+				return true;
+			}
+			else
+			{
+				printf("no such arg");
+			}
+		}
+		/*if(!strcmp(args[i], "-A")) {
+			printf("-A triggered");
+			return true;
+		} else {
+			printf("no");
+		}*/
+	}
+	return false;
+}
 
 int listdir(char *directoryname) {
 	DIR *dir; /* Define 'dir' */
@@ -25,7 +52,6 @@ int listdir(char *directoryname) {
 	dir=opendir(directoryname); /* Open the directory */
 	if(dir == NULL) /* Check if the directory has been opened successfully */
 	{
-		
 		FILE *file; /* Define 'file' */
 		file=fopen(directoryname, "r"); /* Open the file in read-only mode */
 		if(file == NULL) {
@@ -39,7 +65,9 @@ int listdir(char *directoryname) {
 	while((directory = readdir(dir)) != NULL) /* Until there's nothing else to print */
 	{
 		/* Print the directory's contents to stdout */
-		printf("%s\n", directory->d_name);
+		/* Unless it starts with a dot */
+		if(strncmp(directory->d_name, ".", 1))
+			printf("%s\n", directory->d_name);
 	}
 	closedir(dir); /* Close the directory */
 	return 0;
@@ -47,7 +75,7 @@ int listdir(char *directoryname) {
 
 int main(int argc, char *argv[]) {
 	/* Check for arguments */
-	if(argc == 2) {
+	if(argc >= 2) {
 		if (!strcmp(argv[1], "--help")) {
 			/* Print the help message */
 			printf("Ferass' Base System.\n");

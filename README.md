@@ -24,11 +24,19 @@ what `fases` currently provides:
   
   - [n] Other options.
 
+- `head`
+
+  - [i] Prints file until a specific line.
+  
+  - [i] Defaults to 10.
+  
+  - [i] `-n NUMBER`
+
 - `cat`
 
   - [i] Prints file to stdin.
   
-  - [n] `-u`.
+  - [n] `-u`. 
 
 - `yes`
   

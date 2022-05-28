@@ -2,7 +2,7 @@
 include ../config.mk
 
 build:
-	$(CC) $(ARGS) main.c -o ls
+	$(CC) $(CFLAGS) main.c -o ls
 
 clean:
 	rm ./ls

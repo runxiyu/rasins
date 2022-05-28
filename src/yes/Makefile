@@ -2,7 +2,7 @@
 include ../config.mk
 
 build:
-	$(CC) $(ARGS) main.c -o yes
+	$(CC) $(CFLAGS) main.c -o yes
 
 clean:
 	rm ./yes

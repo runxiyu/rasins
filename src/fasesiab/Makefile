@@ -4,7 +4,7 @@ build:
 	# Find 'main(' and replace it by '<UTIL>_main(' to prevent conflicting function names
 	for f in ${SRC}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "../"$$f"/main.c" > ""$$f".c"; done
 	# Compile
-	$(CC) $(ARGS) -o fasesiab *.c
+	$(CC) $(CFLAGS) -o fasesiab *.c
 	# Remove junk
 	rm $(SRC:=.c)
 

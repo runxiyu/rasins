@@ -11,7 +11,7 @@ CC   = cc
 # C compiler options
 # - Use the C99 standard
 # - All warnings
-ARGS = -std=c99 -Wall
+CFLAGS = -std=c99 -Wall
 
 # Path where utilities are installed
 PREFIX=/usr/local

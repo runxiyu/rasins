@@ -2,7 +2,7 @@
 include ../config.mk
 
 build:
-	$(CC) $(ARGS) main.c -o cat
+	$(CC) $(CFLAGS) main.c -o cat
 
 clean:
 	rm ./cat

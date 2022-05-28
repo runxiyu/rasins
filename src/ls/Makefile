@@ -1,7 +1,8 @@
 # Makefile to build ls
+include ../config.mk
 
 build:
-	cc --std=c99 main.c -o ls
+	$(CC) $(ARGS) main.c -o ls
 
 clean:
 	rm ./ls

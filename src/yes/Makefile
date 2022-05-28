@@ -1,7 +1,8 @@
 # Makefile to build yes
+include ../config.mk
 
 build:
-	cc --std=c99 main.c -o yes
+	$(CC) $(ARGS) main.c -o yes
 
 clean:
 	rm ./yes

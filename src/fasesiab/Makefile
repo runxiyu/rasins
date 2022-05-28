@@ -1,14 +1,10 @@
-SRC=\
-	ls\
-	cat\
-	yes\
-	head
+include ../config.mk
 
 build:
 	# Find 'main(' and replace it by '<UTIL>_main(' to prevent conflicting function names
 	for f in ${SRC}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "../"$$f"/main.c" > ""$$f".c"; done
 	# Compile
-	cc --std=c99 -o fasesiab *.c
+	$(CC) $(ARGS) -o fasesiab *.c
 	# Remove junk
 	rm $(SRC:=.c)
 

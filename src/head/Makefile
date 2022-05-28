@@ -1,7 +1,8 @@
 # Makefile to build head
+include ../config.mk
 
 build:
-	cc --std=c99 main.c -o head
+	$(CC) $(ARGS) main.c -o head
 
 clean:
 	rm ./head

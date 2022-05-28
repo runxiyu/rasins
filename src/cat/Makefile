@@ -1,7 +1,8 @@
 # Makefile to build cat
+include ../config.mk
 
 build:
-	cc --std=c99 main.c -o cat
+	$(CC) $(ARGS) main.c -o cat
 
 clean:
 	rm ./cat

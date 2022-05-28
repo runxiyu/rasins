@@ -4,8 +4,7 @@ build:
 	# Find 'main(' and replace it by '<UTIL>_main(' to prevent conflicting function names
 	for f in ${SRC}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "../"$$f"/main.c" > ""$$f".c"; done
 	# Compile
-	$(CC) $(CFLAGS) -o fasesiab *.c
-	# Remove junk
+	$(CC) $(CFLAGS) -o fasesiab *.c || echo "Did you perhaps forget to generate the main.c file?"
 	rm $(SRC:=.c)
 
 gen:
@@ -53,4 +52,24 @@ gen:
 	echo "		printf(\"]\n\");"                                    >> main.c
 	echo "	}"                                                       >> main.c
 	echo "}"                                                         >> main.c
+
+clear:
+	echo "/*	fasesiab - Ferass' Base System in a box "             > main.c
+	echo " *	Copyright (C) 2022 Ferass EL HAFIDI"                 >> main.c
+	echo " *"                                                        >> main.c
+	echo " *	This program is free software: you can redistribute it and/or modify"   >> main.c
+	echo " *	it under the terms of the GNU General Public License as published by"   >> main.c
+	echo " *	the Free Software Foundation, either version 3 of the License, or"      >> main.c
+	echo " *	(at your option) any later version."                 >> main.c
+	echo " *"                                                        >> main.c
+	echo " *	This program is distributed in the hope that it will be useful,"        >> main.c
+	echo " *	but WITHOUT ANY WARRANTY; without even the implied warranty of"         >> main.c
+	echo " *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"          >> main.c
+	echo " *	GNU General Public License for more details."        >> main.c
+	echo " *"                                                        >> main.c
+	echo " *	You should have received a copy of the GNU General Public License"      >> main.c
+	echo " *	along with this program.  If not, see <https://www.gnu.org/licenses/>." >> main.c
+	echo " */"                                                       >> main.c
+	echo                                                             >> main.c
+	echo "/* This file must be generated using `make`; use `make gen` to generate it */">> main.c
 

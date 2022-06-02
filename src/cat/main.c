@@ -19,7 +19,7 @@
 #include <unistd.h> /* POSIX-compliant library */
 
 /* Define a `print()` macro */
-#define print(string) write(STDOUT_FILENO, string, strlen(string)) 
+ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
 
 int main(int argc, char *argv[]) {
 	/* Check for arguments */

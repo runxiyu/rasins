@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 		}
 		else {
 			int file; /* Define 'file' */
-			char s[200000]; /* Stupid character limit that will be removed soon */
+			char s[4096];
 			file=open(argv[1], O_RDONLY); /* Open the file(argv[1]) in read-only(O_RDONLY) mode */
 			if(file == -1) /* Check if the file has been opened successfully */
 			{
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 				print(": No such file or directory\n");
 				return 1; /* If not, exit. */
 			}
-			while(read(file, s, 200000) > 0)
+			while(read(file, s, 4096) > 0)
 			{
 				/* Print the file's contents line by line to stdout */
 				print(s);

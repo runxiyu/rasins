@@ -18,38 +18,47 @@
 #include <string.h> /* To check for arguments */
 #include <unistd.h> /* POSIX-compliant library */
 
+/* For getopt */
+int getopt(int argc, char *const argv[], const char *optstring);
+
 /* Define a `print()` macro */
 ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *const argv[]) {
 	/* Check for arguments */
 	if(argc == 2) {
-		if (!strcmp(argv[1], "-h")) {
-			/* Print the help message */
-			print("Ferass' Base System.\n\n"
-					"Usage: ");
-			print(argv[0]);
-			print(" [FILE]\n\n"
-					"Concatenate FILE to stdout\n\n");
-		}
-		else {
-			int file; /* Define 'file' */
-			char s[4096];
-			file=open(argv[1], O_RDONLY); /* Open the file(argv[1]) in read-only(O_RDONLY) mode */
-			if(file == -1) /* Check if the file has been opened successfully */
-			{
-				print("cat: ");
-				print(argv[1]);
-				print(": No such file or directory\n");
-				return 1; /* If not, exit. */
+		int arguments;
+		while ((arguments = getopt(argc, argv, "h")) != -1) {
+			switch (arguments) {
+				case 'h':
+					/* Print the help message */
+					print("Ferass' Base System.\n\n"
+							"Usage: ");
+					print(argv[0]);
+					print(" [FILE]\n\n"
+							"Concatenate FILE to stdout\n\n");
+					return 0;
+					break;
+				default:
+					return 1;
 			}
-			while(read(file, s, 4096) > 0)
-			{
-				/* Print the file's contents line by line to stdout */
-				print(s);
-			}
-			close(file); /* Close the file */
 		}
+		int file; /* Define 'file' */
+		char s[4096];
+		file=open(argv[1], O_RDONLY); /* Open the file(argv[1]) in read-only(O_RDONLY) mode */
+		if(file == -1) /* Check if the file has been opened successfully */
+		{
+			print("cat: ");
+			print(argv[1]);
+			print(": No such file or directory\n");
+			return 1; /* If not, exit. */
+		}
+		while(read(file, s, 4096) > 0)
+		{
+			/* Print the file's contents line by line to stdout */
+			print(s);
+		}
+		close(file); /* Close the file */
 	}
 	else if(argc == 1)
 	{

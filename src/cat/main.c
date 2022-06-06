@@ -65,8 +65,8 @@ int main(int argc, char *const argv[]) {
 		/* Enter in a loop where each line typed gets printed to stdout */
 		while(1) {
 			/* Read user input */
-			char input[200000];
-			read(STDIN_FILENO, input, 200000);
+			char input[4096];
+			read(STDIN_FILENO, input, 4096);
 			/* Print it */
 			print(input);
 		}

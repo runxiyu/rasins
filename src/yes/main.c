@@ -14,32 +14,34 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <stdio.h>  /* To print STRING to stdout */
 #include <string.h> /* To check for arguments */
+#include <unistd.h> /* POSIX-compliant library for interacting with the OS */
+
+/* Define a `print()` macro */
+ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
 
 int main(int argc, char *argv[]) {
 	/* Check for arguments */
-	if(argc == 2) {
-		if (!strcmp(argv[1], "-h")) {
-			/* Print the help message */
-			printf("Ferass' Base System.\n");
-			printf("\n");
-			printf("Usage: %s [STRING]\n", argv[0]);
-			printf("\n");
-			printf("Repeatedly output a line with all specified STRING or 'y'.\n");
-			printf("\n");
+	if (argc > 1 && !strcmp(argv[1], "-h")) {
+		/* Print the help message */
+		print("Ferass' Base System.\n\n"
+				"Usage: ");
+		print(argv[0]);
+		print(" [STRING]\n\n"
+				"Repeatedly output a line with all specified STRING or 'y'.\n\n");
+	}
+	else {
+		/* Repeadtedly output 'y' or STRING */
+		if (argc > 1) {
+			while(1) {
+				print(argv[1]);
+				print("\n");
+			}
 		}
 		else {
 			while(1) {
-				printf("%s\n", argv[1]);
+				print("y\n");
 			}
-		}
-	}
-	else if(argc == 1)
-	{
-		/* Enter in a loop where each line typed gets printed to stdout */
-		while(1) {
-			printf("y\n");
 		}
 	}
 	return 0;

@@ -20,12 +20,12 @@
 
 int main(int argc, char *argv[]) {
 	/* Check for arguments */
-	if(argc >= 2) {
+	if (argc >= 2) {
 		char args;        /* Number of supported arguments */
 		int usedargs = 0; /* Number of used arguments */
 		int arg_lines;    /* Number of lines to print */
-		for(int i = 1; argv[i]; i++) { /* For loop */
-			if(argv[i][usedargs + 1] == 'n') { 
+		for (int i = 1; argv[i]; i++) { /* For loop */
+			if (argv[i][usedargs + 1] == 'n') { 
 				if(argv[i + 1])
 				{
 					args = 'n'; 
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 					usedargs++;
 				}
 			}
-			if(argv[i][usedargs + 1] == 'h') {
+			if (argv[i][usedargs + 1] == 'h') {
 				/* Print the help message */
 				printf("Ferass' Base System.\n");
 				printf("\n");
@@ -49,14 +49,11 @@ int main(int argc, char *argv[]) {
 		char s[512];
 		int i = 0;  /* Integer used for the 'for' loop */
 		file=fopen(argv[1], "r"); /* Open the file in read-only mode */
-		if(file == NULL) /* Check if the file has been opened successfully */
-		{
+		if (file == NULL) { /* Check if the file has been opened successfully */
 			printf("head: %s: No such file or directory\n", argv[1]);
 			exit(1); /* If not, exit. */
 		}
-		while(i != arg_lines && (fgets(s, 512, file)) != NULL)
-		{
-			
+		while (i != arg_lines && (fgets(s, 512, file)) != NULL) {
 			s[strcspn(s, "\n")] = 0; /* Remove trailing newline */
 			/* Print the file's contents line by line to stdout */
 			puts(s); 
@@ -64,10 +61,9 @@ int main(int argc, char *argv[]) {
 		}
 		fclose(file); /* Close the file */
 	}
-	else if(argc == 1)
-	{
+	else if (argc == 1) {
 		/* Enter in a loop where each line typed gets printed to stdout */
-		while(1) {
+		while (1) {
 			/* Read user output */
 			char input[80];
 			fgets(input, 80, stdin);

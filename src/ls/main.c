@@ -24,11 +24,10 @@ int listdir(char *directoryname) {
 	DIR *dir; /* Define 'dir' */
 	struct dirent *directory;
 	dir=opendir(directoryname); /* Open the directory */
-	if(dir == NULL) /* Check if the directory has been opened successfully */
-	{
+	if (dir == NULL) { /* Check if the directory has been opened successfully */
 		FILE *file; /* Define 'file' */
 		file=fopen(directoryname, "r"); /* Open the file in read-only mode */
-		if(file == NULL) {
+		if (file == NULL) {
 			printf("ls: %s: No such file or directory\n", directoryname);
 			exit(1); /* If not, exit. */
 		}
@@ -36,11 +35,10 @@ int listdir(char *directoryname) {
 		printf("%s\n", directoryname);
 		return 0;
 	}
-	while((directory = readdir(dir)) != NULL) /* Until there's nothing else to print */
-	{
+	while ((directory = readdir(dir)) != NULL) { /* Until there's nothing else to print */
 		/* Print the directory's contents to stdout */
 		/* Unless it starts with a dot */
-		if(strncmp(directory->d_name, ".", 1))
+		if (strncmp(directory->d_name, ".", 1))
 			printf("%s\n", directory->d_name);
 	}
 	closedir(dir); /* Close the directory */
@@ -49,15 +47,15 @@ int listdir(char *directoryname) {
 
 int main(int argc, char *argv[]) {
 	/* Check for arguments */
-	if(argc >= 2) {
+	if (argc >= 2) {
 		char args[26];    /* Number of supported arguments */
 		int usedargs = 0; /* Number of used arguments */
 		for(int i = 1; argv[i]; i++) { /* For loop */
-			if(argv[i][usedargs + 1] == 'A') { 
+			if (argv[i][usedargs + 1] == 'A') { 
 				args[usedargs] = 'A';
 				usedargs++;
 			}
-			if(argv[i][usedargs + 1] == 'h') {
+			if (argv[i][usedargs + 1] == 'h') {
 				/* Print the help message */
 				printf("Ferass' Base System.\n");
 				printf("\n");
@@ -68,18 +66,15 @@ int main(int argc, char *argv[]) {
 				exit(0);
 			}
 		}
-		if(usedargs == 0) /* If no valid options have been found */
-		{
+		if (usedargs == 0) { /* If no valid options have been found */
 			/* Use the first argument as the directory or file */
 			listdir(argv[1]);
 		}
-		else
-		{
+		else {
 			printf("%c %c\n", args[0], args[1]); /* Placeholder */
 		}
 	}
-	else if(argc == 1)
-	{
+	else if (argc == 1) {
 		/* Default to opening '.' */
 		listdir(".");
 	}

@@ -35,16 +35,14 @@ gen:
 	echo "ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }" >> main.c
 	for u in ${SRC}; do echo "int $${u%.c}_main(int, char**);"; done >> main.c
 	echo                                                             >> main.c
-	echo "int main(int argc, char *argv[])"                          >> main.c
-	echo "{"                                                         >> main.c
-	echo "	if(!strcmp(basename(argv[0]),\"fasesiab\") && argc > 1)" >> main.c
+	echo "int main(int argc, char *argv[]) {"                        >> main.c
+	echo "	if (!strcmp(basename(argv[0]),\"fasesiab\") && argc > 1) {">> main.c
 	echo "	{"                                                       >> main.c
 	echo "		argc--;"                                             >> main.c
 	echo "		argv++;"                                             >> main.c
 	echo "	} if(0);"                                                >> main.c
 	for u in ${SRC}; do echo "	else if(!strcmp(argv[0], \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> main.c
-	echo "	else"                                                    >> main.c
-	echo "	{"                                                       >> main.c
+	echo "	else {"                                                  >> main.c
 	echo "		print(\"Ferass' Base System in a box\n\n\");"        >> main.c
 	echo "		print(\"Usage: fasesiab <COMMAND> [ARGUMENTS]\n\n\");">> main.c
 	echo "		print(\"Commands available:\n\");"                   >> main.c

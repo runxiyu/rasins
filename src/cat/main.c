@@ -21,7 +21,7 @@
 /* For getopt */
 int getopt(int argc, char *const argv[], const char *optstring);
 
-/* Define a `print()` macro */
+/* Define a `print()` function */
 ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
 
 int main(int argc, char *const argv[]) {

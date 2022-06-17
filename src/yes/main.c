@@ -17,7 +17,7 @@
 #include <string.h> /* To check for arguments */
 #include <unistd.h> /* POSIX-compliant library for interacting with the OS */
 
-/* Define a `print()` macro */
+/* Define a `print()` function */
 ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
 
 int main(int argc, char *argv[]) {

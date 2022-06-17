@@ -14,69 +14,84 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-#include <stdio.h>   /* To print the file's contents to stdout */
-#include <dirent.h>  /* For opening directories */
-#include <stdlib.h>  /* For the exit() function */
-#include <string.h>  /* To check for arguments */
-#include <stdbool.h> /* For 'true' and 'false' and the 'bool' variable type */
+#include <unistd.h> /* Unix standard library */
+#include <string.h> /* Strings */
+#include <dirent.h> /* Manipulating directories */
+#include <fcntl.h>  /* Manipulating files */
 
-int listdir(char *directoryname) {
-	DIR *dir; /* Define 'dir' */
-	struct dirent *directory;
-	dir=opendir(directoryname); /* Open the directory */
-	if (dir == NULL) { /* Check if the directory has been opened successfully */
-		FILE *file; /* Define 'file' */
-		file=fopen(directoryname, "r"); /* Open the file in read-only mode */
-		if (file == NULL) {
-			printf("ls: %s: No such file or directory\n", directoryname);
-			exit(1); /* If not, exit. */
+/* For `getopt()` */
+int getopt(int argc, char *const argv[], const char *optstring);
+
+/* Define a `print()` function */
+ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
+
+/* `ls()` function for listing files and directories. */
+int ls(char *dirname, char params[3]) {
+	DIR *directory;
+	directory = opendir(dirname); /* Open the directory */
+	struct dirent *dirtree;
+	if (directory != NULL) { /* Did the directory open successfully? */
+		while ((dirtree = readdir(directory)) != NULL) {
+			/* Yes, `print()` every file/directory */
+			if (dirtree->d_name[0] != '.') { /* Unless they start with a dot */
+				print(dirtree->d_name);
+				print("\n");
+			}
+			else if (params[0] == 'a') {
+				/* Print names starting with a dot if the `-a` option is used */
+				print(dirtree->d_name);
+				print("\n");
+			}
 		}
-		fclose(file);
-		printf("%s\n", directoryname);
-		return 0;
 	}
-	while ((directory = readdir(dir)) != NULL) { /* Until there's nothing else to print */
-		/* Print the directory's contents to stdout */
-		/* Unless it starts with a dot */
-		if (strncmp(directory->d_name, ".", 1))
-			printf("%s\n", directory->d_name);
+	else { /* It didn't open. Maybe it's a file? */
+		int file;
+		file = open(dirname, O_RDONLY);
+		if (file == -1) { /* Nope, it doesn't exist. Gracefully exit. */
+			print("ls: ");
+			print(dirname);
+			print(": No such file or directory\n");
+			return 1;
+		}
+		print(dirname); /* The file exists, print its name */
+		print("\n");
+		close(file); /* Close file */
 	}
-	closedir(dir); /* Close the directory */
+	closedir(directory); /* Close directory */
 	return 0;
 }
 
 int main(int argc, char *argv[]) {
 	/* Check for arguments */
-	if (argc >= 2) {
-		char args[26];    /* Number of supported arguments */
-		int usedargs = 0; /* Number of used arguments */
-		for(int i = 1; argv[i]; i++) { /* For loop */
-			if (argv[i][usedargs + 1] == 'A') { 
-				args[usedargs] = 'A';
-				usedargs++;
-			}
-			if (argv[i][usedargs + 1] == 'h') {
-				/* Print the help message */
-				printf("Ferass' Base System.\n");
-				printf("\n");
-				printf("Usage: %s [DIR/FILE]\n", argv[0]);
-				printf("\n");
-				printf("List files and directories in DIR or list FILE.\n");
-				printf("\n");
-				exit(0);
+	if (argc > 1) {
+		int arguments;
+		char params[3];
+		while ((arguments = getopt(argc, argv, "ha")) != -1) {
+			switch (arguments) {
+				case 'h': /* Print help message */
+					print("Ferass' Base System.\n\n"
+							"Usage: ");
+					print(argv[0]);
+					print(" [DIRECTORY] ...\n\n"
+							"Print DIRECTORY's contents to stdout\n\n");
+					print("	-a	Include names starting with a dot, including '.' and '..'\n");
+					return 0;
+					break;
+				case 'a':
+					params[0] = 'a';
+					break;
 			}
 		}
-		if (usedargs == 0) { /* If no valid options have been found */
-			/* Use the first argument as the directory or file */
-			listdir(argv[1]);
-		}
-		else {
-			printf("%c %c\n", args[0], args[1]); /* Placeholder */
+		for (int i = 1; i < argc; i++) {
+			/* List every file/directory the user wants to list */
+			if (argv[i][0] != '-') { /* Discard options starting with '-' */
+				ls(argv[i], params);
+			}
 		}
 	}
-	else if (argc == 1) {
-		/* Default to opening '.' */
-		listdir(".");
+	else { /* No other arguments.  */
+		char params[3];
+		ls(".", params);
 	}
 	return 0;
 }

@@ -18,33 +18,45 @@ what `fases` currently provides:
 
 (n: not implemented, i: implemented)
 
-- `ls`
-  
-  - [i] Lists files.
-  
-  - [n] Other options.
+`ls`:
 
-- `head`
+- [i] Lists files.
 
-  - [i] Prints file until a specific line.
-  
-  - [i] Defaults to 10.
-  
-  - [i] `-n NUMBER`
+- [i] `-a`
 
-- `cat`
+- [n] Other options.
 
-  - [i] Prints file to stdin.
-  
-  - [n] `-u`. 
+`head`:
 
-- `yes`
-  
-  - [i] Spams 'y'.
-  
-  - [i] Spams any other string specified by the user.
+- [i] Prints file until a specific line.
+
+- [i] Defaults to 10.
+
+- [i] `-n NUMBER`
+
+`cat`:
+
+- [i] Prints file to stdin.
+
+- [n] `-u`. 
+
+`yes`:
+
+- [i] Spams 'y'.
+
+- [i] Spams any other string specified by the user.
 
 Other utilities are still in the making. Help is greatly appreciated.
+
+## Known bugs
+
+The `fases` project is still a Work-in-progress and as such, there are bugs.
+Please do report bugs to me, via IRC, email, or even by using Notabug.org 
+issues.
+
+| Bug | Affected utility/utilities |
+|-----|----------------------------|
+| Weird characters at the end of the output | `cat` |
 
 ## Compile
 

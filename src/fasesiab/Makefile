@@ -37,7 +37,6 @@ gen:
 	echo                                                             >> main.c
 	echo "int main(int argc, char *argv[]) {"                        >> main.c
 	echo "	if (!strcmp(basename(argv[0]),\"fasesiab\") && argc > 1) {">> main.c
-	echo "	{"                                                       >> main.c
 	echo "		argc--;"                                             >> main.c
 	echo "		argv++;"                                             >> main.c
 	echo "	} if(0);"                                                >> main.c

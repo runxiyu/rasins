@@ -3,7 +3,8 @@ SRC  =\
 		ls\
 		cat\
 		yes\
-		head
+		head\
+		date
 
 # C compiler
 CC   = cc

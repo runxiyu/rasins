@@ -46,6 +46,12 @@ what `fases` currently provides:
 
 - [i] Spams any other string specified by the user.
 
+`date`:
+
+- [i] Shows date by default.
+
+- [n] Formats date.
+
 Other utilities are still in the making. Help is greatly appreciated.
 
 ## Known bugs

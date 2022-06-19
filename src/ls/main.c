@@ -112,17 +112,18 @@ int main(int argc, char *argv[]) {
 	if (argc > 1) {
 		int arguments;
 		char params[6];
-		while ((arguments = getopt(argc, argv, "haAC")) != -1) {
+		while ((arguments = getopt(argc, argv, "haAC1")) != -1) {
 			switch (arguments) {
 				case 'h': /* Print help message */
 					print("Ferass' Base System.\n\n"
 							"Usage: ");
 					print(argv[0]);
-					print(" [DIRECTORY] ...\n\n"
+					print(" [DIRECTORY] [-a|-A] [-1|-C]\n\n"
 							"Print DIRECTORY's contents to stdout\n\n");
 					print("	-a	Include names starting with a dot, including '.' and '..'\n");
 					print("	-A	Same as `-a` but don't include '.' and '..'\n");
 					print("	-C	Print in columns\n");
+					print("	-1	Print line by line\n");
 					return 0;
 					break;
 				case 'a':
@@ -134,6 +135,8 @@ int main(int argc, char *argv[]) {
 				case 'C':
 					params[1] = 'C';
 					break;
+				case '1':
+					params[1] = '1';
 			}
 		}
 		for (int i = 1; i < argc; i++) {

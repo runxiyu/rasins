@@ -32,26 +32,63 @@ int ls(char *dirname, char params[3]) {
 	struct dirent *dirtree;
 	if (directory != NULL) { /* Did the directory open successfully? */
 		while ((dirtree = readdir(directory)) != NULL) {
+			/* Column counter for `-C` */
+			int column;
 			/* Yes, `print()` every file/directory */
-			if (dirtree->d_name[0] != '.') { /* Unless they start with a dot */
+			if (dirtree->d_name[0] != '.' && 
+					params[0] != 'a' && params[1] != 'A') { 
+				/* Unless they start with a dot */
 				print(dirtree->d_name);
-				print("\n");
+				if (params[2] != 'C')
+					print("\n"); /* Print a newline if `-C` isn't used */
 			}
-			else if (params[0] == 'a') {
+			if (params[0] == 'a') {
 				/* Print names starting with a dot if the `-a` option is used */
 				print(dirtree->d_name);
-				print("\n");
+				if (params[2] != 'C')
+					print("\n"); /* Print a newline if `-C` isn't used */
 			}
-			else if (params[1] == 'A' && 
+			if (params[1] == 'A' && 
 					strcmp(dirtree->d_name, ".") && strcmp(dirtree->d_name, "..")) {
 				/* Print names starting with a dot 
 				 * (unless it's '.' or '..' if they exist) 
 				 * if the `-A` option is used 
 				 */
 				print(dirtree->d_name);
-				print("\n");
+				if (params[2] != 'C')
+					print("\n"); /* Print a newline if `-C` isn't used */
+			}
+			if (params[2] == 'C' && 
+					params[0] != 'a' && params[1] != 'A' && 
+					dirtree->d_name[0] != '.') {
+				/* Print in columns: unless the file starts with a dot and 
+				 * `-a`/`-A` are unspecified, print tab characters until 
+				 * the 4th column 
+				 */
+				if (column > 5)
+					print("\n");
+				else
+					print("\t\t");
+				column++;
+			}
+			else if (params[2] == 'C' && 
+					(params[0] == 'a' || (params[1] == 'A' && strcmp(dirtree->d_name, "." )
+										  && strcmp(dirtree->d_name, "..")))) {
+				/* Print in columns: if `-a` or `-A` are specified, print
+				 * tab characters for files starting with a dot (more info 
+				 * in the 'a' or 'A' `if` block) 
+				 */
+				if (column > 5) {
+					print("\n");
+					column = 0;
+				}
+				else {
+					print("\t\t");
+					column++;
+				}
 			}
 		}
+		print("\n"); /* Print newline in case it hasn't been printed. */
 	}
 	else { /* It didn't open. Maybe it's a file? */
 		int file;
@@ -74,8 +111,8 @@ int main(int argc, char *argv[]) {
 	/* Check for arguments */
 	if (argc > 1) {
 		int arguments;
-		char params[3];
-		while ((arguments = getopt(argc, argv, "haA")) != -1) {
+		char params[6];
+		while ((arguments = getopt(argc, argv, "haAC")) != -1) {
 			switch (arguments) {
 				case 'h': /* Print help message */
 					print("Ferass' Base System.\n\n"
@@ -92,6 +129,8 @@ int main(int argc, char *argv[]) {
 				case 'A':
 					params[1] = 'A';
 					break;
+				case 'C':
+					params[2] = 'C';
 			}
 		}
 		for (int i = 1; i < argc; i++) {
@@ -101,7 +140,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
-	else { /* No other arguments.  */
+	else { /* No other arguments. */
 		char params[3];
 		ls(".", params);
 	}

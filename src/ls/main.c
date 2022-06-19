@@ -141,6 +141,9 @@ int main(int argc, char *argv[]) {
 			if (argv[i][0] != '-') { /* Discard options starting with '-' */
 				ls(argv[i], params);
 			}
+			if (argc == 2 && argv[i][0] == '-') {
+				ls(".", params);
+			}
 		}
 	}
 	else { /* No other arguments. */

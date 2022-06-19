@@ -121,6 +121,8 @@ int main(int argc, char *argv[]) {
 					print(" [DIRECTORY] ...\n\n"
 							"Print DIRECTORY's contents to stdout\n\n");
 					print("	-a	Include names starting with a dot, including '.' and '..'\n");
+					print("	-A	Same as `-a` but don't include '.' and '..'\n");
+					print("	-C	Print in columns\n");
 					return 0;
 					break;
 				case 'a':

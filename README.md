@@ -24,6 +24,10 @@ what `fases` currently provides:
 
 - [i] `-a`
 
+- [i] `-A`
+
+- [i] `-C`
+
 - [n] Other options.
 
 `head`:

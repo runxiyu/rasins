@@ -137,6 +137,8 @@ int main(int argc, char *argv[]) {
 					break;
 				case '1':
 					params[1] = '1';
+				default: /* No valid option found */
+					return 1;
 			}
 		}
 		for (int i = 1; i < argc; i++) {

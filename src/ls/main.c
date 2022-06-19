@@ -36,30 +36,30 @@ int ls(char *dirname, char params[3]) {
 			int column;
 			/* Yes, `print()` every file/directory */
 			if (dirtree->d_name[0] != '.' && 
-					params[0] != 'a' && params[1] != 'A') { 
+					params[0] != 'a' && params[0] != 'A') { 
 				/* Unless they start with a dot */
 				print(dirtree->d_name);
-				if (params[2] != 'C')
+				if (params[1] != 'C')
 					print("\n"); /* Print a newline if `-C` isn't used */
 			}
 			if (params[0] == 'a') {
 				/* Print names starting with a dot if the `-a` option is used */
 				print(dirtree->d_name);
-				if (params[2] != 'C')
+				if (params[1] != 'C')
 					print("\n"); /* Print a newline if `-C` isn't used */
 			}
-			if (params[1] == 'A' && 
+			if (params[0] == 'A' && 
 					strcmp(dirtree->d_name, ".") && strcmp(dirtree->d_name, "..")) {
 				/* Print names starting with a dot 
 				 * (unless it's '.' or '..' if they exist) 
 				 * if the `-A` option is used 
 				 */
 				print(dirtree->d_name);
-				if (params[2] != 'C')
+				if (params[1] != 'C')
 					print("\n"); /* Print a newline if `-C` isn't used */
 			}
-			if (params[2] == 'C' && 
-					params[0] != 'a' && params[1] != 'A' && 
+			if (params[1] == 'C' && 
+					params[0] != 'a' && params[0] != 'A' && 
 					dirtree->d_name[0] != '.') {
 				/* Print in columns: unless the file starts with a dot and 
 				 * `-a`/`-A` are unspecified, print tab characters until 
@@ -71,8 +71,8 @@ int ls(char *dirname, char params[3]) {
 					print("\t\t");
 				column++;
 			}
-			else if (params[2] == 'C' && 
-					(params[0] == 'a' || (params[1] == 'A' && strcmp(dirtree->d_name, "." )
+			else if (params[1] == 'C' && 
+					(params[0] == 'a' || (params[0] == 'A' && strcmp(dirtree->d_name, "." )
 										  && strcmp(dirtree->d_name, "..")))) {
 				/* Print in columns: if `-a` or `-A` are specified, print
 				 * tab characters for files starting with a dot (more info 
@@ -129,10 +129,11 @@ int main(int argc, char *argv[]) {
 					params[0] = 'a';
 					break;
 				case 'A':
-					params[1] = 'A';
+					params[0] = 'A';
 					break;
 				case 'C':
-					params[2] = 'C';
+					params[1] = 'C';
+					break;
 			}
 		}
 		for (int i = 1; i < argc; i++) {

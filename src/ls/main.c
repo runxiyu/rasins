@@ -42,6 +42,15 @@ int ls(char *dirname, char params[3]) {
 				print(dirtree->d_name);
 				print("\n");
 			}
+			else if (params[1] == 'A' && 
+					strcmp(dirtree->d_name, ".") && strcmp(dirtree->d_name, "..")) {
+				/* Print names starting with a dot 
+				 * (unless it's '.' or '..' if they exist) 
+				 * if the `-A` option is used 
+				 */
+				print(dirtree->d_name);
+				print("\n");
+			}
 		}
 	}
 	else { /* It didn't open. Maybe it's a file? */
@@ -66,7 +75,7 @@ int main(int argc, char *argv[]) {
 	if (argc > 1) {
 		int arguments;
 		char params[3];
-		while ((arguments = getopt(argc, argv, "ha")) != -1) {
+		while ((arguments = getopt(argc, argv, "haA")) != -1) {
 			switch (arguments) {
 				case 'h': /* Print help message */
 					print("Ferass' Base System.\n\n"
@@ -79,6 +88,9 @@ int main(int argc, char *argv[]) {
 					break;
 				case 'a':
 					params[0] = 'a';
+					break;
+				case 'A':
+					params[1] = 'A';
 					break;
 			}
 		}

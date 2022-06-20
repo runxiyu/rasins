@@ -22,33 +22,21 @@
 
 #include <string.h>
 #include <unistd.h>
-
-ssize_t print(char *string)
-	{ return write(STDOUT_FILENO, string, strlen(string)); }
+#include <stdio.h>
 
 void printUsage() {
-	print(
-	"Ferass' Base System.\n\n"
+	printf("Ferass' Base System.\n\n"
 	"Usage: yes [STRING]\n\n"
-	"Repeatedly output a line with specified STRING or 'y'.\n\n"
-	);
+	"Repeatedly output a line with specified STRING or 'y'.\n\n" );
 }
 
 int main(int argc, char *argv[]) {
+	setvbuf(stdout, NULL, _IONBF, 0);
 	if (argc > 1 && !strcmp(argv[1], "-h")) {
 		printUsage();
-	} else {
-		if (argc > 1) {
-			while(1) {
-				print(argv[1]);
-				print("\n");
-			}
-		}
-		else {
-			while(1) {
-				print("y\n");
-			}
-		}
-	}
-	return 0;
+		return 0;
+	} else if (argc > 1) while(1)
+		printf("%s\n", argv[1]);
+	else while(1)
+		printf("y\n");
 }

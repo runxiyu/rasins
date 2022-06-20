@@ -52,20 +52,18 @@ int ls(char *dirname, char params[3]) {
 
 	if (directory == NULL) {
 		file = open(dirname, O_RDONLY);
-		if (file == -1) { /* not a file */
+		if (file == -1) {
 			print("ls: ");
 			print(dirname);
 			print(": No such file or directory\n");
 			return 1;
 		}
-		/* Is a file, not a directory: */
 		print(dirname);
 		print("\n");
 		close(file);
 		return 0;
 	}
 
-	/* Directory */
 	while ((dirtree = readdir(directory)) != NULL) {
 		int column; /* counter column for -C */
 		if (dirtree->d_name[0] != '.' && 
@@ -86,10 +84,6 @@ int ls(char *dirname, char params[3]) {
 		} else if (params[1] == 'C' && 
 				params[0] != 'a' && params[0] != 'A' && 
 				dirtree->d_name[0] != '.') {
-			/* Print in columns: unless the file starts with a dot and 
-			 * `-a`/`-A` are unspecified, print tab characters until 
-			 * the 4th column 
-			 */
 			if (column > 5)
 				print("\n");
 			else
@@ -101,10 +95,6 @@ int ls(char *dirname, char params[3]) {
 					(params[0] == 'A' &&
 					strcmp(dirtree->d_name, "." )
 					&& strcmp(dirtree->d_name, "..")))) {
-			/* Print in columns: if `-a` or `-A` are specified, print
-			 * tab characters for files starting with a dot (more info 
-			 * in the 'a' or 'A' `if` block) 
-			 */
 			if (column > 5) {
 				print("\n");
 				column = 0;

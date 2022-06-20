@@ -33,6 +33,8 @@ void printUsage() {
 }
 
 int main(int argc, char *argv[]) {
+	setvbuf(stdout, NULL, _IONBF, 0);
+
 	if (argc >= 2) {
 		char args;
 		int usedargs = 0;

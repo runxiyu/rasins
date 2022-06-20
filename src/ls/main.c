@@ -25,14 +25,12 @@
 #include <string.h>
 #include <dirent.h>
 #include <fcntl.h>
+#include <stdio.h>
 
 int getopt(int argc, char *const argv[], const char *optstring);
 
-ssize_t print(char *string)
-	{ return write(STDOUT_FILENO, string, strlen(string)); }
-
 void printUsage() {
-	print("Ferass' Base System.\n\n"
+	printf("Ferass' Base System.\n\n"
 	"Usage: "
 	"ls [DIRECTORY] ...\n\n"
 	"Print DIRECTORY's contents to stdout\n\n"
@@ -51,13 +49,10 @@ int ls(char *dirname, char params[3]) {
 	if (directory == NULL) {
 		file = open(dirname, O_RDONLY);
 		if (file == -1) {
-			print("ls: ");
-			print(dirname);
-			print(": No such file or directory\n");
+			printf("ls: %s: No such file or directory\n", dirname);
 			return 1;
 		}
-		print(dirname);
-		print("\n");
+		printf("%s\n", dirname);
 		close(file);
 		return 0;
 	}
@@ -65,38 +60,38 @@ int ls(char *dirname, char params[3]) {
 	while ((dirtree = readdir(directory)) != NULL) {
 		if (dirtree->d_name[0] != '.' && 
 				params[0] != 'a' && params[0] != 'A') { 
-			print(dirtree->d_name);
-			if (params[1] != 'C') print("\n");
+			printf("%s", dirtree->d_name);
+			if (params[1] != 'C') printf("\n");
 		}
 		if (params[0] == 'a') {
-			print(dirtree->d_name);
+			printf("%s", dirtree->d_name);
 		} else if (params[0] == 'A' && 
 				strcmp(dirtree->d_name, ".") &&
 				strcmp(dirtree->d_name, "..")) {
-			print(dirtree->d_name);
+			printf("%s", dirtree->d_name);
 		}
 		if (params[1] != 'C' && (params[0]=='A' || params[0]=='a')) {
-			print("\n");
+			printf("\n");
 		} else if (params[1] == 'C' && 
 				params[0] != 'a' && params[0] != 'A' && 
 				dirtree->d_name[0] != '.') {
-			if (column++ > 5) print("\n");
-			else print("\t\t");
+			if (column++ > 5) printf("\n");
+			else printf("\t\t");
 		} else if (params[1] == 'C' && 
 				(params[0] == 'a' ||
 					(params[0] == 'A' &&
 					strcmp(dirtree->d_name, "." )
 					&& strcmp(dirtree->d_name, "..")))) {
 			if (column > 5) {
-				print("\n");
+				printf("\n");
 				column = 0;
 			} else {
-				print("\t\t");
+				printf("\t\t");
 				column++;
 			}
 		}
 	}
-	print("\n");
+	printf("\n");
 
 	closedir(directory);
 	return 0;
@@ -107,6 +102,8 @@ int main(int argc, char *argv[]) {
 	int success = 0;
 	int argument, i;
 	char params[6]; for(i=0; i<6; i++) params[i]=0;
+
+	setvbuf(stdout, NULL, _IONBF, 0);
 
 	while ((argument = getopt(argc, argv, "haAC")) != -1) {
 		if (argument == 'h') {

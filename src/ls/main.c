@@ -75,7 +75,7 @@ int ls(char *dirname, char params[3]) {
 				strcmp(dirtree->d_name, "..")) {
 			print(dirtree->d_name);
 		}
-		if (params[1] != 'C' && (params[0]=='A' || params[1]=='a')) {
+		if (params[1] != 'C' && (params[0]=='A' || params[0]=='a')) {
 			print("\n");
 		} else if (params[1] == 'C' && 
 				params[0] != 'a' && params[0] != 'A' && 

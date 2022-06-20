@@ -125,7 +125,7 @@ int ls(char *dirname, char params[3]) {
 }
 
 int main(int argc, char *argv[]) {
-	int retval = 0;
+	int status = 0;
 	int success = 0;
 	int arguments;
 	char params[6];
@@ -148,10 +148,10 @@ int main(int argc, char *argv[]) {
 
 	for (int i = 1; i < argc; i++)
 		if ((success |= (argv[i][0] != '-' ? 1 : 0)))
-			retval |= ls(argv[i], params);
+			status |= ls(argv[i], params);
 
 	if (!success)
 		return ls(".", params);
 
-	return retval;
+	return status;
 }

@@ -26,19 +26,27 @@ int main(int argc, char *argv[]) {
 		int arg_lines;    /* Number of lines to print */
 		for (int i = 1; argv[i]; i++) { /* For loop */
 			if (argv[i][usedargs + 1] == 'n' && argv[i + 1]) {
-					args = 'n'; 
-					arg_lines = strtol(argv[i + 1], NULL, 0);
-					usedargs++;
+				args = 'n'; 
+				arg_lines = strtol(argv[i + 1], NULL, 0);
+				usedargs++;
 			}
 			if (argv[i][usedargs + 1] == 'h') {
 				/* Print the help message */
 				printf("Ferass' Base System.\n");
 				printf("\n");
-				printf("Usage: %s [FILE] [-n NUMBER]\n", argv[0]);
+				printf(
+					"Usage: %s [FILE] [-n NUMBER]\n",
+					argv[0]);
 				printf("\n");
-				printf("Print FILE's contents until line NUMBER.\n");
+
+				printf(
+				"Print FILE's contents until line NUMBER.\n");
+
 				printf("\n");
-				printf("\t-n NUMBER\tPrint first NUMBER line(s).\n");
+
+				printf(
+				"\t-n NUMBER\tPrint first NUMBER line(s).\n");
+
 				exit(0);
 			}
 		}
@@ -47,7 +55,8 @@ int main(int argc, char *argv[]) {
 		int i = 0;  /* Integer used for the 'for' loop */
 		file=fopen(argv[1], "r"); /* Open the file in read-only mode */
 		if (file == NULL) { /* Check if the file has been opened successfully */
-			printf("head: %s: No such file or directory\n", argv[1]);
+			printf("head: %s: No such file or directory\n",
+				argv[1]);
 			exit(1); /* If not, exit. */
 		}
 		while (i != arg_lines && (fgets(s, 512, file)) != NULL) {

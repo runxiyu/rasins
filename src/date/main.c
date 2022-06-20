@@ -20,7 +20,8 @@
 #include <stdio.h>
 
 /* Define a `print()` function */
-ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
+ssize_t print(char *string)
+	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
 int main(int argc, char *argv[]) {
 	if (argc == 1) {

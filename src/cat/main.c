@@ -22,25 +22,24 @@
 int getopt(int argc, char *const argv[], const char *optstring);
 
 /* Define a `print()` function */
-ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
+ssize_t print(char *string)
+	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
 int main(int argc, char *const argv[]) {
 	/* Check for arguments */
 	if (argc == 2) {
 		int arguments;
 		while ((arguments = getopt(argc, argv, "h")) != -1) {
-			switch (arguments) {
-				case 'h':
-					/* Print the help message */
-					print("Ferass' Base System.\n\n"
-							"Usage: ");
-					print(argv[0]);
-					print(" [FILE]\n\n"
-							"Concatenate FILE to stdout\n\n");
-					return 0;
-					break;
-				default:
-					return 1;
+			if (arguments == 'h') {
+				/* Print the help message */
+				print("Ferass' Base System.\n\n"
+						"Usage: ");
+				print(argv[0]);
+				print(" [FILE]\n\n"
+					"Concatenate FILE to stdout\n\n");
+				return 0;
+			} else {
+				return 1;
 			}
 		}
 		int file; /* Define 'file' */

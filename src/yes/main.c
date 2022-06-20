@@ -18,7 +18,8 @@
 #include <unistd.h> /* POSIX-compliant library for interacting with the OS */
 
 /* Define a `print()` function */
-ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
+ssize_t print(char *string)
+	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
 int main(int argc, char *argv[]) {
 	/* Check for arguments */
@@ -28,7 +29,7 @@ int main(int argc, char *argv[]) {
 				"Usage: ");
 		print(argv[0]);
 		print(" [STRING]\n\n"
-				"Repeatedly output a line with all specified STRING or 'y'.\n\n");
+		"Repeatedly output a line with specified STRING or 'y'.\n\n");
 	}
 	else {
 		/* Repeadtedly output 'y' or STRING */

@@ -131,11 +131,19 @@ int main(int argc, char *argv[]) {
 			print("Ferass' Base System.\n\n"
 					"Usage: ");
 			print(argv[0]);
+
 			print(" [DIRECTORY] ...\n\n"
-					"Print DIRECTORY's contents to stdout\n\n");
-			print("	-a	Include names starting with a dot, including '.' and '..'\n");
-			print("	-A	Same as `-a` but don't include '.' and '..'\n");
-			print("	-C	Print in columns\n");
+				"Print DIRECTORY's contents to stdout\n\n");
+
+			print("\t-a\tInclude names starting with a"
+			"dot, including '.' and '..'\n");
+
+			print(
+			"\t-A\tSame as `-a` but don't include '.' and '..'\n");
+
+			print(
+			"\t-C\tPrint in columns\n");
+
 			return 0;
 		} else if (arguments == 'a' || arguments == 'A') {
 			params[0] = arguments;

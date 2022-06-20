@@ -1,5 +1,6 @@
 /*	ls - list files and directories in the given path
  *	Copyright (C) 2022 Ferass EL HAFIDI
+ *	Copyright (C) 2022 Leah Rowe
  *
  *	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -14,6 +15,12 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
+
+/*
+ *	TODO: return proper error codes (0 and 1 are incorrect)
+ *	https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html
+ */
+
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>

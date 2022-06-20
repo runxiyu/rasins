@@ -14,6 +14,12 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/*
+ *	TODO: return proper error codes (0 and 1 are incorrect)
+ *	https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html
+ */
+
 #include <string.h>
 #include <unistd.h>
 

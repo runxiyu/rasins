@@ -1,5 +1,6 @@
 /*	cat - concatenate a file to stdout 
  *	Copyright (C) 2022 Ferass EL HAFIDI
+ *	Copyright (C) 2022 Leah Rowe
  *
  *	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -34,40 +35,32 @@ void printUsage() {
 }
 
 int main(int argc, char *const argv[]) {
+	int file, argument;
+	char s[4096], input[4096];
+
 	setvbuf(stdout, NULL, _IONBF, 0);
-
-	if (argc == 2) {
-		int argument;
-		while ((argument = getopt(argc, argv, "h")) != -1) {
-			if (argument == 'h') {
-				/* Print the help message */
-				printUsage();
-				return 0;
-			} else {
-				return 1;
-			}
-		}
-		int file;
-		char s[4096];
-		file=open(argv[1], O_RDONLY);
-
-		if (file == -1) {
-			printf("cat: %s: No such file or directory\n", argv[1]);
-			return 1;
-		}
-		while (read(file, s, 4096) > 0)
-			printf("%s", s);
-
-		close(file);
-	}
-	else if (argc == 1) {
-		/* Each line typed gets printed to stdout */
-		/* ^C will terminate the execution */
+	
+	if (argc == 1) {
 		while (1) {
-			char input[4096];
 			read(STDIN_FILENO, input, 4096);
 			printf("%s", input);
 		}
 	}
+
+	while ((argument = getopt(argc, argv, "h")) != -1) {
+		if (argument == 'h') {
+			printUsage();
+			return 0;
+		} else return 1;
+	}
+
+	if ((file=open(argv[1], O_RDONLY)) == -1) {
+		printf("cat: %s: No such file or directory\n", argv[1]);
+		return 1;
+	}
+	while (read(file, s, 4096) > 0)
+		printf("%s", s);
+
+	close(file);
 	return 0;
 }

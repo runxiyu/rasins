@@ -23,20 +23,19 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdio.h>
 
 int getopt(int argc, char *const argv[], const char *optstring);
 
-ssize_t print(char *string)
-	{ return write(STDOUT_FILENO, string, strlen(string)); }
-
 void printUsage() {
-	print("Ferass' Base System.\n\n"
+	printf("Ferass' Base System.\n\n"
 		"Usage: cat [FILE]\n\n"
-		"Concatenate FILE to stdout\n\n"
-	);
+		"Concatenate FILE to stdout\n\n");
 }
 
 int main(int argc, char *const argv[]) {
+	setvbuf(stdout, NULL, _IONBF, 0);
+
 	if (argc == 2) {
 		int argument;
 		while ((argument = getopt(argc, argv, "h")) != -1) {
@@ -53,13 +52,11 @@ int main(int argc, char *const argv[]) {
 		file=open(argv[1], O_RDONLY);
 
 		if (file == -1) {
-			print("cat: ");
-			print(argv[1]);
-			print(": No such file or directory\n");
+			printf("cat: %s: No such file or directory\n", argv[1]);
 			return 1;
 		}
 		while (read(file, s, 4096) > 0)
-			print(s);
+			printf("%s", s);
 
 		close(file);
 	}
@@ -69,7 +66,7 @@ int main(int argc, char *const argv[]) {
 		while (1) {
 			char input[4096];
 			read(STDIN_FILENO, input, 4096);
-			print(input);
+			printf("%s", input);
 		}
 	}
 	return 0;

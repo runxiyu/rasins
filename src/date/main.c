@@ -25,23 +25,22 @@
 #include <time.h>
 #include <stdio.h>
 
-ssize_t print(char *string)
-	{ return write(STDOUT_FILENO, string, strlen(string)); }
-
 void printUsage() {
-		print("Ferass' Base System.\n\n"
-			"Usage: date\n\n"
-			"Print the date and time.\n\n"
-		);
+	printf("Ferass' Base System.\n\n"
+		"Usage: date\n\n"
+		"Print the date and time.\n\n"
+	);
 }
 
 int main(int argc, char *argv[]) {
+	setvbuf(stdout, NULL, _IONBF, 0);
+
 	if (argc == 1) {
 		struct tm *date;
 		time_t epoch;
 		epoch = time(NULL);
 		date = localtime(&epoch);
-		print(asctime(date));
+		printf("%s", asctime(date));
 	}
 	else {
 		printUsage();

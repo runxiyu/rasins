@@ -18,6 +18,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+		"Usage: head [FILE] [-n NUMBER]\n\n"
+		"Print FILE's contents until line NUMBER.\n\n"
+		"\t-n NUMBER\tPrint first NUMBER line(s).\n"
+	);
+}
+
 int main(int argc, char *argv[]) {
 	if (argc >= 2) {
 		char args;
@@ -30,21 +38,7 @@ int main(int argc, char *argv[]) {
 				usedargs++;
 			}
 			if (argv[i][usedargs + 1] == 'h') {
-				printf("Ferass' Base System.\n");
-				printf("\n");
-				printf(
-					"Usage: %s [FILE] [-n NUMBER]\n",
-					argv[0]);
-				printf("\n");
-
-				printf(
-				"Print FILE's contents until line NUMBER.\n");
-
-				printf("\n");
-
-				printf(
-				"\t-n NUMBER\tPrint first NUMBER line(s).\n");
-
+				printUsage();
 				exit(0);
 			}
 		}

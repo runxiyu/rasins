@@ -22,6 +22,13 @@
 ssize_t print(char *string)
 	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
+void printUsage() {
+		print("Ferass' Base System.\n\n"
+			"Usage: date\n\n"
+			"Print the date and time.\n\n"
+		);
+}
+
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
 		struct tm *date;
@@ -31,11 +38,7 @@ int main(int argc, char *argv[]) {
 		print(asctime(date));
 	}
 	else {
-		print("Ferass' Base System.\n\n"
-				"Usage: ");
-		print(argv[0]);
-		print(" \n\n"
-				"Print the date and time.\n\n");
+		printUsage();
 	}
 	return 0;
 }

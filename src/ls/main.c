@@ -24,6 +24,18 @@ int getopt(int argc, char *const argv[], const char *optstring);
 ssize_t print(char *string)
 	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
+void printUsage() {
+	print(
+	"Ferass' Base System.\n\n"
+	"Usage: "
+	"ls [DIRECTORY] ...\n\n"
+	"Print DIRECTORY's contents to stdout\n\n"
+	"\t-a\tInclude names starting with a dot, including '.' and '..'\n"
+	"\t-A\tSame as `-a` but don't include '.' and '..'\n"
+	"\t-C\tPrint in columns\n"
+	);
+}
+
 int ls(char *dirname, char params[3]) {
 	int file;
 	DIR *directory;
@@ -125,22 +137,7 @@ int main(int argc, char *argv[]) {
 
 	while ((arguments = getopt(argc, argv, "haAC")) != -1) {
 		if (arguments == 'h') {
-			print("Ferass' Base System.\n\n"
-					"Usage: ");
-			print(argv[0]);
-
-			print(" [DIRECTORY] ...\n\n"
-				"Print DIRECTORY's contents to stdout\n\n");
-
-			print("\t-a\tInclude names starting with a"
-			"dot, including '.' and '..'\n");
-
-			print(
-			"\t-A\tSame as `-a` but don't include '.' and '..'\n");
-
-			print(
-			"\t-C\tPrint in columns\n");
-
+			printUsage();
 			return 0;
 		} else if (arguments == 'a' || arguments == 'A') {
 			params[0] = arguments;

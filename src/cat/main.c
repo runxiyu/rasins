@@ -23,17 +23,20 @@ int getopt(int argc, char *const argv[], const char *optstring);
 ssize_t print(char *string)
 	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
+void printUsage() {
+	print("Ferass' Base System.\n\n"
+		"Usage: cat [FILE]\n\n"
+		"Concatenate FILE to stdout\n\n"
+	);
+}
+
 int main(int argc, char *const argv[]) {
 	if (argc == 2) {
 		int arguments;
 		while ((arguments = getopt(argc, argv, "h")) != -1) {
 			if (arguments == 'h') {
 				/* Print the help message */
-				print("Ferass' Base System.\n\n"
-						"Usage: ");
-				print(argv[0]);
-				print(" [FILE]\n\n"
-					"Concatenate FILE to stdout\n\n");
+				printUsage();
 				return 0;
 			} else {
 				return 1;

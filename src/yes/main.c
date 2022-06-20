@@ -20,15 +20,18 @@
 ssize_t print(char *string)
 	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
+void printUsage() {
+	print(
+	"Ferass' Base System.\n\n"
+	"Usage: yes [STRING]\n\n"
+	"Repeatedly output a line with specified STRING or 'y'.\n\n"
+	);
+}
+
 int main(int argc, char *argv[]) {
 	if (argc > 1 && !strcmp(argv[1], "-h")) {
-		print("Ferass' Base System.\n\n"
-				"Usage: ");
-		print(argv[0]);
-		print(" [STRING]\n\n"
-		"Repeatedly output a line with specified STRING or 'y'.\n\n");
-	}
-	else {
+		printUsage();
+	} else {
 		if (argc > 1) {
 			while(1) {
 				print(argv[1]);

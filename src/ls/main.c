@@ -76,17 +76,14 @@ int ls(char *dirname, char params[3]) {
 		}
 		if (params[0] == 'a') {
 			print(dirtree->d_name);
-			if (params[1] != 'C')
-				print("\n");
-		}
-		if (params[0] == 'A' && 
+		} else if (params[0] == 'A' && 
 				strcmp(dirtree->d_name, ".") &&
 				strcmp(dirtree->d_name, "..")) {
 			print(dirtree->d_name);
-			if (params[1] != 'C')
-				print("\n");
 		}
-		if (params[1] == 'C' && 
+		if (params[1] != 'C' && (params[0]=='A' || params[1]=='a')) {
+			print("\n");
+		} else if (params[1] == 'C' && 
 				params[0] != 'a' && params[0] != 'A' && 
 				dirtree->d_name[0] != '.') {
 			/* Print in columns: unless the file starts with a dot and 

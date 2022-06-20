@@ -114,7 +114,7 @@ int ls(char *dirname, char params[3]) {
 int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
-	int arguments;
+	int argument;
 	char params[6];
 
 	if (argc < 2) {
@@ -122,14 +122,14 @@ int main(int argc, char *argv[]) {
 		return ls(".", params);
 	}
 
-	while ((arguments = getopt(argc, argv, "haAC")) != -1) {
-		if (arguments == 'h') {
+	while ((argument = getopt(argc, argv, "haAC")) != -1) {
+		if (argument == 'h') {
 			printUsage();
 			return 0;
-		} else if (arguments == 'a' || arguments == 'A') {
-			params[0] = arguments;
-		} else if (arguments == 'C') {
-			params[1] = arguments;
+		} else if (argument == 'a' || argument == 'A') {
+			params[0] = argument;
+		} else if (argument == 'C') {
+			params[1] = argument;
 		}
 	}
 

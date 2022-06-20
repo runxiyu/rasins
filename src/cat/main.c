@@ -38,9 +38,9 @@ void printUsage() {
 
 int main(int argc, char *const argv[]) {
 	if (argc == 2) {
-		int arguments;
-		while ((arguments = getopt(argc, argv, "h")) != -1) {
-			if (arguments == 'h') {
+		int argument;
+		while ((argument = getopt(argc, argv, "h")) != -1) {
+			if (argument == 'h') {
 				/* Print the help message */
 				printUsage();
 				return 0;

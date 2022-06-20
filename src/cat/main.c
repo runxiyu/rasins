@@ -14,19 +14,16 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <fcntl.h>  /* For opening files */
-#include <string.h> /* To check for arguments */
-#include <unistd.h> /* POSIX-compliant library */
+#include <fcntl.h>
+#include <string.h>
+#include <unistd.h>
 
-/* For getopt */
 int getopt(int argc, char *const argv[], const char *optstring);
 
-/* Define a `print()` function */
 ssize_t print(char *string)
 	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
 int main(int argc, char *const argv[]) {
-	/* Check for arguments */
 	if (argc == 2) {
 		int arguments;
 		while ((arguments = getopt(argc, argv, "h")) != -1) {
@@ -42,28 +39,27 @@ int main(int argc, char *const argv[]) {
 				return 1;
 			}
 		}
-		int file; /* Define 'file' */
+		int file;
 		char s[4096];
-		file=open(argv[1], O_RDONLY); /* Open the file(argv[1]) in read-only(O_RDONLY) mode */
-		if (file == -1) { /* Check if the file has been opened successfully */
+		file=open(argv[1], O_RDONLY);
+
+		if (file == -1) {
 			print("cat: ");
 			print(argv[1]);
 			print(": No such file or directory\n");
-			return 1; /* If not, exit. */
+			return 1;
 		}
 		while (read(file, s, 4096) > 0)
-			/* Print the file's contents to stdout */
 			print(s);
 
-		close(file); /* Close the file */
+		close(file);
 	}
 	else if (argc == 1) {
-		/* Enter in a loop where each line typed gets printed to stdout */
+		/* Each line typed gets printed to stdout */
+		/* ^C will terminate the execution */
 		while (1) {
-			/* Read user input */
 			char input[4096];
 			read(STDIN_FILENO, input, 4096);
-			/* Print it */
 			print(input);
 		}
 	}

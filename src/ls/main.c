@@ -14,38 +14,36 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-#include <unistd.h> /* Unix standard library */
-#include <string.h> /* Strings */
-#include <dirent.h> /* Manipulating directories */
-#include <fcntl.h>  /* Manipulating files */
+#include <unistd.h>
+#include <string.h>
+#include <dirent.h>
+#include <fcntl.h>
 
-/* For `getopt()` */
 int getopt(int argc, char *const argv[], const char *optstring);
 
-/* Define a `print()` function */
 ssize_t print(char *string)
 	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
-/* `ls()` function for listing files and directories. */
 int ls(char *dirname, char params[3]) {
 	int file;
 	DIR *directory;
 	struct dirent *dirtree;
 
-	directory = opendir(dirname); /* Open the directory */
+	directory = opendir(dirname);
 
-	if (directory == NULL) { /* not a directory */
+	if (directory == NULL) {
+		/* Check to see if it's a file */
 		file = open(dirname, O_RDONLY);
-		if (file == -1) { /* Doesn't exist. Gracefully exit. */
+		if (file == -1) { /* not a file */
 			print("ls: ");
 			print(dirname);
 			print(": No such file or directory\n");
 			return 1;
 		}
-		print(dirname); /* The file exists, print its name */
+		print(dirname);
 		print("\n");
-		close(file); /* Close file */
-		return 0;
+		close(file);
+		return 0; /* it was a file */
 	}
 
 	/* is a directory */
@@ -109,9 +107,9 @@ int ls(char *dirname, char params[3]) {
 			}
 		}
 	}
-	print("\n"); /* Print newline in case it hasn't been printed. */
+	print("\n");
 
-	closedir(directory); /* Close directory */
+	closedir(directory);
 	return 0;
 }
 
@@ -119,7 +117,6 @@ int main(int argc, char *argv[]) {
 	int arguments;
 	char params[6];
 
-	/* Check for arguments */
 	if (argc < 2) {
 		char params[3];
 		ls(".", params);

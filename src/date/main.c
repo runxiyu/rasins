@@ -14,12 +14,11 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <string.h> /* To check for arguments */
-#include <unistd.h> /* POSIX-compliant library for interacting with the OS */
-#include <time.h>   /* Time. */
+#include <string.h>
+#include <unistd.h>
+#include <time.h>
 #include <stdio.h>
 
-/* Define a `print()` function */
 ssize_t print(char *string)
 	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
@@ -27,9 +26,8 @@ int main(int argc, char *argv[]) {
 	if (argc == 1) {
 		struct tm *date;
 		time_t epoch;
-		epoch = time(NULL); /* Seconds since the Unix epoch: January 1st 1970 00:00:00 */
-		date = localtime(&epoch); /* Convert 'epoch' to a tm struct 
-								   * containing human-readable date and time */
+		epoch = time(NULL);
+		date = localtime(&epoch);
 		print(asctime(date));
 	}
 	else {

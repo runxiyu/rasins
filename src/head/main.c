@@ -14,24 +14,22 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <stdio.h>  /* To print the file's contents to stdout */
-#include <stdlib.h> /* For opening files */
-#include <string.h> /* To check for arguments */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char *argv[]) {
-	/* Check for arguments */
 	if (argc >= 2) {
-		char args;        /* Number of supported arguments */
-		int usedargs = 0; /* Number of used arguments */
+		char args;
+		int usedargs = 0;
 		int arg_lines;    /* Number of lines to print */
-		for (int i = 1; argv[i]; i++) { /* For loop */
+		for (int i = 1; argv[i]; i++) {
 			if (argv[i][usedargs + 1] == 'n' && argv[i + 1]) {
 				args = 'n'; 
 				arg_lines = strtol(argv[i + 1], NULL, 0);
 				usedargs++;
 			}
 			if (argv[i][usedargs + 1] == 'h') {
-				/* Print the help message */
 				printf("Ferass' Base System.\n");
 				printf("\n");
 				printf(
@@ -50,30 +48,27 @@ int main(int argc, char *argv[]) {
 				exit(0);
 			}
 		}
-		FILE *file; /* Define 'file' */
+		FILE *file;
 		char s[512];
-		int i = 0;  /* Integer used for the 'for' loop */
-		file=fopen(argv[1], "r"); /* Open the file in read-only mode */
-		if (file == NULL) { /* Check if the file has been opened successfully */
+		int i = 0;
+		file=fopen(argv[1], "r");
+		if (file == NULL) {
 			printf("head: %s: No such file or directory\n",
 				argv[1]);
-			exit(1); /* If not, exit. */
+			exit(1);
 		}
 		while (i != arg_lines && (fgets(s, 512, file)) != NULL) {
 			s[strcspn(s, "\n")] = 0; /* Remove trailing newline */
-			/* Print the file's contents line by line to stdout */
 			puts(s); 
 			i++;
 		}
-		fclose(file); /* Close the file */
+		fclose(file);
 	}
 	else if (argc == 1) {
-		/* Enter in a loop where each line typed gets printed to stdout */
+		/* Output to stdout based on user input */
 		while (1) {
-			/* Read user output */
 			char input[80];
 			fgets(input, 80, stdin);
-			/* Print it */
 			printf("%s", input);
 		}
 	}

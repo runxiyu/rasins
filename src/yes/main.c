@@ -14,17 +14,14 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <string.h> /* To check for arguments */
-#include <unistd.h> /* POSIX-compliant library for interacting with the OS */
+#include <string.h>
+#include <unistd.h>
 
-/* Define a `print()` function */
 ssize_t print(char *string)
 	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
 int main(int argc, char *argv[]) {
-	/* Check for arguments */
 	if (argc > 1 && !strcmp(argv[1], "-h")) {
-		/* Print the help message */
 		print("Ferass' Base System.\n\n"
 				"Usage: ");
 		print(argv[0]);
@@ -32,7 +29,6 @@ int main(int argc, char *argv[]) {
 		"Repeatedly output a line with specified STRING or 'y'.\n\n");
 	}
 	else {
-		/* Repeadtedly output 'y' or STRING */
 		if (argc > 1) {
 			while(1) {
 				print(argv[1]);

@@ -126,11 +126,8 @@ int main(int argc, char *argv[]) {
 		if (argument == 'h') {
 			printUsage();
 			return 0;
-		} else if (argument == 'a' || argument == 'A') {
-			params[0] = argument;
-		} else if (argument == 'C') {
-			params[1] = argument;
-		}
+		} else if (argument=='a' || argument=='A' || argument=='C')
+			params[argument == 'C' ? 1 : 0] = argument;
 	}
 
 	for (int i = 1; i < argc; i++)

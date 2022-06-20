@@ -44,7 +44,6 @@ int ls(char *dirname, char params[3]) {
 	directory = opendir(dirname);
 
 	if (directory == NULL) {
-		/* Check to see if it's a file */
 		file = open(dirname, O_RDONLY);
 		if (file == -1) { /* not a file */
 			print("ls: ");
@@ -52,40 +51,33 @@ int ls(char *dirname, char params[3]) {
 			print(": No such file or directory\n");
 			return 1;
 		}
+		/* Is a file, not a directory: */
 		print(dirname);
 		print("\n");
 		close(file);
-		return 0; /* it was a file */
+		return 0;
 	}
 
-	/* is a directory */
+	/* Directory */
 	while ((dirtree = readdir(directory)) != NULL) {
-		/* Column counter for `-C` */
-		int column;
-		/* Yes, `print()` every file/directory */
+		int column; /* counter column for -C */
 		if (dirtree->d_name[0] != '.' && 
 				params[0] != 'a' && params[0] != 'A') { 
-			/* Unless they start with a dot */
 			print(dirtree->d_name);
 			if (params[1] != 'C')
-				print("\n"); /* Print a newline if `-C` isn't used */
+				print("\n");
 		}
 		if (params[0] == 'a') {
-			/* Print names starting with a dot if the `-a` option is used */
 			print(dirtree->d_name);
 			if (params[1] != 'C')
-				print("\n"); /* Print a newline if `-C` isn't used */
+				print("\n");
 		}
 		if (params[0] == 'A' && 
 				strcmp(dirtree->d_name, ".") &&
 				strcmp(dirtree->d_name, "..")) {
-			/* Print names starting with a dot 
-			 * (unless it's '.' or '..' if they exist) 
-			 * if the `-A` option is used 
-			 */
 			print(dirtree->d_name);
 			if (params[1] != 'C')
-				print("\n"); /* Print a newline if `-C` isn't used */
+				print("\n");
 		}
 		if (params[1] == 'C' && 
 				params[0] != 'a' && params[0] != 'A' && 
@@ -146,8 +138,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	for (int i = 1; i < argc; i++) {
-		/* List every file/directory the user wants to list */
-		if (argv[i][0] != '-') { /* Discard options starting with '-' */
+		if (argv[i][0] != '-') {
 			ls(argv[i], params);
 		}
 		if (argc == 2 && argv[i][0] == '-') {

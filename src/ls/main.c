@@ -32,19 +32,17 @@ ssize_t print(char *string)
 	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
 void printUsage() {
-	print(
-	"Ferass' Base System.\n\n"
+	print("Ferass' Base System.\n\n"
 	"Usage: "
 	"ls [DIRECTORY] ...\n\n"
 	"Print DIRECTORY's contents to stdout\n\n"
 	"\t-a\tInclude names starting with a dot, including '.' and '..'\n"
 	"\t-A\tSame as `-a` but don't include '.' and '..'\n"
-	"\t-C\tPrint in columns\n"
-	);
+	"\t-C\tPrint in columns\n");
 }
 
 int ls(char *dirname, char params[3]) {
-	int file;
+	int file, column;
 	DIR *directory;
 	struct dirent *dirtree;
 
@@ -65,12 +63,10 @@ int ls(char *dirname, char params[3]) {
 	}
 
 	while ((dirtree = readdir(directory)) != NULL) {
-		int column; /* counter column for -C */
 		if (dirtree->d_name[0] != '.' && 
 				params[0] != 'a' && params[0] != 'A') { 
 			print(dirtree->d_name);
-			if (params[1] != 'C')
-				print("\n");
+			if (params[1] != 'C') print("\n");
 		}
 		if (params[0] == 'a') {
 			print(dirtree->d_name);
@@ -84,13 +80,9 @@ int ls(char *dirname, char params[3]) {
 		} else if (params[1] == 'C' && 
 				params[0] != 'a' && params[0] != 'A' && 
 				dirtree->d_name[0] != '.') {
-			if (column > 5)
-				print("\n");
-			else
-				print("\t\t");
-			column++;
-		}
-		else if (params[1] == 'C' && 
+			if (column++ > 5) print("\n");
+			else print("\t\t");
+		} else if (params[1] == 'C' && 
 				(params[0] == 'a' ||
 					(params[0] == 'A' &&
 					strcmp(dirtree->d_name, "." )
@@ -98,8 +90,7 @@ int ls(char *dirname, char params[3]) {
 			if (column > 5) {
 				print("\n");
 				column = 0;
-			}
-			else {
+			} else {
 				print("\t\t");
 				column++;
 			}
@@ -117,11 +108,6 @@ int main(int argc, char *argv[]) {
 	int argument, i;
 	char params[6]; for(i=0; i<6; i++) params[i]=0;
 
-	if (argc < 2) {
-		char params[3];
-		return ls(".", params);
-	}
-
 	while ((argument = getopt(argc, argv, "haAC")) != -1) {
 		if (argument == 'h') {
 			printUsage();
@@ -134,8 +120,5 @@ int main(int argc, char *argv[]) {
 		if ((success |= (argv[i][0] != '-' ? 1 : 0)))
 			status |= ls(argv[i], params);
 
-	if (!success)
-		return ls(".", params);
-
-	return status;
+	return success ? status : ls(".", params);
 }

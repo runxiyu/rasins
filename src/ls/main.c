@@ -114,8 +114,8 @@ int ls(char *dirname, char params[3]) {
 int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
-	int argument;
-	char params[6];
+	int argument, i;
+	char params[6]; for(i=0; i<6; i++) params[i]=0;
 
 	if (argc < 2) {
 		char params[3];
@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
 			params[argument == 'C' ? 1 : 0] = argument;
 	}
 
-	for (int i = 1; i < argc; i++)
+	for (i = 1; i < argc; i++)
 		if ((success |= (argv[i][0] != '-' ? 1 : 0)))
 			status |= ls(argv[i], params);
 

@@ -118,14 +118,14 @@ int ls(char *dirname, char params[3]) {
 }
 
 int main(int argc, char *argv[]) {
+	int retval = 0;
 	int success = 0;
 	int arguments;
 	char params[6];
 
 	if (argc < 2) {
 		char params[3];
-		ls(".", params);
-		return 0;
+		return ls(".", params);
 	}
 
 	while ((arguments = getopt(argc, argv, "haAC")) != -1) {
@@ -138,14 +138,13 @@ int main(int argc, char *argv[]) {
 			params[1] = arguments;
 		}
 	}
-	for (int i = 1; i < argc; i++) {
-		if (argv[i][0] != '-') {
-			ls(argv[i], params);
-			success = 1;
-		}
-	}
-	if (!success)
-		ls(".", params);
 
-	return 0;
+	for (int i = 1; i < argc; i++)
+		if ((success |= (argv[i][0] != '-' ? 1 : 0)))
+			retval |= ls(argv[i], params);
+
+	if (!success)
+		return ls(".", params);
+
+	return retval;
 }

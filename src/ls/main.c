@@ -23,77 +23,20 @@
 int getopt(int argc, char *const argv[], const char *optstring);
 
 /* Define a `print()` function */
-ssize_t print(char *string) { return write(STDOUT_FILENO, string, strlen(string)); }
+ssize_t print(char *string)
+	{ return write(STDOUT_FILENO, string, strlen(string)); }
 
 /* `ls()` function for listing files and directories. */
 int ls(char *dirname, char params[3]) {
+	int file;
 	DIR *directory;
-	directory = opendir(dirname); /* Open the directory */
 	struct dirent *dirtree;
-	if (directory != NULL) { /* Did the directory open successfully? */
-		while ((dirtree = readdir(directory)) != NULL) {
-			/* Column counter for `-C` */
-			int column;
-			/* Yes, `print()` every file/directory */
-			if (dirtree->d_name[0] != '.' && 
-					params[0] != 'a' && params[0] != 'A') { 
-				/* Unless they start with a dot */
-				print(dirtree->d_name);
-				if (params[1] != 'C')
-					print("\n"); /* Print a newline if `-C` isn't used */
-			}
-			if (params[0] == 'a') {
-				/* Print names starting with a dot if the `-a` option is used */
-				print(dirtree->d_name);
-				if (params[1] != 'C')
-					print("\n"); /* Print a newline if `-C` isn't used */
-			}
-			if (params[0] == 'A' && 
-					strcmp(dirtree->d_name, ".") && strcmp(dirtree->d_name, "..")) {
-				/* Print names starting with a dot 
-				 * (unless it's '.' or '..' if they exist) 
-				 * if the `-A` option is used 
-				 */
-				print(dirtree->d_name);
-				if (params[1] != 'C')
-					print("\n"); /* Print a newline if `-C` isn't used */
-			}
-			if (params[1] == 'C' && 
-					params[0] != 'a' && params[0] != 'A' && 
-					dirtree->d_name[0] != '.') {
-				/* Print in columns: unless the file starts with a dot and 
-				 * `-a`/`-A` are unspecified, print tab characters until 
-				 * the 4th column 
-				 */
-				if (column > 5)
-					print("\n");
-				else
-					print("\t\t");
-				column++;
-			}
-			else if (params[1] == 'C' && 
-					(params[0] == 'a' || (params[0] == 'A' && strcmp(dirtree->d_name, "." )
-										  && strcmp(dirtree->d_name, "..")))) {
-				/* Print in columns: if `-a` or `-A` are specified, print
-				 * tab characters for files starting with a dot (more info 
-				 * in the 'a' or 'A' `if` block) 
-				 */
-				if (column > 5) {
-					print("\n");
-					column = 0;
-				}
-				else {
-					print("\t\t");
-					column++;
-				}
-			}
-		}
-		print("\n"); /* Print newline in case it hasn't been printed. */
-	}
-	else { /* It didn't open. Maybe it's a file? */
-		int file;
+
+	directory = opendir(dirname); /* Open the directory */
+
+	if (directory == NULL) { /* not a directory */
 		file = open(dirname, O_RDONLY);
-		if (file == -1) { /* Nope, it doesn't exist. Gracefully exit. */
+		if (file == -1) { /* Doesn't exist. Gracefully exit. */
 			print("ls: ");
 			print(dirname);
 			print(": No such file or directory\n");
@@ -102,58 +45,113 @@ int ls(char *dirname, char params[3]) {
 		print(dirname); /* The file exists, print its name */
 		print("\n");
 		close(file); /* Close file */
+		return 0;
 	}
+
+	/* is a directory */
+	while ((dirtree = readdir(directory)) != NULL) {
+		/* Column counter for `-C` */
+		int column;
+		/* Yes, `print()` every file/directory */
+		if (dirtree->d_name[0] != '.' && 
+				params[0] != 'a' && params[0] != 'A') { 
+			/* Unless they start with a dot */
+			print(dirtree->d_name);
+			if (params[1] != 'C')
+				print("\n"); /* Print a newline if `-C` isn't used */
+		}
+		if (params[0] == 'a') {
+			/* Print names starting with a dot if the `-a` option is used */
+			print(dirtree->d_name);
+			if (params[1] != 'C')
+				print("\n"); /* Print a newline if `-C` isn't used */
+		}
+		if (params[0] == 'A' && 
+				strcmp(dirtree->d_name, ".") &&
+				strcmp(dirtree->d_name, "..")) {
+			/* Print names starting with a dot 
+			 * (unless it's '.' or '..' if they exist) 
+			 * if the `-A` option is used 
+			 */
+			print(dirtree->d_name);
+			if (params[1] != 'C')
+				print("\n"); /* Print a newline if `-C` isn't used */
+		}
+		if (params[1] == 'C' && 
+				params[0] != 'a' && params[0] != 'A' && 
+				dirtree->d_name[0] != '.') {
+			/* Print in columns: unless the file starts with a dot and 
+			 * `-a`/`-A` are unspecified, print tab characters until 
+			 * the 4th column 
+			 */
+			if (column > 5)
+				print("\n");
+			else
+				print("\t\t");
+			column++;
+		}
+		else if (params[1] == 'C' && 
+				(params[0] == 'a' ||
+					(params[0] == 'A' &&
+					strcmp(dirtree->d_name, "." )
+					&& strcmp(dirtree->d_name, "..")))) {
+			/* Print in columns: if `-a` or `-A` are specified, print
+			 * tab characters for files starting with a dot (more info 
+			 * in the 'a' or 'A' `if` block) 
+			 */
+			if (column > 5) {
+				print("\n");
+				column = 0;
+			}
+			else {
+				print("\t\t");
+				column++;
+			}
+		}
+	}
+	print("\n"); /* Print newline in case it hasn't been printed. */
+
 	closedir(directory); /* Close directory */
 	return 0;
 }
 
 int main(int argc, char *argv[]) {
+	int arguments;
+	char params[6];
+
 	/* Check for arguments */
-	if (argc > 1) {
-		int arguments;
-		char params[6];
-		while ((arguments = getopt(argc, argv, "haAC1")) != -1) {
-			switch (arguments) {
-				case 'h': /* Print help message */
-					print("Ferass' Base System.\n\n"
-							"Usage: ");
-					print(argv[0]);
-					print(" [DIRECTORY] [-a|-A] [-1|-C]\n\n"
-							"Print DIRECTORY's contents to stdout\n\n");
-					print("	-a	Include names starting with a dot, including '.' and '..'\n");
-					print("	-A	Same as `-a` but don't include '.' and '..'\n");
-					print("	-C	Print in columns\n");
-					print("	-1	Print line by line\n");
-					return 0;
-					break;
-				case 'a':
-					params[0] = 'a';
-					break;
-				case 'A':
-					params[0] = 'A';
-					break;
-				case 'C':
-					params[1] = 'C';
-					break;
-				case '1':
-					params[1] = '1';
-				default: /* No valid option found */
-					return 1;
-			}
-		}
-		for (int i = 1; i < argc; i++) {
-			/* List every file/directory the user wants to list */
-			if (argv[i][0] != '-') { /* Discard options starting with '-' */
-				ls(argv[i], params);
-			}
-			if (argc == 2 && argv[i][0] == '-') {
-				ls(".", params);
-			}
-		}
-	}
-	else { /* No other arguments. */
+	if (argc < 2) {
 		char params[3];
 		ls(".", params);
+		return 0;
 	}
+
+	while ((arguments = getopt(argc, argv, "haAC")) != -1) {
+		if (arguments == 'h') {
+			print("Ferass' Base System.\n\n"
+					"Usage: ");
+			print(argv[0]);
+			print(" [DIRECTORY] ...\n\n"
+					"Print DIRECTORY's contents to stdout\n\n");
+			print("	-a	Include names starting with a dot, including '.' and '..'\n");
+			print("	-A	Same as `-a` but don't include '.' and '..'\n");
+			print("	-C	Print in columns\n");
+			return 0;
+		} else if (arguments == 'a' || arguments == 'A') {
+			params[0] = arguments;
+		} else if (arguments == 'C') {
+			params[1] = arguments;
+		}
+	}
+	for (int i = 1; i < argc; i++) {
+		/* List every file/directory the user wants to list */
+		if (argv[i][0] != '-') { /* Discard options starting with '-' */
+			ls(argv[i], params);
+		}
+		if (argc == 2 && argv[i][0] == '-') {
+			ls(".", params);
+		}
+	}
+
 	return 0;
 }

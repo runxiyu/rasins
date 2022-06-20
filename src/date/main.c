@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 								   * containing human-readable date and time */
 		print(asctime(date));
 	}
-	else () {
+	else {
 		print("Ferass' Base System.\n\n"
 				"Usage: ");
 		print(argv[0]);

@@ -25,13 +25,10 @@ int main(int argc, char *argv[]) {
 		int usedargs = 0; /* Number of used arguments */
 		int arg_lines;    /* Number of lines to print */
 		for (int i = 1; argv[i]; i++) { /* For loop */
-			if (argv[i][usedargs + 1] == 'n') { 
-				if(argv[i + 1])
-				{
+			if (argv[i][usedargs + 1] == 'n' && argv[i + 1]) {
 					args = 'n'; 
 					arg_lines = strtol(argv[i + 1], NULL, 0);
 					usedargs++;
-				}
 			}
 			if (argv[i][usedargs + 1] == 'h') {
 				/* Print the help message */
@@ -41,7 +38,7 @@ int main(int argc, char *argv[]) {
 				printf("\n");
 				printf("Print FILE's contents until line NUMBER.\n");
 				printf("\n");
-				printf("	-n NUMBER	Print first NUMBER line(s).\n");
+				printf("\t-n NUMBER\tPrint first NUMBER line(s).\n");
 				exit(0);
 			}
 		}

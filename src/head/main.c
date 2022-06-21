@@ -33,15 +33,15 @@ void printUsage() {
 }
 
 int main(int argc, char *argv[]) {
+	FILE *file;
+	char s[512], arg_lines;
+	int i = 0, usedargs = 0;
+
 	setvbuf(stdout, NULL, _IONBF, 0);
 
 	if (argc >= 2) {
-		char args;
-		int usedargs = 0;
-		int arg_lines;    /* Number of lines to print */
-		for (int i = 1; argv[i]; i++) {
+		for (i = 1; argv[i]; i++) {
 			if (argv[i][usedargs + 1] == 'n' && argv[i + 1]) {
-				args = 'n'; 
 				arg_lines = strtol(argv[i + 1], NULL, 0);
 				usedargs++;
 			}
@@ -50,19 +50,15 @@ int main(int argc, char *argv[]) {
 				exit(0);
 			}
 		}
-		FILE *file;
-		char s[512];
-		int i = 0;
 		file=fopen(argv[1], "r");
 		if (file == NULL) {
 			printf("head: %s: No such file or directory\n",
 				argv[1]);
 			exit(1);
 		}
-		while (i != arg_lines && (fgets(s, 512, file)) != NULL) {
+		for (; i != arg_lines && (fgets(s, 512, file)) != NULL; i++) {
 			s[strcspn(s, "\n")] = 0; /* Remove trailing newline */
 			puts(s); 
-			i++;
 		}
 		fclose(file);
 	}

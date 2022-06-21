@@ -1,3 +1,4 @@
+* cat isn't actually cat. in that, it doesn't concatenate files
 * start making use of pledge/unveil, but only on openbsd
 * test on lots of unix/unix-like operating systems
 * look at https://github.com/GwenNelson/UnixPatterns

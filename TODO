@@ -1,0 +1,7 @@
+* start making use of pledge/unveil, but only on openbsd
+* test on lots of unix/unix-like operating systems
+* look at https://github.com/GwenNelson/UnixPatterns
+* nice shell: https://github.com/GwenNelson/face
+  NOTE: no license. ask the author to add a compatible license
+* return proper error codes (0 and 1 are incorrect):
+  https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html

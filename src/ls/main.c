@@ -16,11 +16,6 @@
  *	along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- *	TODO: return proper error codes (0 and 1 are incorrect)
- *	https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html
- */
-
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>

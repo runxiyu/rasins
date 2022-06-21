@@ -15,8 +15,6 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <string.h>
-#include <unistd.h>
 #include <time.h>
 #include <stdio.h>
 
@@ -28,17 +26,16 @@ void printUsage() {
 }
 
 int main(int argc, char *argv[]) {
+	time_t epoch = time(NULL);
+	struct tm* date = localtime(&epoch);
+
 	setvbuf(stdout, NULL, _IONBF, 0);
 
-	if (argc == 1) {
-		struct tm *date;
-		time_t epoch;
-		epoch = time(NULL);
-		date = localtime(&epoch);
-		printf("%s", asctime(date));
-	}
-	else {
+	if (argc > 1) {
 		printUsage();
+		return 0;
 	}
+
+	printf("%s", asctime(date));
 	return 0;
 }

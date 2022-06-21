@@ -5,3 +5,4 @@
   NOTE: no license. ask the author to add a compatible license
 * return proper error codes (0 and 1 are incorrect):
   https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html
+* take inspiration maybe from http://heirloom.sourceforge.net/

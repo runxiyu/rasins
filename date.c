@@ -25,17 +25,11 @@ void printUsage() {
 	);
 }
 
-int main(int argc, char *argv[]) {
+int main() {
 	time_t epoch = time(NULL);
 	struct tm* date = localtime(&epoch);
 
 	setvbuf(stdout, NULL, _IONBF, 0);
-
-	if (argc > 1) {
-		printUsage();
-		return 0;
-	}
-
 	printf("%s", asctime(date));
 	return 0;
 }

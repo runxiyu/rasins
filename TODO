@@ -6,3 +6,4 @@
 * return proper error codes (0 and 1 are incorrect):
   https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html
 * take inspiration maybe from http://heirloom.sourceforge.net/
+* check for possible buffer overflows, especially in head

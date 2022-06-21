@@ -34,36 +34,33 @@ int main(int argc, char *argv[]) {
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 
-	if (argc >= 2) {
-		for (i = 1; argv[i]; i++) {
-			if (argv[i][usedargs + 1] == 'n' && argv[i + 1]) {
-				arg_lines = strtol(argv[i + 1], NULL, 0);
-				usedargs++;
-			}
-			if (argv[i][usedargs + 1] == 'h') {
-				printUsage();
-				exit(0);
-			}
-		}
-		file=fopen(argv[1], "r");
-		if (file == NULL) {
-			printf("head: %s: No such file or directory\n",
-				argv[1]);
-			exit(1);
-		}
-		for (; i != arg_lines && (fgets(s, 512, file)) != NULL; i++) {
-			s[strcspn(s, "\n")] = 0; /* Remove trailing newline */
-			puts(s); 
-		}
-		fclose(file);
-	}
-	else if (argc == 1) {
-		/* Output to stdout based on user input */
+	if (argc == 1) {
 		while (1) {
 			char input[80];
 			fgets(input, 80, stdin);
 			printf("%s", input);
 		}
 	}
+
+	for (i = 1; argv[i]; i++) {
+		if (argv[i][usedargs + 1] == 'n' && argv[i + 1]) {
+			arg_lines = strtol(argv[i + 1], NULL, 0);
+			usedargs++;
+		}
+		if (argv[i][usedargs + 1] == 'h') {
+			printUsage();
+			return 0;
+		}
+	}
+	if ((file = fopen(argv[1], "r")) == NULL) {
+		printf("head: %s: No such file or directory\n", argv[1]);
+		return 1;
+	}
+	for (; i != arg_lines && (fgets(s, 512, file)) != NULL; i++) {
+		s[strcspn(s, "\n")] = 0; /* Remove trailing newline */
+		puts(s); 
+	}
+	fclose(file);
+
 	return 0;
 }

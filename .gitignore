@@ -1,3 +1,6 @@
-src/cat/cat
-src/ls/ls
-src/yes/yes
+head
+cat
+ls
+yes
+date
+*.o

@@ -90,9 +90,7 @@ int main(int argc, char *argv[]) {
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 
-	while (1) {
-		argument = getopt(argc, argv, params);
-		if (argument == -1) break;
+	while ((argument = getopt(argc, argv, params)) != -1) {
 		if(unsupported[argument]) status = 1;
 		if (argument == 'h') {
 			printUsage();

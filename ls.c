@@ -65,9 +65,7 @@ int ls(char *path) {
 		if (dot && !param['a'] && !param['A']) continue;
 		if ((cwdname || prevdir) && param['A']) continue;
 
-		printf("%s", name);
-
-		if (param['C']) printf(" ");
+		if (param['C']) printf("%s ", name);
 	}
 	printf("\n");
 

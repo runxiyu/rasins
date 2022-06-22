@@ -95,20 +95,20 @@ int main(int argc, char *argv[]) {
 	int success = 0;
 	int argument, i;
 	char* params = "haAC";
-	char supported[256];
+	char unsupported[256];
 
 	for(i=0; i<256; i++) {
 		param[i]=0;
-		supported[i]=0;
+		unsupported[i]=1;
 	}
-	for(i=0; i<3; i++) supported[(int)params[i]] = 1;
+	for(i=0; i<3; i++) unsupported[(int)params[i]] = 0;
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 
 	while (1) {
 		argument = getopt(argc, argv, params);
 		if (argument == -1) break;
-		if(!supported[argument]) status = 1;
+		if(unsupported[argument]) status = 1;
 		if (argument == 'h') {
 			printUsage();
 			return 0;

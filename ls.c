@@ -68,7 +68,7 @@ int ls(char *path) {
 		}
 		if (!param['C'] && (param['A'] || param['a'])) {
 			printf("\n");
-		} else if (param[1] == 'C' && !param['a'] && !param['A'] && 
+		} else if (param['C'] && !param['a'] && !param['A'] && 
 				dirtree->d_name[0] != '.') {
 			if (column++ > 5) printf("\n");
 			else printf("\t\t");

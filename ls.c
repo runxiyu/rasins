@@ -21,6 +21,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 char param[256];
 int getopt(int argc, char *const argv[], const char *optstring);
@@ -36,8 +37,9 @@ void printUsage() {
 }
 
 int ls(char *path) {
+	int status = 0;
 	int file, dotname, cwdname, prevdir, dot;
-	DIR *directory;
+	DIR *directory, *subdirectory;
 	struct dirent *dirtree;
 	char* name;
 
@@ -53,6 +55,9 @@ int ls(char *path) {
 		close(file);
 		return 0;
 	}
+
+	if (param['R'])
+		printf("%s:\n", path);
 
 	while ((dirtree = readdir(directory)) != NULL) {
 		name = dirtree->d_name;
@@ -70,6 +75,53 @@ int ls(char *path) {
 	printf("\n");
 
 	closedir(directory);
+
+	/* Recursively list all subdirectories */
+	if (param['R']) {
+		directory = opendir(path);
+		while ((dirtree = readdir(directory)) != NULL) {
+			name = dirtree->d_name;
+
+			cwdname = strcmp(name, ".") ? 0 : 1;
+			prevdir = strcmp(name, "..") ? 0 : 1;
+			dotname = (name[0]=='.' && !cwdname && !prevdir) ? 1 : 0;
+			dot = strcmp(name, "./") ? 0 : 1;
+			dot |= dotname | prevdir | cwdname;
+			if (dot) continue;
+
+			int offset = path[strlen(path)-1] == '/' ? 0 : 1;
+			char* subpath = malloc(
+				strlen(path)+strlen(name)+offset);
+
+			if (subpath == NULL) {
+				free(subpath);
+				closedir(directory);
+				printf("ls: Out of memory\n");
+				exit(1);
+			}
+
+			memcpy(subpath, path, strlen(path));
+			if (offset) subpath[strlen(path)] = '/';
+			memcpy(subpath+strlen(path)+offset, name, strlen(name));
+
+			subdirectory = opendir(subpath);
+			if (subdirectory == NULL) {
+				free(subpath);
+				closedir(subdirectory);
+				continue;
+			}
+			closedir(subdirectory);
+
+			printf("\n");
+			if(!param['l']) printf("\n");
+
+			status |= ls(subpath);
+			free(subpath);
+		}
+		closedir(directory);
+		return status;
+	}
+
 	return 0;
 }
 
@@ -77,14 +129,14 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "haAC";
+	char* params = "aACR";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {
 		param[i]=0;
 		unsupported[i]=1;
 	}
-	for(i=0; i<3; i++) unsupported[(int)params[i]] = 0;
+	for(i=0; i<5; i++) unsupported[(int)params[i]] = 0;
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 
@@ -99,8 +151,13 @@ int main(int argc, char *argv[]) {
 	if (status) return 1;
 
 	for (i = 1; i < argc; i++)
-		if ((success |= (argv[i][0] != '-' ? 1 : 0)))
-			status |= ls(argv[i]);
+		if ((success |= (argv[i][0] != '-' ? 1 : 0))) {
+			if (!strcmp(argv[i],".")) status |= ls("./");
+			else status |= ls(argv[i]);
+		}
 
-	return success ? status : ls(".");
+	i = success ? status : ls("./");
+	if(!param['l']) printf("\n");
+
+	return i;
 }

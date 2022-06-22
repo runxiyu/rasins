@@ -35,20 +35,20 @@ void printUsage() {
 	"\t-C\tPrint in columns\n");
 }
 
-int ls(char *dirname) {
+int ls(char *path) {
 	int file, column;
 	DIR *directory;
 	struct dirent *dirtree;
 
-	directory = opendir(dirname);
+	directory = opendir(path);
 
 	if (directory == NULL) {
-		file = open(dirname, O_RDONLY);
+		file = open(path, O_RDONLY);
 		if (file == -1) {
-			printf("ls: %s: No such file or directory\n", dirname);
+			printf("ls: %s: No such file or directory\n", path);
 			return 1;
 		}
-		printf("%s\n", dirname);
+		printf("%s\n", path);
 		close(file);
 		return 0;
 	}

@@ -108,13 +108,14 @@ int main(int argc, char *argv[]) {
 	while (1) {
 		argument = getopt(argc, argv, params);
 		if (argument == -1) break;
-		if(!supported[argument]) return 1;
+		if(!supported[argument]) status = 1;
 		if (argument == 'h') {
 			printUsage();
 			return 0;
 		}
 		param[argument] = argument;	
 	}
+	if (status) return 1;
 
 	for (i = 1; i < argc; i++)
 		if ((success |= (argv[i][0] != '-' ? 1 : 0)))

@@ -70,7 +70,10 @@ int ls(char *path) {
 		if (dot && !param['a'] && !param['A']) continue;
 		if ((cwdname || prevdir) && param['A']) continue;
 
-		if (param['C']) printf("%s ", name);
+		if (param['C'])
+			printf("%s ", name);
+		else if (param['1'])
+			printf("%s\n", name);
 	}
 	printf("\n");
 
@@ -113,7 +116,7 @@ int ls(char *path) {
 			closedir(subdirectory);
 
 			printf("\n");
-			if(!param['l']) printf("\n");
+			if(!param['l'] && !param['1']) printf("\n");
 
 			status |= ls(subpath);
 			free(subpath);
@@ -129,14 +132,15 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "aACR";
+	char* params = "aACR1";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {
 		param[i]=0;
 		unsupported[i]=1;
 	}
-	for(i=0; i<5; i++) unsupported[(int)params[i]] = 0;
+	for(i=0; (size_t)i<strlen(params); i++)
+		unsupported[(int)params[i]] = 0;
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 
@@ -146,9 +150,21 @@ int main(int argc, char *argv[]) {
 			printUsage();
 			return 0;
 		}
-		param[argument] = argument;	
+		param[argument] = argument;
+
+		if (argument=='C') {
+			param['l'] = 0;
+			param['1'] = 0;
+		} else if (argument=='l' || argument=='1')
+			param['C'] = 0;
 	}
-	if (status) return 1;
+	if (status) {
+		if(!param['l'] && !param['1']) printf("\n");
+		return 1;
+	}
+
+	if (!param['C'] && !param['l'] && !param['1'])
+		param['C'] = 'C';
 
 	for (i = 1; i < argc; i++) {
 		if ((success |= (argv[i][0] != '-' ? 1 : 0))) {
@@ -158,7 +174,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	i = success ? status : ls("./");
-	if(!param['l']) printf("\n");
+	if(!param['l'] && !param['1'])
+		printf("\n");
 
 	return i;
 }

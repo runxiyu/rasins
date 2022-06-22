@@ -29,7 +29,8 @@ void printUsage() {
 }
 
 int main(int argc, char *const argv[]) {
-	int file, argument;
+	int status = 0;
+	int file, argument, i;
 	char s[4096], input[4096];
 
 	setvbuf(stdout, NULL, _IONBF, 0);
@@ -48,13 +49,14 @@ int main(int argc, char *const argv[]) {
 		} else return 1;
 	}
 
-	if ((file=open(argv[1], O_RDONLY)) == -1) {
-		printf("cat: %s: No such file or directory\n", argv[1]);
-		return 1;
+	for (i=1; i<argc; i++) {
+		if (status |= (file=open(argv[i], O_RDONLY)) == -1 ? 1 : 0) {
+			printf("cat: %s: No such file or directory\n", argv[1]);
+			break;
+		}
+		while (read(file, s, 4096) > 0) printf("%s", s);
+		close(file);
 	}
-	while (read(file, s, 4096) > 0)
-		printf("%s", s);
 
-	close(file);
-	return 0;
+	return status;
 }

@@ -22,6 +22,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+char param[256];
 int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
@@ -34,7 +35,7 @@ void printUsage() {
 	"\t-C\tPrint in columns\n");
 }
 
-int ls(char *dirname, char params[3]) {
+int ls(char *dirname) {
 	int file, column;
 	DIR *directory;
 	struct dirent *dirtree;
@@ -54,27 +55,24 @@ int ls(char *dirname, char params[3]) {
 
 	while ((dirtree = readdir(directory)) != NULL) {
 		if (dirtree->d_name[0] != '.' && 
-				params[0] != 'a' && params[0] != 'A') { 
+				!param['a'] && !param['A']) { 
 			printf("%s", dirtree->d_name);
-			if (params[1] != 'C') printf("\n");
+			if (!param['C']) printf("\n");
 		}
-		if (params[0] == 'a') {
+		if (param['a']) {
 			printf("%s", dirtree->d_name);
-		} else if (params[0] == 'A' && 
+		} else if (param['A'] && 
 				strcmp(dirtree->d_name, ".") &&
 				strcmp(dirtree->d_name, "..")) {
 			printf("%s", dirtree->d_name);
 		}
-		if (params[1] != 'C' && (params[0]=='A' || params[0]=='a')) {
+		if (!param['C'] && (param['A'] || param['a'])) {
 			printf("\n");
-		} else if (params[1] == 'C' && 
-				params[0] != 'a' && params[0] != 'A' && 
+		} else if (param[1] == 'C' && !param['a'] && !param['A'] && 
 				dirtree->d_name[0] != '.') {
 			if (column++ > 5) printf("\n");
 			else printf("\t\t");
-		} else if (params[1] == 'C' && 
-				(params[0] == 'a' ||
-					(params[0] == 'A' &&
+		} else if (param['C'] && (param['a'] || (param['A'] &&
 					strcmp(dirtree->d_name, "." )
 					&& strcmp(dirtree->d_name, "..")))) {
 			if (column > 5) {
@@ -96,21 +94,20 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char params[6]; for(i=0; i<6; i++) params[i]=0;
+	for(i=0; i<256; i++) param[i]=0;
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 
-	while ((argument = getopt(argc, argv, "haAC")) != -1) {
+	while ((argument = getopt(argc, argv, "haAC")) != -1)
 		if (argument == 'h') {
 			printUsage();
 			return 0;
-		} else if (argument=='a' || argument=='A' || argument=='C')
-			params[argument == 'C' ? 1 : 0] = argument;
-	}
+		}
+		param[argument] = argument;	
 
 	for (i = 1; i < argc; i++)
 		if ((success |= (argv[i][0] != '-' ? 1 : 0)))
-			status |= ls(argv[i], params);
+			status |= ls(argv[i]);
 
-	return success ? status : ls(".", params);
+	return success ? status : ls(".");
 }

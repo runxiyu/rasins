@@ -94,16 +94,27 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	for(i=0; i<256; i++) param[i]=0;
+	char* params = "haAC";
+	char supported[256];
+
+	for(i=0; i<256; i++) {
+		param[i]=0;
+		supported[i]=0;
+	}
+	for(i=0; i<3; i++) supported[(int)params[i]] = 1;
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 
-	while ((argument = getopt(argc, argv, "haAC")) != -1)
+	while (1) {
+		argument = getopt(argc, argv, params);
+		if (argument == -1) break;
+		if(!supported[argument]) return 1;
 		if (argument == 'h') {
 			printUsage();
 			return 0;
 		}
 		param[argument] = argument;	
+	}
 
 	for (i = 1; i < argc; i++)
 		if ((success |= (argv[i][0] != '-' ? 1 : 0)))

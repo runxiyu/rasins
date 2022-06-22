@@ -150,11 +150,12 @@ int main(int argc, char *argv[]) {
 	}
 	if (status) return 1;
 
-	for (i = 1; i < argc; i++)
+	for (i = 1; i < argc; i++) {
 		if ((success |= (argv[i][0] != '-' ? 1 : 0))) {
 			if (!strcmp(argv[i],".")) status |= ls("./");
 			else status |= ls(argv[i]);
 		}
+	}
 
 	i = success ? status : ls("./");
 	if(!param['l']) printf("\n");

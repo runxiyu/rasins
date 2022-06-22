@@ -36,7 +36,6 @@ void printUsage() {
 }
 
 int ls(char *path) {
-	int column = 0;
 	int file, dotname, cwdname, prevdir, dot;
 	DIR *directory;
 	struct dirent *dirtree;
@@ -68,15 +67,7 @@ int ls(char *path) {
 
 		printf("%s", name);
 
-		if (param['C']) {
-			++column;
-			if (column == 5) {
-				column = 0;
-				printf("\n");
-			}
-			else printf("\t\t");
-		}
-		else printf("\n");
+		if (param['C']) printf(" ");
 	}
 	printf("\n");
 

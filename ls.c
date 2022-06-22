@@ -36,9 +36,11 @@ void printUsage() {
 }
 
 int ls(char *path) {
-	int file, column;
+	int column = 0;
+	int file, dotname, cwdname, prevdir, dot;
 	DIR *directory;
 	struct dirent *dirtree;
+	char* name;
 
 	directory = opendir(path);
 
@@ -54,35 +56,27 @@ int ls(char *path) {
 	}
 
 	while ((dirtree = readdir(directory)) != NULL) {
-		if (dirtree->d_name[0] != '.' && 
-				!param['a'] && !param['A']) { 
-			printf("%s", dirtree->d_name);
-			if (!param['C']) printf("\n");
-		}
-		if (param['a']) {
-			printf("%s", dirtree->d_name);
-		} else if (param['A'] && 
-				strcmp(dirtree->d_name, ".") &&
-				strcmp(dirtree->d_name, "..")) {
-			printf("%s", dirtree->d_name);
-		}
-		if (!param['C'] && (param['A'] || param['a'])) {
-			printf("\n");
-		} else if (param['C'] && !param['a'] && !param['A'] && 
-				dirtree->d_name[0] != '.') {
-			if (column++ > 5) printf("\n");
-			else printf("\t\t");
-		} else if (param['C'] && (param['a'] || (param['A'] &&
-					strcmp(dirtree->d_name, "." )
-					&& strcmp(dirtree->d_name, "..")))) {
-			if (column > 5) {
-				printf("\n");
+		name = dirtree->d_name;
+
+		cwdname = strcmp(name, ".") ? 0 : 1;
+		prevdir = strcmp(name, "..") ? 0 : 1;
+		dotname = (name[0]=='.' && !cwdname && !prevdir) ? 1 : 0;
+		dot = dotname | prevdir | cwdname;
+
+		if (dot && !param['a'] && !param['A']) continue;
+		if ((cwdname || prevdir) && param['A']) continue;
+
+		printf("%s", name);
+
+		if (param['C']) {
+			++column;
+			if (column == 5) {
 				column = 0;
-			} else {
-				printf("\t\t");
-				column++;
+				printf("\n");
 			}
+			else printf("\t\t");
 		}
+		else printf("\n");
 	}
 	printf("\n");
 

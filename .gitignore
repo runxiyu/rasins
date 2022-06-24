@@ -3,4 +3,7 @@ cat
 ls
 yes
 date
+box
 *.o
+box.c
+box/*

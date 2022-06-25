@@ -77,8 +77,6 @@ int ls(char *path) {
 		else if (param['1'])
 			printf("%s\n", name);
 	}
-	printf("\n");
-
 	closedir(directory);
 
 	/* Recursively list all subdirectories */

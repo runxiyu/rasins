@@ -4,6 +4,6 @@ ls
 yes
 date
 box
+mkdir
 *.o
-box.c
-box/*
+box_tmp/*

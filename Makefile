@@ -26,7 +26,8 @@ NOLINKER=-c
 SRC=cat\
 	ls\
 	date\
-	yes
+	yes\
+	mkdir
 
 # Commands
 # ========
@@ -48,6 +49,9 @@ date: date.o
 yes: yes.o
 	$(CC) $(CFLAGS) yes.o -o yes
 
+mkdir: mkdir.o
+	$(CC) $(CFLAGS) mkdir.o -o mkdir
+
 prepbox:
 	mkdir -p box_tmp
 	for f in ${SRC}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < ""$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
@@ -56,7 +60,7 @@ box: box.o
 	$(CC) $(CFLAGS) box_tmp/*.c box.o -o box 
 
 clean:
-	rm -f head date cat ls clean yes box *.o
+	rm -f mkdir head date cat ls clean yes box *.o
 	rm -Rf box_tmp
 
 # Utilities
@@ -76,6 +80,9 @@ date.o:
 
 yes.o:
 	$(CC) $(CFLAGS) $(NOLINKER) yes.c -o yes.o
+
+mkdir.o:
+	$(CC) $(CFLAGS) $(NOLINKER) mkdir.c -o mkdir.o
 
 box.o: prepbox
 	$(CC) $(CFLAGS) $(NOLINKER) box.c -o box.o

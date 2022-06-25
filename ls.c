@@ -33,7 +33,9 @@ void printUsage() {
 	"Print DIRECTORY's contents to stdout\n\n"
 	"\t-a\tInclude names starting with a dot, including '.' and '..'\n"
 	"\t-A\tSame as `-a` but don't include '.' and '..'\n"
-	"\t-C\tPrint in columns\n");
+	"\t-C\tPrint in columns\n"
+	"\t-1\tPrint in lines\n"
+	"\t-R\tRecursively list directories\n");
 }
 
 int ls(char *path) {
@@ -132,7 +134,7 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "aACR1";
+	char* params = "haACR1";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {

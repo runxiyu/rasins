@@ -1,0 +1,42 @@
+.DD 25 June 2022
+.TH CAT 1 2022-06-25 Fases
+.SH NAME
+cat \- concatenate files to stdout
+.SH SYNOPSIS
+.B cat
+.RB [ \-uh ]
+.RB [ FILE ] ...
+.SH DESCRIPTION
+Concatenate files to standard output (stdout).
+.P
+With no file, read and concatenate standard input to standard output.
+.TP
+.B -h
+Print a help message and exit.
+.TP
+.B -u
+Print unbuffered
+.P
+.SH EXAMPLES
+.TP
+.B cat foobar
+Output foobar's contents to standard output.
+.TP
+.B cat
+Output standard input to standard output.
+.TP
+.B cat -u hello.c
+Output hello.c's contents unbuffered to standard output. 
+.TP
+.B cat foo bar baz
+Output foo's contents, then bar's, then baz's to standard output.
+.SH AUTHOR
+Written by Ferass EL HAFIDI as part of the fases 
+project \- Ferass' Base System.
+.P
+Source code is at http://git.vitali64.duckdns.org/utils/fases.git.
+.SH COPYRIGHT
+.P
+Copyright (C) 2022 Ferass EL HAFIDI
+.P
+Copyright (C) 2022 Leah Rowe

@@ -24,37 +24,45 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-		"Usage: cat [FILE]\n\n"
-		"Concatenate FILE to stdout\n\n");
+	"Usage: cat [FILE]\n\n"
+	"Concatenate FILE to stdout\n\n"
+	"\t-u\tPrint unbuffered\n");
 }
 
 int main(int argc, char *const argv[]) {
-	int file, argument;
+	int file, argument, i = 1;
 	char s[4096], input[4096];
 
-	setvbuf(stdout, NULL, _IONBF, 0);
+	while ((argument = getopt(argc, argv, "uh")) != -1) {
+		if (argument == 'h') {
+			printUsage();
+			return 0;
+		}
+		else if (argument == 'u')
+			setvbuf(stdout, NULL, _IONBF, 0);
+		else
+			setvbuf(stdout, NULL, _IOFBF, 0);
+	}
 	
-	if (argc == 1) {
+	if (argc < 2) {
 		while (1) {
 			read(STDIN_FILENO, input, 4096);
 			printf("%s", input);
 		}
 	}
 
-	while ((argument = getopt(argc, argv, "h")) != -1) {
-		if (argument == 'h') {
-			printUsage();
-			return 0;
-		} else return 1;
+	for (i = 1; i != argc; i++) {
+		if (argv[i][0] != '-') {
+			file = open(argv[i], O_RDONLY);
+			if (file == -1) {
+				printf("cat: %s: No such file or directory\n", argv[i]);
+				return 1;
+			}
+			while (read(file, s, 4096) > 0)
+				printf("%s", s);
+			close(file);
+		}
 	}
 
-	if ((file=open(argv[1], O_RDONLY)) == -1) {
-		printf("cat: %s: No such file or directory\n", argv[1]);
-		return 1;
-	}
-	while (read(file, s, 4096) > 0)
-		printf("%s", s);
-
-	close(file);
 	return 0;
 }

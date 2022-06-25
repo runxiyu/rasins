@@ -29,7 +29,7 @@ int getopt(int argc, char *const argv[], const char *optstring);
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
 	"Usage: "
-	"ls [-aAc1R] [DIRECTORY] ...\n\n"
+	"ls [-aAC1R] [DIRECTORY] ...\n\n"
 	"Print DIRECTORY's contents to stdout\n\n"
 	"\t-a\tInclude names starting with a dot, including '.' and '..'\n"
 	"\t-A\tSame as `-a` but don't include '.' and '..'\n"
@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	i = success ? status : ls("./");
-	if(!param['l'] && !param['1'])
+	if(!param['1'])
 		printf("\n");
 
 	return i;

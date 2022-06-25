@@ -29,8 +29,11 @@ int main(int argc, char *argv[]) {
 	if (argc > 1 && !strcmp(argv[1], "-h")) {
 		printUsage();
 		return 0;
-	} else if (argc > 1) while(1)
-		printf("%s\n", argv[1]);
+	} else if (argc > 1)
+		while(1) {
+			for (int i = 1; i < argc; i++) printf("%s ", argv[i]);
+			printf("\n");
+		}
 	else while(1)
 		printf("y\n");
 }

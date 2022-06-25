@@ -1,6 +1,5 @@
 /*	mkdir - create directories
  *	Copyright (C) 2022 Ferass EL HAFIDI
- *	Copyright (C) 2022 Leah Rowe
  *
  *	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by

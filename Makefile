@@ -29,10 +29,13 @@ SRC=cat\
 	yes\
 	mkdir
 
+DESTDIR=
+PREFIX=/usr/local
+
 # Commands
 # ========
 
-all: clean head cat ls date yes box
+all: clean mkdir head cat ls date yes box
 
 head: head.o
 	$(CC) $(CFLAGS) head.o -o head
@@ -62,6 +65,10 @@ box: box.o
 clean:
 	rm -f mkdir head date cat ls clean yes box *.o
 	rm -Rf box_tmp
+
+install: box
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp -f box $(DESTDIR)$(PREFIX)/bin
 
 # Utilities
 # =========

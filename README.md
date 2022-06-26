@@ -164,7 +164,8 @@ OpenBSD.
 - Leah Rowe, for adding lots of improvements on her 
 [git repo](https://notabug.org/vimuser/fases) and for testing fases on OpenBSD.
 
-- Ron Nazarov, for fixing a weird bug in `yes`.
+- Ron Nazarov, for fixing a weird bug in `yes` and adding useful features in 
+it.
 
 - Other people I forgot to add there. If I forgot to add you there, do send 
 a patch or just tell me :D.

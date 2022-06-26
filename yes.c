@@ -20,7 +20,8 @@
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: yes [STRING]\n\n"
+	"Usage: yes [STRING]\n"
+	"   Or: yes -- [STRING]\n\n"
 	"Repeatedly output a line with specified STRING or 'y'.\n\n" );
 }
 

@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include <string.h>
 
 int getopt(int argc, char *const argv[], const char *optstring);
 
@@ -46,15 +47,14 @@ int main(int argc, char *const argv[]) {
 	}
 	
 	if (argc < 2) {
-		while (1) {
-			read(STDIN_FILENO, input, 4096);
+		while (read(STDIN_FILENO, input, 4096) > 0)
 			printf("%s", input);
-		}
 	}
 
 	for (i = 1; i != argc; i++) {
-		if (argv[i][0] != '-') {
-			file = open(argv[i], O_RDONLY);
+		if (strcmp(argv[i], "-h") || strcmp(argv[i], "-u")) {
+			if (strcmp(argv[i], "-")) file = open(argv[i], O_RDONLY);
+			else file = STDIN_FILENO;
 			if (file == -1) return errno; /* Something went wrong */
 			while (read(file, s, 4096) > 0)
 				printf("%s", s);

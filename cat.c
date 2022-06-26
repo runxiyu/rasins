@@ -19,6 +19,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 
 int getopt(int argc, char *const argv[], const char *optstring);
 
@@ -54,15 +55,11 @@ int main(int argc, char *const argv[]) {
 	for (i = 1; i != argc; i++) {
 		if (argv[i][0] != '-') {
 			file = open(argv[i], O_RDONLY);
-			if (file == -1) {
-				printf("cat: %s: No such file or directory\n", argv[i]);
-				return 1;
-			}
+			if (file == -1) return errno; /* Something went wrong */
 			while (read(file, s, 4096) > 0)
 				printf("%s", s);
 			close(file);
 		}
 	}
-
 	return 0;
 }

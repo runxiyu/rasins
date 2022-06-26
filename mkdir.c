@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <errno.h>
 
 int getopt(int argc, char *const argv[], const char *optstring);
 
@@ -44,8 +45,7 @@ int main(int argc, char *const argv[]) {
 	for (; i < argc; i++) {
 		int success = !mkdir(argv[i], S_IRWXU | S_IRWXG | S_IRWXO) ? 0 : 1; 
 		if (success == 1) {
-			printf("mkdir: %s: cannot create directory\n", argv[i]);
-			return 1;
+			return errno;
 		}
 	}
 

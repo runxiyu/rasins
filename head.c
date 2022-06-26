@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
@@ -52,10 +53,8 @@ int main(int argc, char *argv[]) {
 			return 0;
 		}
 	}
-	if ((file = fopen(argv[1], "r")) == NULL) {
-		printf("head: %s: No such file or directory\n", argv[1]);
-		return 1;
-	}
+	/* Something went wrong */
+	if ((file = fopen(argv[1], "r")) == NULL) return errno;
 	for (; i != arg_lines && (fgets(s, 512, file)) != NULL; i++) {
 		s[strcspn(s, "\n")] = 0; /* Remove trailing newline */
 		puts(s); 

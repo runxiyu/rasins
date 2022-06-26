@@ -22,6 +22,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 
 char param[256];
 int getopt(int argc, char *const argv[], const char *optstring);
@@ -39,7 +40,6 @@ void printUsage() {
 }
 
 int ls(char *path) {
-	int status = 0;
 	int file, dotname, cwdname, prevdir, dot;
 	DIR *directory, *subdirectory;
 	struct dirent *dirtree;
@@ -49,13 +49,10 @@ int ls(char *path) {
 
 	if (directory == NULL) {
 		file = open(path, O_RDONLY);
-		if (file == -1) {
-			printf("ls: %s: No such file or directory\n", path);
-			return 1;
-		}
+		if (file == -1) return errno;
 		printf("%s\n", path);
 		close(file);
-		return 0;
+		return errno;
 	}
 
 	if (param['R'])
@@ -81,6 +78,7 @@ int ls(char *path) {
 
 	/* Recursively list all subdirectories */
 	if (param['R']) {
+		int status;
 		directory = opendir(path);
 		while ((dirtree = readdir(directory)) != NULL) {
 			name = dirtree->d_name;
@@ -100,7 +98,7 @@ int ls(char *path) {
 				free(subpath);
 				closedir(directory);
 				printf("ls: Out of memory\n");
-				exit(1);
+				return errno;
 			}
 
 			memcpy(subpath, path, strlen(path));
@@ -125,7 +123,7 @@ int ls(char *path) {
 		return status;
 	}
 
-	return 0;
+	return errno;
 }
 
 int main(int argc, char *argv[]) {
@@ -160,7 +158,7 @@ int main(int argc, char *argv[]) {
 	}
 	if (status) {
 		if(!param['l'] && !param['1']) printf("\n");
-		return 1;
+		return status;
 	}
 
 	if (!param['C'] && !param['l'] && !param['1'])

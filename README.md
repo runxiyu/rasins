@@ -10,6 +10,8 @@
 
 - [Status](STATUS.md)
 
+- [Coding Style](CODING_STYLE.md)
+
 ## Goal
 
 The `fases` project tries to provide friendly, functionnal and simple core 

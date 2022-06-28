@@ -10,10 +10,6 @@
 
 - [Status](STATUS.md)
 
-***Manpages***
-
-- [CAT (1)](man/cat.1)
-
 ## Compile
 
 You have 2 choices:

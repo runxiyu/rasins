@@ -10,10 +10,6 @@
 
 - [Mirrors](MIRRORS.md)
 
-***Manpages***
-
-- [CAT (1)](man/cat.1)
-
 ## Status
 
 The `fases` project is still incomplete as some utilities are missing, here's 

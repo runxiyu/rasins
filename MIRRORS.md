@@ -10,10 +10,6 @@
 
 - [Status](STATUS.md)
 
-***Manpages***
-
-- [CAT (1)](man/cat.1)
-
 ## Mirrors
 
 Development of fases is done on git.vitali64.duckdns.org but there are 

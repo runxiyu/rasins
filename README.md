@@ -10,10 +10,6 @@
 
 - [Status](STATUS.md)
 
-***Manpages***
-
-- [CAT (1)](man/cat.1)
-
 ## Goal
 
 The `fases` project tries to provide friendly, functionnal and simple core 

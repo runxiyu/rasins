@@ -2,13 +2,7 @@
 
 *Simple coreutils for a fully functionnal UNIX-like system*
 
-***Project Documentation***
-
-- [Main page](README.md)
-
-- [Compile fases](COMPILE.md)
-
-- [Status](STATUS.md)
+[« Go back](README.md)
 
 ## Mirrors
 

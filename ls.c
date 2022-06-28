@@ -27,16 +27,17 @@
 char param[256];
 int getopt(int argc, char *const argv[], const char *optstring);
 
-void printUsage() {
+void printUsage(char *params) {
 	printf("Ferass' Base System.\n\n"
 	"Usage: "
-	"ls [-aAC1R] [DIRECTORY] ...\n\n"
+	"ls [-%s] [DIRECTORY] ...\n\n"
 	"Print DIRECTORY's contents to stdout\n\n"
 	"\t-a\tInclude names starting with a dot, including '.' and '..'\n"
 	"\t-A\tSame as `-a` but don't include '.' and '..'\n"
 	"\t-C\tPrint in columns\n"
 	"\t-1\tPrint in lines\n"
-	"\t-R\tRecursively list directories\n");
+	"\t-R\tRecursively list directories\n"
+	"\t-i\tFor each file, write its serial number\n", params);
 }
 
 int ls(char *path) {
@@ -68,7 +69,8 @@ int ls(char *path) {
 
 		if (dot && !param['a'] && !param['A']) continue;
 		if ((cwdname || prevdir) && param['A']) continue;
-
+	
+		if (param['i']) printf("%lu ", dirtree->d_ino);
 		if (param['C'])
 			printf("%s ", name);
 		else if (param['1'])
@@ -130,7 +132,7 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "haACR1";
+	char* params = "haACR1i";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {
@@ -145,16 +147,17 @@ int main(int argc, char *argv[]) {
 	while ((argument = getopt(argc, argv, params)) != -1) {
 		if(unsupported[argument]) status = 1;
 		if (argument == 'h') {
-			printUsage();
+			printUsage(params);
 			return 0;
 		}
 		param[argument] = argument;
 
 		if (argument=='C') {
-			param['l'] = 0;
 			param['1'] = 0;
-		} else if (argument=='l' || argument=='1')
+		} else if (argument=='1')
 			param['C'] = 0;
+		else if (argument=='i')
+			param['i'] = 'i';
 	}
 	if (status) {
 		if(!param['l'] && !param['1']) printf("\n");

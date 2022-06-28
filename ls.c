@@ -72,12 +72,13 @@ int ls(char *path) {
 		if ((cwdname || prevdir) && param['A']) continue;
 	
 		if (param['i']) printf("%lu ", dirtree->d_ino);
+		printf("%s", name);
 		if (param['C'])
-			printf("%s ", name);
+			printf(" ");
 		else if (param['1'])
-			printf("%s\n", name);
+			printf("\n");
 		else if (param['m'])
-			printf("%s, ", name);
+			printf(", ");
 	}
 	closedir(directory);
 

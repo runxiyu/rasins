@@ -37,7 +37,8 @@ void printUsage(char *params) {
 	"\t-C\tPrint in columns\n"
 	"\t-1\tPrint in lines\n"
 	"\t-R\tRecursively list directories\n"
-	"\t-i\tFor each file, write its serial number\n", params);
+	"\t-i\tFor each file, write its serial number\n"
+	"\t-m\tList names followed by a comma and space character\n", params);
 }
 
 int ls(char *path) {
@@ -75,6 +76,8 @@ int ls(char *path) {
 			printf("%s ", name);
 		else if (param['1'])
 			printf("%s\n", name);
+		else if (param['m'])
+			printf("%s, ", name);
 	}
 	closedir(directory);
 
@@ -132,7 +135,7 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "haACR1i";
+	char* params = "haACR1im";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {
@@ -152,19 +155,21 @@ int main(int argc, char *argv[]) {
 		}
 		param[argument] = argument;
 
-		if (argument=='C') {
+		if (argument=='C')
 			param['1'] = 0;
-		} else if (argument=='1')
+		else if (argument=='1')
 			param['C'] = 0;
-		else if (argument=='i')
-			param['i'] = 'i';
+		else if (argument=='m') {
+			param['1'] = 0;
+			param['C'] = 0;
+		}
 	}
 	if (status) {
 		if(!param['l'] && !param['1']) printf("\n");
 		return status;
 	}
 
-	if (!param['C'] && !param['l'] && !param['1'])
+	if (!param['C'] && !param['m'] && !param['1'])
 		param['C'] = 'C';
 
 	for (i = 1; i < argc; i++) {

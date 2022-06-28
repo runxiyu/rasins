@@ -2,6 +2,18 @@
 
 *Simple coreutils for a fully functionnal UNIX-like system*
 
+***Project Documentation***
+
+- [Compile fases](COMPILE.md)
+
+- [Mirrors](MIRRORS.md)
+
+- [Status](STATUS.md)
+
+***Manpages***
+
+- [CAT (1)](man/cat.1)
+
 ## Goal
 
 The `fases` project tries to provide friendly, functionnal and simple core 
@@ -10,65 +22,6 @@ be entirely portable and working on any UNIX-like Operating System and kernel
 such as OpenBSD and Linux. It also tries to be completly modular and as such 
 one utility should **not** depend on another in order to work. The coreutils 
 are still a work-in-progress.
-
-## Status
-
-The `fases` project is still incomplete as some utilities are missing, here's 
-what `fases` currently provides:
-
-(n: not implemented, i: implemented)
-
-`ls`:
-
-- [i] Lists files.
-
-- [i] `-a`
-
-- [i] `-A`
-
-- [i] `-C`
-
-- [i] `-1`
-
-- [i] `-R`
-
-- [n] Other options.
-
-`head`:
-
-- [i] Prints file until a specific line.
-
-- [i] Defaults to 10.
-
-- [i] `-n NUMBER`
-
-`cat`:
-
-- [i] Prints file to stdin.
-
-- [n] `-u`. 
-
-`yes`:
-
-- [i] Spams 'y'.
-
-- [i] Spams any other string specified by the user.
-
-`date`:
-
-- [i] Shows date by default.
-
-- [n] Formats date.
-
-`mkdir`:
-
-- [i] creates directories
-
-- [n] `-p`
-
-- [n] `-m MODE`
-
-Other utilities are still in the making. Help is greatly appreciated.
 
 ## Chat
 
@@ -92,66 +45,6 @@ plain: `6667`.
 
 Both of these channels are linked so all messages sent in one of them 
 is sent on the other Network.
-
-## Known bugs
-
-The `fases` project is still a Work-in-progress and as such, there are bugs.
-Please do report bugs to me, via IRC, email, or even by using Notabug.org 
-issues.
-
-| Bug | Affected utility/utilities |
-|-----|----------------------------|
-| Weird characters at the end of the output | `cat` |
-
-## Compile
-
-You have 2 choices:
-
-- compile each utility separately;
-
-- compile only fasesiab which includes all utilities in a single binary.
-
-Modify the `config.mk` file to fit your needs in both cases.
-
-### Compiling each utility separately
-
-For example to compile `cat`, you have to run the following:
-
-	$ make cat
-
-### Compiling fasesiab
-
-Fasesiab stands for Ferass' Base System in a box. It includes the entire 
-coreutils in a single and tiny binary.
-
-Before compiling, you have to prepare `fasesiab`.
-Run the following:
-
-	$ make prepbox
-
-Now you're ready to compile! Run `make` and get a binary!
-
-	$ make box
-
-## Documentation
-
-Documentation can be found inside the `man/` directory; run `man` to render 
-them. Documentation isn't complete yet though, but most utilities are 
-POSIX-compliant so they should work the same (if the utility is fully 
-implemented of course).
-
-## Mirrors
-
-Development of fases is done on git.vitali64.duckdns.org but there are 
-mirrors made by other people:
-
-- [Notabug mirror made by me](https://notabug.org/vitali64/fases) ;
-
-- [git.andrewyu.org mirror made by 
-Andrew Yu](git://git.andrewyu.org/fases.git).
-
-If you made a mirror too, be sure to let me know so I can add it on this 
-section too!
 
 ## Thank you!
 

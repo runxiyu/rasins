@@ -222,10 +222,9 @@ int main(int argc, char *argv[]) {
 			param['1'] = 0;
 			param['m'] = 0;
 		}
-		else if (argument=='1' || argument=='l') {
+		else if (argument=='1') {
 			param['m'] = 0;
 			param['C'] = 0;
-			param['1'] = '1'; /* In case -l is specified */
 		}
 		else if (argument=='m') {
 			param['1'] = 0;
@@ -239,6 +238,12 @@ int main(int argc, char *argv[]) {
 
 	if (!param['C'] && !param['m'] && !param['1'])
 		param['C'] = 'C';
+
+	if (param['l']) {
+		param['m'] = 0;
+		param['C'] = 0;
+		param['1'] = '1';
+	}
 
 	for (i = 1; i < argc; i++) {
 		if ((success |= (argv[i][0] != '-' ? 1 : 0))) {

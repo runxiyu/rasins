@@ -13,29 +13,29 @@ The coding style is as follows:
 
 ### General
 
-1. The code shall be as simple to understand as possible, add comments if 
+- The code shall be as simple to understand as possible, add comments if 
 necessary ;
 
-2. For indentation, the code shall use tab characters ;
+- For indentation, the code shall use tab characters ;
 
-3. The code shall avoid using GNU-specific functions (as that would make 
+- The code shall avoid using GNU-specific functions (as that would make 
 the program less portable) ;
 
-4. Each line shall not exceed 79 characters ;
+- Each line shall not exceed 79 characters ;
 
-5. Utilities shall only implement POSIX-compliant options, the only 
+- Utilities shall only implement POSIX-compliant options, the only 
 exception is the `-h` option, which shall print a help text ;
 
-6. Utilities shall only use the **standard C library and POSIX libraries** ;
+- Utilities shall only use the **standard C library and POSIX libraries** ;
 
-7. For comments, instead of using `//` (as in `// Comment`), the code shall 
+- For comments, instead of using `//` (as in `// Comment`), the code shall 
 use `/*` and `*/` (as in `/* Comment */`).
 
-8. **Variable names** shall describe the variable's purpose ;
+- **Variable names** shall describe the variable's purpose ;
 
 ### Blocks
 
-9. In a block, do not use `{` and `}` if there's only one instruction inside ;
+- In a block, do not use `{` and `}` if there's only one instruction inside ;
 
 ```
 for (int i; i != 3; i++)

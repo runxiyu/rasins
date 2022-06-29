@@ -23,6 +23,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <grp.h>
+#include <time.h>
 
 char param[256];
 int getopt(int argc, char *const argv[], const char *optstring);
@@ -38,14 +43,17 @@ void printUsage(char *params) {
 	"\t-1\tPrint in lines\n"
 	"\t-R\tRecursively list directories\n"
 	"\t-i\tFor each file, write its serial number\n"
-	"\t-m\tList names followed by a comma and space character\n", params);
+	"\t-m\tList names followed by a comma and space character\n"
+	"\t-l\tDo not follow symbolic links named as operands and "
+	"write in long format (unfinished)\n", params);
 }
 
 int ls(char *path) {
 	int file, dotname, cwdname, prevdir, dot;
 	DIR *directory, *subdirectory;
+	struct stat file_status;
 	struct dirent *dirtree;
-	char* name;
+	char *name, *file_moddate, file_modes[10] = "----------";
 
 	directory = opendir(path);
 
@@ -72,9 +80,63 @@ int ls(char *path) {
 		if ((cwdname || prevdir) && param['A']) continue;
 	
 		if (param['i']) printf("%lu ", dirtree->d_ino);
+		if (param['l']) {
+			char *fullpath = malloc(sizeof(path) + sizeof(name));
+			if (fullpath) {
+				strcpy(fullpath, path);
+				if (path[strlen(path)] != '/') strcat(fullpath, "/");
+				strcat(fullpath, name);
+			}
+			stat(fullpath, &file_status);
+			                     /* File modes */
+			/* File type */
+			{
+				if (S_ISBLK(file_status.st_mode))       file_modes[0] = 'b';
+				else if (S_ISCHR(file_status.st_mode))  file_modes[0] = 'c';
+				else if (S_ISDIR(file_status.st_mode))  file_modes[0] = 'd';
+				else if (S_ISFIFO(file_status.st_mode)) file_modes[0] = 'p';
+				else if (S_ISREG(file_status.st_mode))  file_modes[0] = '-';
+				else if (S_ISLNK(file_status.st_mode))  file_modes[0] = 'l';
+				else                                    file_modes[0] = 's';
+			}
+			/* User */
+			{
+				if (file_status.st_mode & S_IRUSR) file_modes[1] = 'r';
+				if (file_status.st_mode & S_IWUSR) file_modes[2] = 'w';
+				if (file_status.st_mode & S_IXUSR) file_modes[3] = 'x';
+			}
+			/* Group */
+			{
+				if (file_status.st_mode & S_IRGRP) file_modes[4] = 'r';
+				if (file_status.st_mode & S_IWGRP) file_modes[5] = 'w';
+				if (file_status.st_mode & S_IXGRP) file_modes[6] = 'x';
+			}
+			/* Others */
+			{
+				if (file_status.st_mode & S_IROTH) file_modes[7] = 'r';
+				if (file_status.st_mode & S_IWOTH) file_modes[8] = 'w';
+				if (file_status.st_mode & S_IXOTH) file_modes[9] = 'x';
+			}
+			printf("%s ", file_modes);
+			                  /* Number of links */
+			printf("%lu ", file_status.st_nlink);
+			                    /* Owner name */
+			printf("%s ", getpwuid(file_status.st_uid)->pw_name);
+			                    /* Group name */
+			printf("%s ", getgrgid(file_status.st_gid)->gr_name);
+			                   /* Size of file */
+			printf("%lu ", file_status.st_size);
+			                   /* Date and time */
+			strftime(file_moddate, 31, "%b %e %H:%MM", 
+					localtime(&file_status.st_mtime));
+			/* It should be st_mtim right? */
+			file_moddate[strlen(file_moddate) - 1] = 0; /* Remove newline */
+			printf("%s ", file_moddate);
+			free(fullpath);
+		}
 		printf("%s", name);
 		if (param['C'])
-			printf(" ");
+			printf(" "); /* TODO: Calculate based on the terminal's size */
 		else if (param['1'])
 			printf("\n");
 		else if (param['m'])
@@ -120,7 +182,7 @@ int ls(char *path) {
 			closedir(subdirectory);
 
 			printf("\n");
-			if(!param['l'] && !param['1']) printf("\n");
+			if(!param['1']) printf("\n");
 
 			status |= ls(subpath);
 			free(subpath);
@@ -136,7 +198,7 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "haACR1im";
+	char* params = "haACR1iml";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {
@@ -156,17 +218,22 @@ int main(int argc, char *argv[]) {
 		}
 		param[argument] = argument;
 
-		if (argument=='C')
+		if (argument=='C') {
 			param['1'] = 0;
-		else if (argument=='1')
+			param['m'] = 0;
+		}
+		else if (argument=='1' || argument=='l') {
+			param['m'] = 0;
 			param['C'] = 0;
+			param['1'] = '1'; /* In case -l is specified */
+		}
 		else if (argument=='m') {
 			param['1'] = 0;
 			param['C'] = 0;
 		}
 	}
 	if (status) {
-		if(!param['l'] && !param['1']) printf("\n");
+		if(!param['1']) printf("\n");
 		return status;
 	}
 

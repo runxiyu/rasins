@@ -32,4 +32,5 @@ issues.
 | Bug                                          | Affected utility-ies |
 |-------------------------------------------------------------|-------|
 | Sometimes, `-l` would show incorrect permissions.           | `ls`  |
+| When there's a lot to print, `-l` fails with a memory error | `ls`  |
 

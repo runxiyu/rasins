@@ -12,6 +12,8 @@
 
 - [Coding Style](CODING_STYLE.md)
 
+- [Incomplete TODO list](TODO.md)
+
 ## Goal
 
 The `fases` project tries to provide friendly, functionnal and simple core 

@@ -20,16 +20,24 @@
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-		"Usage: date\n\n"
-		"Print the date and time.\n\n"
-	);
+	"Usage: date [+format]\n\n"
+	"Output the date and time.\n\n");
 }
 
-int main() {
+int main(int argc, char *argv[]) {
 	time_t epoch = time(NULL);
 	struct tm* date = localtime(&epoch);
-
+	char date_s[31];
+	const char *format;
+	if (argc == 2 && argv[1][0] == '+') {
+		argv[1]++;
+		format = argv[1];
+	}
+	else {
+		format = "%a %b %e %H:%M:%S %Z %Y";
+	}
 	setvbuf(stdout, NULL, _IONBF, 0);
-	printf("%s", asctime(date));
+	strftime(date_s, 31, format, date);
+	printf("%s\n", date_s);
 	return 0;
 }

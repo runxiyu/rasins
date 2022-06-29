@@ -42,7 +42,7 @@ for (int i; i != 3; i++)
 	printf("%d\n", i);
 ```
 
-10. When using `{` and `}`, `{` shall not be on it's own line ;
+- When using `{` and `}`, `{` shall not be on it's own line ;
 
 ```
 if (i) {
@@ -51,7 +51,7 @@ if (i) {
 }
 ```
 
-11. The block shall only use 1 line if there's only one instruction ran and 
+- The block shall only use 1 line if there's only one instruction ran and 
 that shall not exceed 79 characters ;
 
 ```
@@ -60,7 +60,7 @@ if (foo[1] == 'a') foo[1] = 'b';
 
 ### Functions
 
-12. The function type shall be on the same line as the function name and `{` ;
+- The function type shall be on the same line as the function name and `{` ;
 
 ```
 int main() {
@@ -68,9 +68,9 @@ int main() {
 }
 ```
 
-13. Function names shall describe the function's intended purpose ;
+- Function names shall describe the function's intended purpose ;
 
-14. When exiting, the function shall use `return` instead of `exit()` ;
+- When exiting, the function shall use `return` instead of `exit()` ;
 	
 ```
 int calculate(int i) {
@@ -83,7 +83,7 @@ int calculate(int i) {
 }
 ```
 
-15. Variable declarations shall be at the top of the function ;
+- Variable declarations shall be at the top of the function ;
 
 ```
 int main() {
@@ -95,7 +95,7 @@ int main() {
 
 ### Switch
 
-16. In `switch (foo)`, `case` shall be indented ;
+- In `switch (foo)`, `case` shall be indented ;
 
 ```
 switch (foo) {
@@ -110,11 +110,11 @@ switch (foo) {
 
 ### Preprocessor statements
 
-17. The `#define` preprocessor statement shall only be used for setting 
+- The `#define` preprocessor statement shall only be used for setting 
 constant values ;
 
 ```
 #define FOO 80
 ```
 
-18. Preprocessor statements shall not be indented.
+- Preprocessor statements shall not be indented.

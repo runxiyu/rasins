@@ -32,8 +32,8 @@ void printUsage() {
 }
 
 int main(int argc, char *const argv[]) {
-	int file, argument, i = 1;
-	char s[4096], input[4096];
+	int file, argument, i = 1, length;
+	char s[4096];
 
 	while ((argument = getopt(argc, argv, "uh")) != -1) {
 		if (argument == 'h') {
@@ -45,19 +45,18 @@ int main(int argc, char *const argv[]) {
 		else
 			setvbuf(stdout, NULL, _IOFBF, 0);
 	}
-	
 	if (argc < 2) {
-		while (read(STDIN_FILENO, input, 4096) > 0)
-			printf("%s", input);
+		while (read(STDIN_FILENO, s, 4096) > 0)
+			printf("%s", s);
 	}
 
 	for (i = 1; i != argc; i++) {
-		if (strcmp(argv[i], "-h") || strcmp(argv[i], "-u")) {
+		if (strcmp(argv[i], "-u")) {
 			if (strcmp(argv[i], "-")) file = open(argv[i], O_RDONLY);
 			else file = STDIN_FILENO;
 			if (file == -1) return errno; /* Something went wrong */
-			while (read(file, s, 4096) > 0)
-				printf("%s", s);
+			while ((length = read(file, s, 4096)) > 0)
+				write(STDOUT_FILENO, s, length);
 			close(file);
 		}
 	}

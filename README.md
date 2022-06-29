@@ -25,7 +25,7 @@ are still a work-in-progress.
 
 The `fases` project has 2 IRC channels hosted on 2 IRC Networks:
 
-- `#fases` on `LibreIRC`:
+- `#fases` on `LibreIRC` ([webchat](https://kiwi.andrewyu.org/#fases)):
 
 server: `irc.andrewyu.org` ;
 
@@ -33,7 +33,7 @@ ssl: `6697` (recommended) ;
 
 plain: `6667`.
 
-- `##fases` on `Libera.Chat`:
+- `#fases` on `Libera.Chat` ([webchat](https://web.libera.chat/#fases)):
 
 server: `irc.libera.chat` ;
 

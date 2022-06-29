@@ -7,59 +7,19 @@
 ## Status
 
 The `fases` project is still incomplete as some utilities are missing, here's 
-what `fases` currently provides:
+what `fases` currently provides (most of those utilities are incomplete):
 
-(n: not implemented, i: implemented)
+- `ls`
 
-`ls`:
+- `head`
 
-- [i] Lists files.
+- `cat`
 
-- [i] `-a`
+- `yes`
 
-- [i] `-A`
+- `date`
 
-- [i] `-C`
-
-- [i] `-1`
-
-- [i] `-R`
-
-- [n] Other options.
-
-`head`:
-
-- [i] Prints file until a specific line.
-
-- [i] Defaults to 10.
-
-- [i] `-n NUMBER`
-
-`cat`:
-
-- [i] Prints file to stdout.
-
-- [n] `-u`. 
-
-`yes`:
-
-- [i] Spams 'y'.
-
-- [i] Spams any other string specified by the user.
-
-`date`:
-
-- [i] Shows date by default.
-
-- [n] Formats date.
-
-`mkdir`:
-
-- [i] creates directories
-
-- [n] `-p`
-
-- [n] `-m MODE`
+- `mkdir`
 
 Other utilities are still in the making. Help is greatly appreciated.
 
@@ -71,6 +31,5 @@ issues.
 
 | Bug                                          | Affected utility-ies |
 |-------------------------------------------------------------|-------|
-| Weird characters at the end of the output                   | `cat` |
-| When running `cat file -`, it outputs file's contents twice | `cat` |
+| Sometimes, `-l` would show incorrect permissions.           | `ls`  |
 

@@ -35,7 +35,7 @@ int main(int argc, char *const argv[]) {
 	int file, argument, i = 1, length;
 	char s[4096];
 
-	while ((argument = getopt(argc, argv, "uh")) != -1) {
+	while ((argument = getopt(argc, argv, "u")) != -1) {
 		if (argument == '?') {
 			printUsage();
 			return 1;

@@ -198,7 +198,7 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "haACR1iml";
+	char* params = "aACR1iml";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {

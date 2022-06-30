@@ -21,14 +21,21 @@ include ../config.mk
 # Commands
 # ========
 
-all: clean yes
+all: clean yes errno
 
 yes: yes.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) yes.o -o bin/yes
 
+errno: errno.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) errno.o -o bin/errno
+
+clean:
+	rm -Rf bin/ *.o
+
 # Utilities
 # =========
 
-yes.o:
-	$(CC) $(CFLAGS) $(NOLINKER) yes.c -o yes.o
+errno.o:
+	$(CC) $(CFLAGS) $(NOLINKER) errno.c -o errno.o

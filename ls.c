@@ -21,8 +21,8 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <errno.h>
+#include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <pwd.h>
@@ -81,10 +81,10 @@ int ls(char *path) {
 	
 		if (param['i']) printf("%lu ", dirtree->d_ino);
 		if (param['l']) {
-			char *fullpath = malloc(sizeof(path) + sizeof(name));
+			char *fullpath = malloc(strlen(path) + strlen(name) + 2);
 			if (fullpath) {
 				strcpy(fullpath, path);
-				if (path[strlen(path)] != '/') strcat(fullpath, "/");
+				if (path[strlen(path) - 1] != '/') strcat(fullpath, "/");
 				strcat(fullpath, name);
 			}
 			stat(fullpath, &file_status);
@@ -127,11 +127,11 @@ int ls(char *path) {
 			                   /* Size of file */
 			printf("%lu ", file_status.st_size);
 			                   /* Date and time */
-			strftime(file_moddate, 31, "%b %e %H:%MM", 
+			strftime(file_moddate, 50, "%b %e %H:%M", 
 					localtime(&file_status.st_mtime));
 			/* It should be st_mtim right? */
-			file_moddate[strlen(file_moddate) - 1] = 0; /* Remove newline */
-			printf("%s ", file_moddate);
+			//file_moddate[strlen(file_moddate) - 1] = 0; /* Remove newline */
+			printf("%s ", file_moddate ? file_moddate : "?????????");
 			free(fullpath);
 		}
 		printf("%s", name);

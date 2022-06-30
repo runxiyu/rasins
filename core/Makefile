@@ -59,6 +59,10 @@ false: false.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) false.o -o bin/false
 
+sleep: sleep.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) sleep.o -o bin/sleep
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -92,3 +96,6 @@ true.o:
 
 false.o:
 	$(CC) $(CFLAGS) $(NOLINKER) false.c -o false.o
+
+sleep.o:
+	$(CC) $(CFLAGS) $(NOLINKER) sleep.c -o sleep.o

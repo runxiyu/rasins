@@ -1,6 +1,5 @@
 /*	echo - write strings to stdout
  *	Copyright (C) 2022 Ferass EL HAFIDI
- *	Copyright (C) 2022 Leah Rowe
  *
  *	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -23,9 +22,8 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: cat [FILE]\n\n"
-	"Concatenate FILE to stdout\n\n"
-	"\t-u\tPrint unbuffered\n");
+	"Usage: echo [STRING]\n\n"
+	"Write STRING to stdout\n\n");
 }
 
 int main(int argc, char *const argv[]) {

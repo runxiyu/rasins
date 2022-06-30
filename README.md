@@ -46,13 +46,21 @@ plain: `6667`.
 Both of these channels are linked so all messages sent in one of them 
 is sent on the other Network.
 
+## Mailing Lists
+
+The `fases` project also has a mailing list ran by Andrew Yu (thanks!).
+
+The mailing list's address is: ***fases -at- andrewyu -dot- org*** (
+[archive](https://www.mail-archive.com/fases@andrewyu.org/)). If you want 
+to subscribe to this mailing list, please ask on IRC.
+
 ## Thank you!
 
 I would like to thank a few people there, mainly:
 
 - Andrew Yu, for making a mirror on their git server at git.andrewyu.org, and 
-linking the ##fases libera.chat channel to LibreIRC and for testing fases on
-OpenBSD.
+linking the ##fases libera.chat channel to LibreIRC, for testing fases on
+OpenBSD and for hosting the mailing list.
 
 - Leah Rowe, for adding lots of improvements on her 
 [git repo](https://notabug.org/vimuser/fases) and for testing fases on OpenBSD.

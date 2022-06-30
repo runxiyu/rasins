@@ -28,6 +28,7 @@ int ls_main(int, char**);
 int date_main(int, char**);
 int yes_main(int, char**);
 int mkdir_main(int, char**);
+int echo_main(int, char**);
 
 int main(int argc, char *argv[]) {	
 	if (!strcmp(basename(argv[0]),"box") && argc > 1) {
@@ -39,17 +40,13 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(argv[0], "date")) return date_main(argc, argv);
 	else if(!strcmp(argv[0], "yes")) return yes_main(argc, argv);
 	else if(!strcmp(argv[0], "mkdir")) return mkdir_main(argc, argv);
+	else if(!strcmp(argv[0], "echo")) return echo_main(argc, argv);
 	else {
 		/* Help message */
 		printf("Ferass' Base System in a box.\n\n");
 		printf("Usage: box <COMMAND> [ARGUMENTS]\n\n");
 		printf("Commands available:\n");
-		printf("[ ");
-		printf("cat ");
-		printf("ls ");
-		printf("date ");
-		printf("yes ");
-		printf("mkdir ");
-		printf("]\n");	
+		printf("%s %s %s %s %s %s\n", 
+		"cat", "ls", "date", "yes", "mkdir", "echo");
 	}
 }

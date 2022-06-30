@@ -21,6 +21,8 @@ what `fases` currently provides (most of those utilities are incomplete):
 
 - `mkdir`
 
+- `echo`
+
 Other utilities are still in the making. Help is greatly appreciated.
 
 ## Known bugs

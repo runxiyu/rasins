@@ -27,6 +27,7 @@ SRC=cat\
 	ls\
 	date\
 	yes\
+	echo\
 	mkdir
 
 DESTDIR=
@@ -55,6 +56,9 @@ yes: yes.o
 mkdir: mkdir.o
 	$(CC) $(CFLAGS) mkdir.o -o mkdir
 
+echo: echo.o
+	$(CC) $(CFLAGS) echo.o -o echo
+
 prepbox:
 	mkdir -p box_tmp
 	for f in ${SRC}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < ""$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
@@ -63,7 +67,7 @@ box: box.o
 	$(CC) $(CFLAGS) box_tmp/*.c box.o -o box 
 
 clean:
-	rm -f mkdir head date cat ls clean yes box *.o
+	rm -f mkdir head echo date cat ls clean yes box *.o
 	rm -Rf box_tmp
 
 install: box
@@ -90,6 +94,9 @@ yes.o:
 
 mkdir.o:
 	$(CC) $(CFLAGS) $(NOLINKER) mkdir.c -o mkdir.o
+
+echo.o:
+	$(CC) $(CFLAGS) $(NOLINKER) echo.c -o echo.o
 
 box.o: prepbox
 	$(CC) $(CFLAGS) $(NOLINKER) box.c -o box.o

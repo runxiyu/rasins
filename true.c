@@ -1,4 +1,4 @@
-/*	echo - write strings to stdout
+/*	true - return true value
  *	Copyright (C) 2022 Ferass EL HAFIDI
  *
  *	This program is free software: you can redistribute it and/or modify
@@ -15,29 +15,6 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <unistd.h>
-#include <stdio.h>
-
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: echo [STRING]\n\n"
-	"Write STRING to stdout\n\n");
-}
-
-int main(int argc, char *const argv[]) {
-	int argument, i = 1;
-
-	while ((argument = getopt(argc, argv, "")) != -1) {
-		if (argument == '?') {
-			printUsage();
-			return 1;
-		}
-	}
-	for (i = 1; i != argc; i++) {
-		printf("%s ", argv[i]);
-	}
-	printf("\n");
+int main() {
 	return 0;
 }

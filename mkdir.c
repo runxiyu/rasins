@@ -35,8 +35,8 @@ int main(int argc, char *const argv[]) {
 	if (argc == 1)
 		return 0;
 
-	while ((argument = getopt(argc, argv, "h")) != -1) {
-		if (argument == 'h') {
+	while ((argument = getopt(argc, argv, "")) != -1) {
+		if (argument == '?') {
 			printUsage();
 			return 0;
 		}

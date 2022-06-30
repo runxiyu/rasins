@@ -28,6 +28,7 @@ SRC=cat\
 	date\
 	yes\
 	echo\
+	true\
 	mkdir
 
 DESTDIR=
@@ -58,6 +59,9 @@ mkdir: mkdir.o
 
 echo: echo.o
 	$(CC) $(CFLAGS) echo.o -o echo
+
+true: true.o
+	$(CC) $(CFLAGS) true.o -o true
 
 prepbox:
 	mkdir -p box_tmp
@@ -97,6 +101,9 @@ mkdir.o:
 
 echo.o:
 	$(CC) $(CFLAGS) $(NOLINKER) echo.c -o echo.o
+
+true.o:
+	$(CC) $(CFLAGS) $(NOLINKER) true.c -o true.o
 
 box.o: prepbox
 	$(CC) $(CFLAGS) $(NOLINKER) box.c -o box.o

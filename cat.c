@@ -36,9 +36,9 @@ int main(int argc, char *const argv[]) {
 	char s[4096];
 
 	while ((argument = getopt(argc, argv, "uh")) != -1) {
-		if (argument == 'h') {
+		if (argument == '?') {
 			printUsage();
-			return 0;
+			return 1;
 		}
 		else if (argument == 'u')
 			setvbuf(stdout, NULL, _IONBF, 0);

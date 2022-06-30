@@ -23,8 +23,9 @@ the program less portable) ;
 
 - Each line shall not exceed 79 characters ;
 
-- Utilities shall only implement POSIX-compliant options, the only 
-exception is the `-h` option, which shall print a help text ;
+- Utilities shall only implement POSIX-compliant options, if the utility 
+supports options, and the specified option is invalid, the utility shall 
+print a help text ;
 
 - Utilities shall only use the **standard C library and POSIX libraries** ;
 

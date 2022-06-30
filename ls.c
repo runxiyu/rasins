@@ -212,9 +212,9 @@ int main(int argc, char *argv[]) {
 
 	while ((argument = getopt(argc, argv, params)) != -1) {
 		if(unsupported[argument]) status = 1;
-		if (argument == 'h') {
+		if (argument == '?') {
 			printUsage(params);
-			return 0;
+			return 1;
 		}
 		param[argument] = argument;
 

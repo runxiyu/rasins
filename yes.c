@@ -29,12 +29,12 @@ void printUsage() {
 int main(int argc, char *argv[]) {
 	setvbuf(stdout, NULL, _IONBF, 0);
 	if (argc > 1) {
-		if (!strcmp(argv[1], "-h")) {
-			printUsage();
-			return 0;
-		} else if (!strcmp(argv[1], "--")) {
+		if (!strcmp(argv[1], "--")) {
 			if (--argc == 1) goto yes;
 			argv = &argv[1];
+		} else {
+			printUsage();
+			return 1;
 		}
 		while(1) {
 			for (int i = 1; i < argc; i++) printf("%s%c", argv[i], i == argc - 1 ? '\n' : ' ');

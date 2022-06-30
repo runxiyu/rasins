@@ -41,31 +41,40 @@ PREFIX=/usr/local
 all: clean mkdir head cat ls date yes box
 
 head: head.o
-	$(CC) $(CFLAGS) head.o -o head
+	mkdir -p bin
+	$(CC) $(CFLAGS) head.o -o bin/head
 
 cat: cat.o
-	$(CC) $(CFLAGS) cat.o -o cat
+	mkdir -p bin
+	$(CC) $(CFLAGS) cat.o -o bin/cat
 
 ls: ls.o
-	$(CC) $(CFLAGS) ls.o -o ls
+	mkdir -p bin
+	$(CC) $(CFLAGS) ls.o -o bin/ls
 
 date: date.o
-	$(CC) $(CFLAGS) date.o -o date
+	mkdir -p bin
+	$(CC) $(CFLAGS) date.o -o bin/date
 
 yes: yes.o
-	$(CC) $(CFLAGS) yes.o -o yes
+	mkdir -p bin
+	$(CC) $(CFLAGS) yes.o -o bin/yes
 
 mkdir: mkdir.o
-	$(CC) $(CFLAGS) mkdir.o -o mkdir
+	mkdir -p bin
+	$(CC) $(CFLAGS) mkdir.o -o bin/mkdir
 
 echo: echo.o
-	$(CC) $(CFLAGS) echo.o -o echo
+	mkdir -p bin
+	$(CC) $(CFLAGS) echo.o -o bin/echo
 
 true: true.o
-	$(CC) $(CFLAGS) true.o -o true
+	mkdir -p bin
+	$(CC) $(CFLAGS) true.o -o bin/true
 
 false: false.o
-	$(CC) $(CFLAGS) false.o -o false
+	mkdir -p bin
+	$(CC) $(CFLAGS) false.o -o bin/false
 
 prepbox:
 	mkdir -p box_tmp
@@ -75,8 +84,8 @@ box: box.o
 	$(CC) $(CFLAGS) box_tmp/*.c box.o -o box 
 
 clean:
-	rm -f mkdir head echo date cat ls clean yes box *.o
-	rm -Rf box_tmp
+	rm -f box *.o
+	rm -Rf bin box_tmp
 
 install: box
 	mkdir -p $(DESTDIR)$(PREFIX)/bin

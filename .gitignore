@@ -1,9 +1,3 @@
-head
-cat
-ls
-yes
-date
-box
-mkdir
 *.o
+bin/*
 box_tmp/*

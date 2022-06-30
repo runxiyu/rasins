@@ -16,30 +16,19 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-include ./config.mk
+include ../config.mk
 
 # Commands
 # ========
 
-all: clean box
+all: clean yes
 
-prepbox:
-	mkdir -p box_tmp
-	for f in ${SRC}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
-
-box: box.o
-	$(CC) $(CFLAGS) box_tmp/*.c box.o -o box 
-
-clean:
-	rm -f box *.o
-	rm -Rf box_tmp
-
-install: box
-	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f box $(DESTDIR)$(PREFIX)/bin
+yes: yes.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) yes.o -o bin/yes
 
 # Utilities
 # =========
 
-box.o: prepbox
-	$(CC) $(CFLAGS) $(NOLINKER) box.c -o box.o
+yes.o:
+	$(CC) $(CFLAGS) $(NOLINKER) yes.c -o yes.o

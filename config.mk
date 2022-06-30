@@ -16,30 +16,22 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-include ./config.mk
+# Configuration
+# =============
 
-# Commands
-# ========
+CC=cc
+FORCEC99=-std=c99
+CFLAGS=-Wall -Wextra -g $(FORCEC99) #-I.
+NOLINKER=-c
+SRC=cat\
+	ls\
+	date\
+	echo\
+	true\
+	false\
+	mkdir
 
-all: clean box
+SRCEXTRA=yes
 
-prepbox:
-	mkdir -p box_tmp
-	for f in ${SRC}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
-
-box: box.o
-	$(CC) $(CFLAGS) box_tmp/*.c box.o -o box 
-
-clean:
-	rm -f box *.o
-	rm -Rf box_tmp
-
-install: box
-	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f box $(DESTDIR)$(PREFIX)/bin
-
-# Utilities
-# =========
-
-box.o: prepbox
-	$(CC) $(CFLAGS) $(NOLINKER) box.c -o box.o
+DESTDIR=
+PREFIX=/usr/local

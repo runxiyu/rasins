@@ -67,6 +67,10 @@ printf: printf.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) printf.o -o bin/printf
 
+uname: uname.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) uname.o -o bin/uname
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -106,3 +110,6 @@ sleep.o:
 
 printf.o:
 	$(CC) $(CFLAGS) $(NOLINKER) printf.c -o printf.o
+
+uname.o:
+	$(CC) $(CFLAGS) $(NOLINKER) uname.c -o uname.o

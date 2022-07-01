@@ -63,6 +63,10 @@ sleep: sleep.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) sleep.o -o bin/sleep
 
+printf: printf.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) printf.o -o bin/printf
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -99,3 +103,6 @@ false.o:
 
 sleep.o:
 	$(CC) $(CFLAGS) $(NOLINKER) sleep.c -o sleep.o
+
+printf.o:
+	$(CC) $(CFLAGS) $(NOLINKER) printf.c -o printf.o

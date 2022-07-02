@@ -21,7 +21,7 @@
 
 CC=cc
 FORCEC99=-std=c99
-CFLAGS=-Wall -Wextra -g $(FORCEC99) #-I.
+CFLAGS=-I. -Wall -Wextra -g $(FORCEC99)
 NOLINKER=-c
 SRC=cat\
 	ls\

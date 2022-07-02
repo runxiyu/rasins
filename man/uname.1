@@ -1,0 +1,55 @@
+.TH UNAME 1 2022-07-02 Ferass'\ Base\ System.
+.SH NAME
+uname \- return system information
+.SH SYNOPSIS
+.B uname
+.RB [ \-amnrsv ]
+.SH DESCRIPTION
+Return system information.
+.P
+With no argument, write the operating system name.
+.TP
+.B -a
+Behave as if -mnrsv were specified.
+.P
+.TP
+.B -m
+Write the name of the hardware architecture on which the system is running to 
+standard output.
+.P
+.TP
+.B -n
+Write the name of this network hostname node to standard output.
+.P
+.TP
+.B -r
+Write the current release level of the operating system implementation.
+.P
+.TP
+.B -s
+Write the name of the running operating system implementation.
+.P
+.TP
+.B -v
+Write the current version of this release of the operating system 
+implementation.
+.SH EXAMPLES
+.TP
+.B uname
+Write the name of the running operating system implementation to standard 
+output.
+.TP
+.B uname -mnrsv
+Same as uname -a.
+.TP
+.B uname -v
+Write the current version of this release of the operating system 
+implementation. 
+.SH AUTHOR
+Written by Ferass EL HAFIDI as part of the fases 
+project \- Ferass' Base System.
+.P
+Source code is at http://git.vitali64.duckdns.org/utils/fases.git.
+.SH COPYRIGHT
+.P
+Copyright (C) 2022 Ferass EL HAFIDI

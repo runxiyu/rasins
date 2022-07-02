@@ -29,7 +29,11 @@ SRC=cat\
 	echo\
 	true\
 	false\
-	mkdir
+	mkdir\
+	head\
+	printf\
+	sleep\
+	uname
 
 SRCEXTRA=yes
 

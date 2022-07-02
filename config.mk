@@ -19,11 +19,13 @@
 # Configuration
 # =============
 
-CC=cc
-FORCEC99=-std=c99
-CFLAGS=-I. -Wall -Wextra -g $(FORCEC99)
-NOLINKER=-c
-SRC=cat\
+CC=cc # C Compiler
+FORCEC99=-std=c99 # Force POSIX C99
+CFLAGS=-I. -Wall -Wextra -g $(FORCEC99) # C Compiler flags
+NOLINKER=-c # C Compiler flag to disable the linker
+# Core utilities
+CORE=\
+	cat\
 	ls\
 	date\
 	echo\
@@ -35,7 +37,12 @@ SRC=cat\
 	sleep\
 	uname
 
-SRCEXTRA=yes
+INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
+# Extra utilities
+EXTRA=\
+	yes\
+	errno
 
+# Destination directory
 DESTDIR=
-PREFIX=/usr/local
+PREFIX=/usr/local # Prefix

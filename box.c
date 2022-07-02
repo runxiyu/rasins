@@ -15,7 +15,7 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* Generated on Sat  2 Jul 17:58:27 CEST 2022 */
+/* Generated on Sat  2 Jul 18:13:12 CEST 2022 */
 #include <string.h>
 #include <unistd.h>
 #include <libgen.h>
@@ -28,6 +28,10 @@ int echo_main(int, char**);
 int true_main(int, char**);
 int false_main(int, char**);
 int mkdir_main(int, char**);
+int head_main(int, char**);
+int printf_main(int, char**);
+int sleep_main(int, char**);
+int uname_main(int, char**);
 
 int main(int argc, char *argv[]) {
 	if (!strcmp(basename(argv[0]),"box") && argc > 1) {
@@ -41,6 +45,10 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(argv[0], "true")) return true_main(argc, argv);
 	else if(!strcmp(argv[0], "false")) return false_main(argc, argv);
 	else if(!strcmp(argv[0], "mkdir")) return mkdir_main(argc, argv);
+	else if(!strcmp(argv[0], "head")) return head_main(argc, argv);
+	else if(!strcmp(argv[0], "printf")) return printf_main(argc, argv);
+	else if(!strcmp(argv[0], "sleep")) return sleep_main(argc, argv);
+	else if(!strcmp(argv[0], "uname")) return uname_main(argc, argv);
 	else {
 		printf("Ferass' Base System in a box\n\n");
 		printf("Usage: box <COMMAND> [ARGS]\n\n");
@@ -52,6 +60,10 @@ int main(int argc, char *argv[]) {
 		printf("true ");
 		printf("false ");
 		printf("mkdir ");
+		printf("head ");
+		printf("printf ");
+		printf("sleep ");
+		printf("uname ");
 		printf("\n");
 	}
 }

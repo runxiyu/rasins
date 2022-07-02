@@ -47,26 +47,30 @@ genbox:
 	echo "#include <libgen.h>"                                       >> box.c
 	echo "#include <stdio.h>"                                        >> box.c
 	echo                                                             >> box.c
-	for u in ${SRC}; do echo "int $${u%.c}_main(int, char**);"; done >> box.c
+	for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c
+	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c
 	echo                                                             >> box.c
 	echo "int main(int argc, char *argv[]) {"                        >> box.c
 	echo "	if (!strcmp(basename(argv[0]),\"box\") && argc > 1) {"   >> box.c
 	echo "		argc--;"                                             >> box.c
 	echo "		argv++;"                                             >> box.c
 	echo "	} if(0);"                                                >> box.c
-	for u in ${SRC}; do echo "	else if(!strcmp(argv[0], \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
+	for u in ${CORE}; do echo "	else if(!strcmp(argv[0], \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
+	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "	else if(!strcmp(argv[0], \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
 	echo "	else {"                                                  >> box.c
 	echo "		printf(\"Ferass' Base System in a box\n\n\");"       >> box.c
 	echo "		printf(\"Usage: box <COMMAND> [ARGS]\n\n\");"        >> box.c
 	echo "		printf(\"Commands available:\n\");"                  >> box.c
-	for u in ${SRC}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
+	for u in ${CORE}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
+	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
 	echo "		printf(\"\\n\");"                                    >> box.c
 	echo "	}"                                                       >> box.c
 	echo "}"                                                         >> box.c
 
 prepbox:
 	mkdir -p box_tmp
-	for f in ${SRC}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
+	for f in ${CORE}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
+	test ${INCLUDE_EXTRA} == n || for f in ${EXTRA}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
 
 box: box.o
 	$(CC) $(CFLAGS) box_tmp/*.c box.o -o box 

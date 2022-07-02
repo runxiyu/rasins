@@ -26,7 +26,12 @@ Fasesiab stands for Ferass' Base System in a box. It includes the entire
 coreutils in a single and tiny binary.
 
 Before compiling, you have to prepare `fasesiab`.
-Run the following:
+The `box.c` file should already contain some code but it may be outdated 
+so it's recommended to regenerate it:
+
+	$ make genbox
+
+Next, run the following:
 
 	$ make prepbox
 

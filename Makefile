@@ -79,9 +79,9 @@ clean:
 	rm -f box *.o
 	rm -Rf box_tmp
 
-install: box
+install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f box $(DESTDIR)$(PREFIX)/bin
+	cp -r box $(DESTDIR)$(PREFIX)/bin
 
 # Utilities
 # =========

@@ -45,4 +45,5 @@ EXTRA=\
 
 # Destination directory
 DESTDIR=
-PREFIX=/usr/local # Prefix
+PREFIX=/usr/local
+# Prefix

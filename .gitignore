@@ -1,3 +1,4 @@
 *.o
+./box
 */bin/*
 box_tmp/*

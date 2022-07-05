@@ -71,6 +71,10 @@ uname: uname.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) uname.o -o bin/uname
 
+link: link.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) link.o -o bin/link
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -113,3 +117,6 @@ printf.o:
 
 uname.o:
 	$(CC) $(CFLAGS) $(NOLINKER) uname.c -o uname.o
+
+link.o:
+	$(CC) $(CFLAGS) $(NOLINKER) link.c -o link.o

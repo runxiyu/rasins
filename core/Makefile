@@ -75,6 +75,10 @@ link: link.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) link.o -o bin/link
 
+ln: ln.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) ln.o -o bin/ln
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -120,3 +124,6 @@ uname.o:
 
 link.o:
 	$(CC) $(CFLAGS) $(NOLINKER) link.c -o link.o
+
+ln.o:
+	$(CC) $(CFLAGS) $(NOLINKER) ln.c -o ln.o

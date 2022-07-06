@@ -35,7 +35,9 @@ CORE=\
 	head\
 	printf\
 	sleep\
-	uname
+	ln\
+	uname\
+	link
 
 INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
 # Extra utilities

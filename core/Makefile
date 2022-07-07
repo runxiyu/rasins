@@ -79,6 +79,10 @@ ln: ln.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) ln.o -o bin/ln
 
+chmod: chmod.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) chmod.o -o bin/chmod
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -127,3 +131,6 @@ link.o:
 
 ln.o:
 	$(CC) $(CFLAGS) $(NOLINKER) ln.c -o ln.o
+
+chmod.o:
+	$(CC) $(CFLAGS) $(NOLINKER) chmod.c -o chmod.o

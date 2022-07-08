@@ -79,7 +79,7 @@ int ls(char *path) {
 
 		if (dot && !param['a'] && !param['A']) continue;
 		if ((cwdname || prevdir) && param['A']) continue;
-	
+		
 		if (param['i']) printf("%lu ", dirtree->d_ino);
 		if (param['l']) {
 			char *fullpath = malloc(strlen(path) + strlen(name) + 2);
@@ -140,6 +140,17 @@ int ls(char *path) {
 			free(fullpath);
 		}
 		printf("%s", name);
+		if (param['p']) {
+			char *fullpath = malloc(strlen(path) + strlen(name) + 2);
+			if (fullpath) {
+				strcpy(fullpath, path);
+				if (path[strlen(path) - 1] != '/') strcat(fullpath, "/");
+				strcat(fullpath, name);
+			}
+			stat(fullpath, &file_status);
+			if (S_ISDIR(file_status.st_mode)) printf("/");
+			free(fullpath);
+		}
 		if (param['C'])
 			printf(" "); /* TODO: Calculate based on the terminal's size */
 		else if (param['1'])
@@ -203,7 +214,7 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "aACR1iml";
+	char* params = "aACR1imlp";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {

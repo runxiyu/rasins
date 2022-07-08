@@ -31,6 +31,10 @@ void printUsage() {
 int main(int argc, char *const argv[]) {
 	int argument, i = 0;
 	mode_t modes, owner_modes, group_modes, other_modes;
+	if (argc == 1) {
+		printUsage();
+		return 1;
+	}
 	while ((argument = getopt(argc, argv, "")) != -1) {
 		if (argument == '?') {
 			printUsage();

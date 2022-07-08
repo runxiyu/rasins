@@ -32,6 +32,10 @@ int main(int argc, char *const argv[]) {
 	int argument;
 	char param[256], *params = "s";
 
+	if (argc == 1) {
+		printUsage();
+		return 1;
+	}
 	while ((argument = getopt(argc, argv, params)) != -1) {
 		if (argument == '?') {
 			printUsage();

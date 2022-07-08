@@ -32,8 +32,10 @@ int main(int argc, char *const argv[]) {
 	int argument, i = 1;
 	setvbuf(stdout, NULL, _IONBF, 0);
 
-	if (argc == 1)
-		return 0;
+	if (argc == 1) {
+		printUsage();
+		return 1;
+	}
 
 	while ((argument = getopt(argc, argv, "")) != -1) {
 		if (argument == '?') {

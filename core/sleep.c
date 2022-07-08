@@ -27,7 +27,7 @@ void printUsage() {
 
 int main(int argc, char *argv[]) {
 	long unsigned int seconds;
-	setvbuf(stdout, NULL, _IONBF, 0);
+	
 	if (argc == 2) {
 		seconds = strtol(argv[1], NULL, 10);
 		if (!seconds) {
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 		}
 		sleep(seconds);
 	}
-	else if (argc > 2) {
+	else if (argc == 1) {
 		printUsage();
 		return 1;
 	}

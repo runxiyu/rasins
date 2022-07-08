@@ -37,7 +37,8 @@ CORE=\
 	sleep\
 	ln\
 	uname\
-	link
+	link\
+	chmod
 
 INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
 # Extra utilities

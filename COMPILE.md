@@ -18,7 +18,14 @@ Modify the `config.mk` file to fit your needs in both cases.
 
 For example to compile `cat`, you have to run the following:
 
+	$ cd core/
 	$ make cat
+
+And to compile a non-POSIX utility such as `yes`, you have to run the 
+following:
+
+	$ cd extras/
+	$ make yes
 
 ## Compiling fasesiab
 
@@ -39,3 +46,16 @@ Now you're ready to compile! Run `make` and get a binary!
 
 	$ make box
 
+## Installation
+
+For now, you can only install fasesiab and no manpages are being installed. 
+To install, simply run the following:
+
+	$ doas make install
+
+Or, if using `sudo`:
+
+	$ sudo make install
+
+Then, you should have a binary called `box`. Make sure `/usr/local/bin/` or 
+whatever `DESTDIR` and `PREFIX` you set is in your `$PATH`.

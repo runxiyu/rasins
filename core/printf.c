@@ -39,6 +39,6 @@ int main(int argc, char *const argv[]) {
 			return 1;
 		}
 	}
-	printf(argv[1], argv[2]);
+	printf(argv[1], argv[2] ? argv[2] : "");
 	return 0;
 }

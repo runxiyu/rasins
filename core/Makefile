@@ -83,6 +83,10 @@ chmod: chmod.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) chmod.o -o bin/chmod
 
+basename: basename.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) basename.o -o bin/basename
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -134,3 +138,6 @@ ln.o:
 
 chmod.o:
 	$(CC) $(CFLAGS) $(NOLINKER) chmod.c -o chmod.o
+
+basename.o:
+	$(CC) $(CFLAGS) $(NOLINKER) basename.c -o basename.o

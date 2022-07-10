@@ -21,7 +21,8 @@
 
 CC=cc # C Compiler
 FORCEC99=-std=c99 # Force POSIX C99
-CFLAGS=-I. -Wall -Wextra -g $(FORCEC99) # C Compiler flags
+# OPTIMIZE=-O3 # Experimental optimizations (Disabled by default)
+CFLAGS=-I. -Wall -Wextra -g $(FORCEC99) $(OPTIMIZE) # C Compiler flags
 NOLINKER=-c # C Compiler flag to disable the linker
 # Core utilities
 CORE=\

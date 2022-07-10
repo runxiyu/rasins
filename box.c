@@ -15,7 +15,7 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* Generated on Sun 10 Jul 09:05:29 CEST 2022 */
+/* Generated on Sun 10 Jul 09:43:13 CEST 2022 */
 #include <string.h>
 #include <unistd.h>
 #include <libgen.h>
@@ -42,21 +42,21 @@ int main(int argc, char *argv[]) {
 		argc--;
 		argv++;
 	} if(0);
-	else if(!strcmp(argv[0], "cat")) return cat_main(argc, argv);
-	else if(!strcmp(argv[0], "ls")) return ls_main(argc, argv);
-	else if(!strcmp(argv[0], "date")) return date_main(argc, argv);
-	else if(!strcmp(argv[0], "echo")) return echo_main(argc, argv);
-	else if(!strcmp(argv[0], "true")) return true_main(argc, argv);
-	else if(!strcmp(argv[0], "false")) return false_main(argc, argv);
-	else if(!strcmp(argv[0], "mkdir")) return mkdir_main(argc, argv);
-	else if(!strcmp(argv[0], "head")) return head_main(argc, argv);
-	else if(!strcmp(argv[0], "printf")) return printf_main(argc, argv);
-	else if(!strcmp(argv[0], "sleep")) return sleep_main(argc, argv);
-	else if(!strcmp(argv[0], "ln")) return ln_main(argc, argv);
-	else if(!strcmp(argv[0], "uname")) return uname_main(argc, argv);
-	else if(!strcmp(argv[0], "link")) return link_main(argc, argv);
-	else if(!strcmp(argv[0], "chmod")) return chmod_main(argc, argv);
-	else if(!strcmp(argv[0], "basename")) return basename_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "cat")) return cat_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "ls")) return ls_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "date")) return date_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "echo")) return echo_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "true")) return true_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "false")) return false_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "mkdir")) return mkdir_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "head")) return head_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "printf")) return printf_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "sleep")) return sleep_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "ln")) return ln_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "uname")) return uname_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "link")) return link_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "chmod")) return chmod_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "basename")) return basename_main(argc, argv);
 	else {
 		printf("Ferass' Base System in a box\n\n");
 		printf("Usage: box <COMMAND> [ARGS]\n\n");

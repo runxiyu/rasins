@@ -55,7 +55,7 @@ genbox:
 	echo "		argc--;"                                             >> box.c
 	echo "		argv++;"                                             >> box.c
 	echo "	} if(0);"                                                >> box.c
-	for u in ${CORE}; do echo "	else if(!strcmp(argv[0], \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
+	for u in ${CORE}; do echo "	else if(!strcmp(basename(argv[0]), \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "	else if(!strcmp(argv[0], \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
 	echo "	else {"                                                  >> box.c
 	echo "		printf(\"Ferass' Base System in a box\n\n\");"       >> box.c

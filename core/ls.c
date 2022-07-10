@@ -81,7 +81,7 @@ int ls(char *path) {
 		if ((cwdname || prevdir) && param['A']) continue;
 		
 		if (param['i']) printf("%lu ", dirtree->d_ino);
-		if (param['l']) {
+		if (param['l'] || param['g']) {
 			char *fullpath = malloc(strlen(path) + strlen(name) + 2);
 			if (fullpath) {
 				strcpy(fullpath, path);
@@ -122,7 +122,7 @@ int ls(char *path) {
 			                  /* Number of links */
 			printf("%lu ", file_status.st_nlink);
 			                    /* Owner name */
-			printf("%s ", getpwuid(file_status.st_uid)->pw_name);
+			if (!param['g']) printf("%s ", getpwuid(file_status.st_uid)->pw_name);
 			                    /* Group name */
 			printf("%s ", getgrgid(file_status.st_gid)->gr_name);
 			                   /* Size of file */
@@ -214,7 +214,7 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "aACR1imlp";
+	char* params = "aACR1imlpg";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {
@@ -238,7 +238,7 @@ int main(int argc, char *argv[]) {
 			param['1'] = 0;
 			param['m'] = 0;
 		}
-		else if (argument=='1') {
+		else if (argument=='1' || argument=='g') {
 			param['m'] = 0;
 			param['C'] = 0;
 		}
@@ -255,7 +255,7 @@ int main(int argc, char *argv[]) {
 	if (!param['C'] && !param['m'] && !param['1'])
 		param['C'] = 'C';
 
-	if (param['l']) {
+	if (param['l'] || param['g']) {
 		param['m'] = 0;
 		param['C'] = 0;
 		param['1'] = '1';

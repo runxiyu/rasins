@@ -30,7 +30,9 @@ print a help text ;
 - Utilities shall only use the **standard C library and POSIX libraries** ;
 
 - For comments, instead of using `//` (as in `// Comment`), the code shall 
-use `/*` and `*/` (as in `/* Comment */`).
+use `/*` and `*/` (as in `/* Comment */`) ;
+
+- For commenting code, use `//` (as in `// printf("broken code")`) ;
 
 - **Variable names** shall describe the variable's purpose ;
 

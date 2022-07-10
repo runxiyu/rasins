@@ -19,22 +19,12 @@
 #include <string.h>
 #include <stdio.h>
 
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: yes [STRING]\n"
-	"   Or: yes -- [STRING]\n\n"
-	"Repeatedly output a line with specified STRING or 'y'.\n\n" );
-}
-
 int main(int argc, char *argv[]) {
 	setvbuf(stdout, NULL, _IONBF, 0);
 	if (argc > 1) {
 		if (!strcmp(argv[1], "--")) {
 			if (--argc == 1) goto yes;
 			argv = &argv[1];
-		} else {
-			printUsage();
-			return 1;
 		}
 		while(1) {
 			for (int i = 1; i < argc; i++) printf("%s%c", argv[i], i == argc - 1 ? '\n' : ' ');

@@ -15,7 +15,7 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* Generated on Sat  2 Jul 18:13:12 CEST 2022 */
+/* Generated on Sun 10 Jul 09:05:29 CEST 2022 */
 #include <string.h>
 #include <unistd.h>
 #include <libgen.h>
@@ -31,7 +31,11 @@ int mkdir_main(int, char**);
 int head_main(int, char**);
 int printf_main(int, char**);
 int sleep_main(int, char**);
+int ln_main(int, char**);
 int uname_main(int, char**);
+int link_main(int, char**);
+int chmod_main(int, char**);
+int basename_main(int, char**);
 
 int main(int argc, char *argv[]) {
 	if (!strcmp(basename(argv[0]),"box") && argc > 1) {
@@ -48,7 +52,11 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(argv[0], "head")) return head_main(argc, argv);
 	else if(!strcmp(argv[0], "printf")) return printf_main(argc, argv);
 	else if(!strcmp(argv[0], "sleep")) return sleep_main(argc, argv);
+	else if(!strcmp(argv[0], "ln")) return ln_main(argc, argv);
 	else if(!strcmp(argv[0], "uname")) return uname_main(argc, argv);
+	else if(!strcmp(argv[0], "link")) return link_main(argc, argv);
+	else if(!strcmp(argv[0], "chmod")) return chmod_main(argc, argv);
+	else if(!strcmp(argv[0], "basename")) return basename_main(argc, argv);
 	else {
 		printf("Ferass' Base System in a box\n\n");
 		printf("Usage: box <COMMAND> [ARGS]\n\n");
@@ -63,7 +71,11 @@ int main(int argc, char *argv[]) {
 		printf("head ");
 		printf("printf ");
 		printf("sleep ");
+		printf("ln ");
 		printf("uname ");
+		printf("link ");
+		printf("chmod ");
+		printf("basename ");
 		printf("\n");
 	}
 }

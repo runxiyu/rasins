@@ -163,7 +163,7 @@ int ls(char *path) {
 			free(fullpath);
 		}
 		if (param['C'])
-			printf(" "); /* TODO: Calculate based on the terminal's size */
+			printf("  "); /* TODO: Calculate based on the terminal's size */
 		else if (param['1'])
 			printf("\n");
 		else if (param['m'])

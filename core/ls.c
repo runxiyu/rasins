@@ -81,7 +81,7 @@ int ls(char *path) {
 		if ((cwdname || prevdir) && param['A']) continue;
 		
 		if (param['i']) printf("%lu ", dirtree->d_ino);
-		if (param['l'] || param['g']) {
+		if (param['l']) {
 			char *fullpath = malloc(strlen(path) + strlen(name) + 2);
 			if (fullpath) {
 				strcpy(fullpath, path);
@@ -121,10 +121,17 @@ int ls(char *path) {
 			printf("%s ", file_modes);
 			                  /* Number of links */
 			printf("%lu ", file_status.st_nlink);
-			                    /* Owner name */
-			if (!param['g']) printf("%s ", getpwuid(file_status.st_uid)->pw_name);
-			                    /* Group name */
-			printf("%s ", getgrgid(file_status.st_gid)->gr_name);
+			                   /* Owner name/uid */
+			if (!param['g']) 
+			/* This recursiveness is needed for whatever reason, 
+			 * else it doesn't work... 
+			 */
+				if (!param['n'])
+					printf("%s ", getpwuid(file_status.st_uid)->pw_name);
+			if (param['n'])                 printf("%u ", file_status.st_uid);
+			                  /* Group name/gid */
+			if (!param['n']) printf("%s ", getgrgid(file_status.st_gid)->gr_name);
+			else             printf("%u ", file_status.st_gid);
 			                   /* Size of file */
 			printf("%lu ", file_status.st_size);
 			                   /* Date and time */
@@ -214,7 +221,7 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "aACR1imlpg";
+	char* params = "aACR1imlpgn";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {
@@ -238,13 +245,17 @@ int main(int argc, char *argv[]) {
 			param['1'] = 0;
 			param['m'] = 0;
 		}
-		else if (argument=='1' || argument=='g') {
+		else if (argument=='1' || argument=='g' || argument=='n') {
 			param['m'] = 0;
 			param['C'] = 0;
 		}
 		else if (argument=='m') {
 			param['1'] = 0;
 			param['C'] = 0;
+		}
+		if (argument=='n' || argument=='g') {
+			param['l'] = 'l';
+			param['n'] = 'n';
 		}
 	}
 	if (status) {

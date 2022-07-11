@@ -45,7 +45,11 @@ void printUsage(char *params) {
 	"\t-i\tFor each file, write its serial number\n"
 	"\t-m\tList names followed by a comma and space character\n"
 	"\t-l\tDo not follow symbolic links named as operands and "
-	"write in long format (unfinished)\n", params);
+	"write in long format (unfinished)\n"
+	"\t-p\tShow '/' after each name if that name is a directory\n"
+	"\t-g\tEnable the -l option but don't print the file owner's name\n"
+	"\t-n\tEnable the -l option but print the file owner and group's numeric "
+	"UID and GID instead of their name\n", params);
 }
 
 int ls(char *path) {

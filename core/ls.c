@@ -233,8 +233,6 @@ int main(int argc, char *argv[]) {
 		param[i]=0;
 	}
 
-	setvbuf(stdout, NULL, _IONBF, 0);
-
 	while ((argument = getopt(argc, argv, params)) != -1) {
 		if (argument == '?') {
 			printUsage(params);

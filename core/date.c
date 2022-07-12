@@ -36,7 +36,6 @@ int main(int argc, char *argv[]) {
 	else {
 		format = "%a %b %e %H:%M:%S %Z %Y";
 	}
-	setvbuf(stdout, NULL, _IONBF, 0);
 	strftime(date_s, 31, format, date);
 	printf("%s\n", date_s);
 	return 0;

@@ -49,7 +49,8 @@ void printUsage(char *params) {
 	"\t-p\tShow '/' after each name if that name is a directory\n"
 	"\t-g\tEnable the -l option but don't print the file owner's name\n"
 	"\t-n\tEnable the -l option but print the file owner and group's numeric "
-	"UID and GID instead of their name\n", params);
+	"UID and GID instead of their name\n"
+	"\t-o\tEnable the -l option but don't print the file group's name\n", params);
 }
 
 int ls(char *path) {
@@ -134,8 +135,9 @@ int ls(char *path) {
 					printf("%s ", getpwuid(file_status.st_uid)->pw_name);
 			if (param['n'])                 printf("%u ", file_status.st_uid);
 			                  /* Group name/gid */
-			if (!param['n']) printf("%s ", getgrgid(file_status.st_gid)->gr_name);
-			else             printf("%u ", file_status.st_gid);
+			if (!param['o'])
+				if (!param['n']) printf("%s ", getgrgid(file_status.st_gid)->gr_name);
+			if (param['n']) printf("%u ", file_status.st_gid);
 			                   /* Size of file */
 			printf("%lu ", file_status.st_size);
 			                   /* Date and time */
@@ -225,7 +227,7 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "aACR1imlpgn";
+	char* params = "aACR1imlpgno";
 	char unsupported[256];
 
 	for(i=0; i<256; i++) {
@@ -257,9 +259,8 @@ int main(int argc, char *argv[]) {
 			param['1'] = 0;
 			param['C'] = 0;
 		}
-		if (argument=='n' || argument=='g') {
+		if (argument=='o' || argument=='n' || argument=='g') {
 			param['l'] = 'l';
-			param['n'] = 'n';
 		}
 	}
 	if (status) {

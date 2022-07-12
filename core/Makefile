@@ -21,7 +21,7 @@ include ../config.mk
 # Commands
 # ========
 
-all: clean mkdir head cat ls date yes
+all: clean $(CORE)
 
 head: head.o
 	mkdir -p bin

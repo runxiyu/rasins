@@ -228,19 +228,14 @@ int main(int argc, char *argv[]) {
 	int success = 0;
 	int argument, i;
 	char* params = "aACR1imlpgno";
-	char unsupported[256];
 
 	for(i=0; i<256; i++) {
 		param[i]=0;
-		unsupported[i]=1;
 	}
-	for(i=0; (size_t)i<strlen(params); i++)
-		unsupported[(int)params[i]] = 0;
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 
 	while ((argument = getopt(argc, argv, params)) != -1) {
-		if(unsupported[argument]) status = 1;
 		if (argument == '?') {
 			printUsage(params);
 			return 1;

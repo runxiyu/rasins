@@ -264,7 +264,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (!param['C'] && !param['m'] && !param['1'])
-		param['C'] = 'C';
+		param['1'] = '1';
 
 	if (param['l'] || param['g']) {
 		param['m'] = 0;

@@ -95,6 +95,10 @@ mv: mv.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) mv.o -o bin/mv
 
+rm: rm.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) rm.o -o bin/rm
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -155,3 +159,6 @@ unlink.o:
 
 mv.o:
 	$(CC) $(CFLAGS) $(NOLINKER) mv.c -o mv.o
+
+rm.o:
+	$(CC) $(CFLAGS) $(NOLINKER) rm.c -o rm.o

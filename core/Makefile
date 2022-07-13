@@ -91,6 +91,10 @@ unlink: unlink.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) unlink.o -o bin/unlink
 
+mv: mv.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) mv.o -o bin/mv
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -147,4 +151,7 @@ basename.o:
 	$(CC) $(CFLAGS) $(NOLINKER) basename.c -o basename.o
 
 unlink.o:
-	$(CC) $(CFLAGS) unlink.c -o unlink.o
+	$(CC) $(CFLAGS) $(NOLINKER) unlink.c -o unlink.o
+
+mv.o:
+	$(CC) $(CFLAGS) $(NOLINKER) mv.c -o mv.o

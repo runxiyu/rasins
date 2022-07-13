@@ -70,7 +70,7 @@ genbox:
 prepbox:
 	mkdir -p box_tmp
 	for f in ${CORE}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
-	test ${INCLUDE_EXTRA} == n || for f in ${EXTRA}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
+	test ${INCLUDE_EXTRA} == n || for f in ${EXTRA}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "extras/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
 
 box: box.o
 	$(CC) $(CFLAGS) box_tmp/*.c box.o -o box 

@@ -15,7 +15,7 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* Generated on Sun 10 Jul 22:39:32 CEST 2022 */
+/* Generated on Wed 13 Jul 16:16:46 CEST 2022 */
 #include <string.h>
 #include <unistd.h>
 #include <libgen.h>
@@ -36,6 +36,8 @@ int uname_main(int, char**);
 int link_main(int, char**);
 int chmod_main(int, char**);
 int basename_main(int, char**);
+int yes_main(int, char**);
+int errno_main(int, char**);
 
 int main(int argc, char *argv[]) {
 	if (!strcmp(basename(argv[0]),"box") && argc > 1) {
@@ -57,6 +59,8 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(basename(argv[0]), "link")) return link_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "chmod")) return chmod_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "basename")) return basename_main(argc, argv);
+	else if(!strcmp(argv[0], "yes")) return yes_main(argc, argv);
+	else if(!strcmp(argv[0], "errno")) return errno_main(argc, argv);
 	else {
 		printf("Ferass' Base System in a box\n\n");
 		printf("Usage: box <COMMAND> [ARGS]\n\n");
@@ -76,6 +80,8 @@ int main(int argc, char *argv[]) {
 		printf("link ");
 		printf("chmod ");
 		printf("basename ");
+		printf("yes ");
+		printf("errno ");
 		printf("\n");
 	}
 }

@@ -86,7 +86,14 @@ install:
 install-box:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -r box $(DESTDIR)$(PREFIX)/bin
+
+links:
 	for u in ${CORE}; do ln -s "$(DESTDIR)$(PREFIX)/bin/box" "$(DESTDIR)$(PREFIX)/bin/$$u"; done
+
+remove:
+	rm -f $(DESTDIR)$(PREFIX)/bin/box
+	for u in ${CORE}; do rm -f "$(DESTDIR)$(PREFIX)/bin/$$u"; done
+
 
 # Utilities
 # =========

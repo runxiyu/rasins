@@ -21,7 +21,6 @@
 #include <errno.h>
 
 int getopt(int argc, char *const argv[], const char *optstring);
-char param[256];
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
@@ -30,7 +29,8 @@ void printUsage() {
 }
 
 int main(int argc, char *const argv[]) {
-	int argument, i = 1;
+	char param[256];
+	int success, argument, i = 1;
 	char *basenamestr[256];
 
 	if (argc == 1) {
@@ -49,10 +49,11 @@ int main(int argc, char *const argv[]) {
 	for (; i < argc; i++) {
 		printf("Warning: -p ignored.\n");
 		if (argv[i][0] != '-')
-			int success = !mkdir(argv[i], S_IRWXU | S_IRWXG | S_IRWXO) ? 0 : 1; 
+			success = !mkdir(argv[i], S_IRWXU | S_IRWXG | S_IRWXO) ? 0 : 1; 
 		if (success == 1) {
 			return errno;
 		}
+
 	}
 
 	return 0;

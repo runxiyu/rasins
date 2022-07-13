@@ -87,6 +87,10 @@ basename: basename.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) basename.o -o bin/basename
 
+unlink: unlink.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) unlink.o -o bin/unlink
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -141,3 +145,6 @@ chmod.o:
 
 basename.o:
 	$(CC) $(CFLAGS) $(NOLINKER) basename.c -o basename.o
+
+unlink.o:
+	$(CC) $(CFLAGS) unlink.c -o unlink.o

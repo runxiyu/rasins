@@ -1,4 +1,4 @@
-/*	mkdir - create directories
+/*	unlink - call the unlink() function
  *	Copyright (C) 2022 Ferass EL HAFIDI
  *
  *	This program is free software: you can redistribute it and/or modify
@@ -17,43 +17,26 @@
 
 #include <unistd.h>
 #include <stdio.h>
-#include <sys/stat.h>
 #include <errno.h>
 
 int getopt(int argc, char *const argv[], const char *optstring);
-char param[256];
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: mkdir [-p] [DIRECTORY] ...\n\n"
-	"Create DIRECTORY\n\n");
+	"Usage: unlink <FILE>\n\n"
+	"Call the unlink() function.\n\n");
 }
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 1;
-	char *basenamestr[256];
 
-	if (argc == 1) {
-		printUsage();
-		return 1;
-	}
-
-	while ((argument = getopt(argc, argv, "p")) != -1) {
-		if (argument == '?') {
+	while ((argument = getopt(argc, argv, "")) != -1) {
+		if (argument == '?' || argc != 2) {
 			printUsage();
-			return 0;
-		}
-		param[argument] = argument;
-	}
-
-	for (; i < argc; i++) {
-		printf("Warning: -p ignored.\n");
-		if (argv[i][0] != '-')
-			int success = !mkdir(argv[i], S_IRWXU | S_IRWXG | S_IRWXO) ? 0 : 1; 
-		if (success == 1) {
-			return errno;
+			return 1;
 		}
 	}
-
+	unlink(argv[1]);
+	if (errno) return errno;
 	return 0;
 }

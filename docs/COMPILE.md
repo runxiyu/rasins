@@ -2,7 +2,7 @@
 
 *Simple coreutils for a fully functionnal UNIX-like system*
 
-[« Go back](README.md)
+[« Go back](/README.md)
 
 ## Compile
 

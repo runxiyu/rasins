@@ -4,17 +4,17 @@
 
 ***Project Documentation***
 
-- [Compile fases](COMPILE.md)
+- [Compile fases](docs/COMPILE.md)
 
-- [Mirrors](MIRRORS.md)
+- [Mirrors](docs/MIRRORS.md)
 
-- [Status](STATUS.md)
+- [Status](docs/STATUS.md)
 
-- [Coding Style](CODING_STYLE.md)
+- [Coding Style](docs/CODING_STYLE.md)
 
-- [Benchmarks](BENCH.md)
+- [Benchmarks](docs/BENCH.md)
 
-- [Incomplete TODO list](TODO.md)
+- [Incomplete TODO list](docs/TODO.md)
 
 ## Goal
 

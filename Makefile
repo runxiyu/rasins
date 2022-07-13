@@ -76,12 +76,17 @@ box: box.o
 	$(CC) $(CFLAGS) box_tmp/*.c box.o -o box 
 
 clean:
-	rm -f box *.o
-	rm -Rf box_tmp
+	rm -f box *.o extras-bin core-bin
+	rm -Rf box_tmp */bin/*
 
 install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp -r core/bin/* $(DESTDIR)$(PREFIX)/bin
+
+install-box:
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -r box $(DESTDIR)$(PREFIX)/bin
+	for u in ${CORE}; do ln -s "$(DESTDIR)$(PREFIX)/bin/box" "$(DESTDIR)$(PREFIX)/bin/$$u"; done
 
 # Utilities
 # =========

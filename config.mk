@@ -45,7 +45,7 @@ CORE=\
 	basename\
 	more
 
-INCLUDE_EXTRA=y # Should extra utils be included inside fasesiab?
+INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
 # Extra utilities
 EXTRA=\
 	yes\

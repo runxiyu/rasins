@@ -103,6 +103,10 @@ more: more.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) more.o -o bin/more
 
+chown: chown.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) chown.o -o bin/chown
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -169,3 +173,6 @@ rm.o:
 
 more.o:
 	$(CC) $(CFLAGS) $(NOLINKER) more.c -o more.o
+
+chown.o:
+	$(CC) $(CFLAGS) $(NOLINKER) chown.c -o chown.o

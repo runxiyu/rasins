@@ -43,7 +43,8 @@ CORE=\
 	unlink\
 	mv\
 	basename\
-	more
+	more\
+	chown
 
 INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
 # Extra utilities

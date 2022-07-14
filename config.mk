@@ -42,7 +42,8 @@ CORE=\
 	chmod\
 	unlink\
 	mv\
-	basename
+	basename\
+	more
 
 INCLUDE_EXTRA=y # Should extra utils be included inside fasesiab?
 # Extra utilities

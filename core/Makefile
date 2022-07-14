@@ -99,6 +99,10 @@ rm: rm.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) rm.o -o bin/rm
 
+more: more.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) more.o -o bin/more
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -162,3 +166,6 @@ mv.o:
 
 rm.o:
 	$(CC) $(CFLAGS) $(NOLINKER) rm.c -o rm.o
+
+more.o:
+	$(CC) $(CFLAGS) $(NOLINKER) more.c -o more.o

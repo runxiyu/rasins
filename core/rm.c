@@ -23,8 +23,10 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: rm <FILE> ...\n\n"
-	"Remove FILE.\n\n");
+	"Usage: rm [-Rr] <FILE> ...\n\n"
+	"Remove FILE.\n\n"
+	"\t-R\tRecursively remove the directory tree\n"
+	"\t-r\tEnable the -R option\n");
 }
 
 int main(int argc, char *const argv[]) {
@@ -43,9 +45,11 @@ int main(int argc, char *const argv[]) {
 		return 1;
 	}
 
-	for (; i <= argc; i++) {
+	for (; i < argc; i++) {
 		if (!param['r'] || !param['R']) unlink(argv[i]);
-		else                            remove(argv[i]);
+		else                            remove(argv[i]); /* TODO: Actually 
+		                                                  * recursively remove 
+		                                                  * the directory */
 	}
 
 	if (errno) return errno;

@@ -26,25 +26,27 @@ CFLAGS=-I. -Wall -Wextra -g $(FORCEC99) $(OPTIMIZE) # C Compiler flags
 NOLINKER=-c # C Compiler flag to disable the linker
 # Core utilities
 CORE=\
+	basename\
 	cat\
-	ls\
+	chmod\
+	chown\
 	date\
 	echo\
-	true\
 	false\
-	mkdir\
 	head\
-	printf\
-	sleep\
-	ln\
-	uname\
 	link\
-	chmod\
-	unlink\
-	mv\
-	basename\
+	ln\
+	ls\
+	Makefile
+	mkdir\
 	more\
-	chown
+	mv\
+	printf\
+	rm\
+	sleep\
+	true\
+	uname\
+	unlink
 
 INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
 # Extra utilities

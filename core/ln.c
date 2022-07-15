@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include <string.h>
 
 int getopt(int argc, char *const argv[], const char *optstring);
 
@@ -25,7 +26,8 @@ void printUsage() {
 	printf("Ferass' Base System.\n\n"
 	"Usage: ln [-s] <SOURCE> ... <TARGET>\n\n"
 	"Link SOURCE-s to TARGET.\n\n"
-	"\t-s\tCreate symbolic links instead of hard links.\n");
+	"\t-s\tCreate symbolic links instead of hard links\n"
+	"\t-f\tIf TARGET exists, override the file");
 }
 
 int main(int argc, char *const argv[]) {
@@ -44,11 +46,14 @@ int main(int argc, char *const argv[]) {
 		param[argument] = argument;
 	}
 
-	for (int i = 1; i > argc; i++) {
-		if (param['s']) symlink(argv[i], argv[argc]);
-		else link(argv[i], argv[argc]);
-
-		if (errno) return errno;
+	for (int i = 1; i < argc - 1; i++) {
+		if (argv[argc - 1] == '-') argc--;
+		if (argv[i][0] != '-') {
+			if (param['f']) remove(argv[argc - 1]);
+			if (param['s']) symlink(argv[i], argv[argc - 1]);
+			else link(argv[i], argv[argc - 1]);
+			if (errno) return errno;
+		}
 	}
 	return 0;
 }

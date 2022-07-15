@@ -1,5 +1,6 @@
-/*	head - print file until a certain line
+/*	head - copy the first part of files 
  *	Copyright (C) 2022 Ferass EL HAFIDI
+ *	Copyright (C) 2022 Leah Rowe
  *
  *	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -15,51 +16,59 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <fcntl.h>
+#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <errno.h>
+#include <string.h>
+#include <stdlib.h>
+
+int getopt(int argc, char *const argv[], const char *optstring);
+extern char *optarg;
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-		"Usage: head [FILE] [-n NUMBER]\n\n"
-		"Print FILE's contents until line NUMBER.\n\n"
-		"\t-n NUMBER\tPrint first NUMBER line(s).\n"
-	);
+	"Usage: head [-n NUMBER] [FILE]\n\n"
+	"Concatenate FILE to stdout\n\n"
+	"\t-n NUMBER\tNumber of lines to be copied to standard output\n");
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *const argv[]) {
+	int argument, i = 1, lines, lines_printed;
 	FILE *file;
-	char s[512], arg_lines;
-	int i = 0, usedargs = 0;
 
-	setvbuf(stdout, NULL, _IONBF, 0);
+	char s[4096];
 
-	if (argc == 1) {
-		while (1) {
-			char input[80];
-			fgets(input, 80, stdin);
-			printf("%s", input);
-		}
-	}
-
-	for (i = 1; argv[i]; i++) {
-		if (argv[i][usedargs + 1] == 'n' && argv[i + 1]) {
-			arg_lines = strtol(argv[i + 1], NULL, 0);
-			usedargs++;
-		}
-		if (argv[i][usedargs + 1] == 'h') {
+	while ((argument = getopt(argc, argv, "n:")) != -1) {
+		if (argument == '?' || argument == ':') {
 			printUsage();
-			return 0;
+			return 1;
 		}
+		else if (argument == 'n') {
+			lines = strtol(optarg, NULL, 10);
+			if (errno) return errno;
+		}
+		else
+			lines = 10;
 	}
-	/* Something went wrong */
-	if ((file = fopen(argv[1], "r")) == NULL) return errno;
-	for (; i != arg_lines && (fgets(s, 512, file)) != NULL; i++) {
-		s[strcspn(s, "\n")] = 0; /* Remove trailing newline */
-		puts(s); 
+	if (argc < 2) {
+		while (read(STDIN_FILENO, s, 4096) > 0)
+			printf("%s", s);
 	}
-	fclose(file);
-
+	if (!lines) lines = 10;
+	for (i = 1; i != argc; i++) {
+		if (strcmp(argv[i], "-n")) {
+			if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
+			else while (read(STDIN_FILENO, s, 4096) > 0) printf("%s", s);
+			if (file == NULL) return errno; /* Something went wrong */
+			for (lines_printed = 1; lines_printed <= lines; lines_printed++) {
+				if (fgets(s, 4096, file) != NULL)
+					printf("%s", s);
+				else if (errno) return errno;
+			}
+			fclose(file);
+		}
+		else i++;
+	}
 	return 0;
 }

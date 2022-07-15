@@ -37,7 +37,6 @@ CORE=\
 	link\
 	ln\
 	ls\
-	Makefile
 	mkdir\
 	more\
 	mv\

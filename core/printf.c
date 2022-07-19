@@ -22,7 +22,7 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: printf <FORMAT> [STRING]\n\n"
+	"Usage: printf format [string]\n\n"
 	"Write formatted strings to stdout.\n\n");
 }
 

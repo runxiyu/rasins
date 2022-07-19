@@ -35,8 +35,8 @@ int getopt(int argc, char *const argv[], const char *optstring);
 void printUsage(char *params) {
 	printf("Ferass' Base System.\n\n"
 	"Usage: "
-	"ls [-%s] [DIRECTORY] ...\n\n"
-	"Print DIRECTORY's contents to stdout\n\n"
+	"ls [-%s] [directory] ...\n\n"
+	"Print <directory>'s contents to standard output.\n\n"
 	"\t-a\tInclude names starting with a dot, including '.' and '..'\n"
 	"\t-A\tSame as `-a` but don't include '.' and '..'\n"
 	"\t-C\tPrint in columns\n"

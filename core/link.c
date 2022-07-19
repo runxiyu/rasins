@@ -23,8 +23,8 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: link <FILE1> <FILE2>\n\n"
-	"Link FILE1 to FILE2 using the link() function.\n\n");
+	"Usage: link file1 file2\n\n"
+	"Link <file1> to <file2> using the link() function.\n\n");
 }
 
 int main(int argc, char *const argv[]) {

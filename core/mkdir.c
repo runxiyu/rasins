@@ -24,8 +24,8 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: mkdir [-p] [DIRECTORY] ...\n\n"
-	"Create DIRECTORY\n\n");
+	"Usage: mkdir [-p] directory ...\n\n"
+	"Create a directory.\n\n");
 }
 
 int main(int argc, char *const argv[]) {

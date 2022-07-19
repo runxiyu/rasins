@@ -25,8 +25,8 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: basename <STRING> [SUFFIX]\n\n"
-	"Return non-directory portion of STRING.\n\n");
+	"Usage: basename string [suffix]\n\n"
+	"Return non-directory portion of <string>.\n\n");
 }
 
 int main(int argc, char *argv[]) {

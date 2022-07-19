@@ -26,8 +26,8 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: more <FILE> ...\n\n"
-	"Display FILE on a page-by-page basis.\n\n");
+	"Usage: more file ...\n\n"
+	"Display a file on a page-by-page basis.\n\n");
 }
 
 int main(int argc, char *const argv[]) {

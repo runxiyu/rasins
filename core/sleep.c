@@ -21,8 +21,8 @@
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: sleep [SECONDS]\n\n"
-	"Suspend execution for SECONDS seconds.\n\n");
+	"Usage: sleep seconds\n\n"
+	"Suspend execution for <seconds> seconds.\n\n");
 }
 
 int main(int argc, char *argv[]) {

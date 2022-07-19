@@ -24,7 +24,7 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: chmod <MODE> <FILE>\n\n"
+	"Usage: chmod mode file\n\n"
 	"Change file modes.\n\n");
 }
 

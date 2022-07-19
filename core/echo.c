@@ -22,8 +22,8 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: echo [STRING]\n\n"
-	"Write STRING to stdout\n\n");
+	"Usage: echo [string]\n\n"
+	"Write <string> to standard output.\n\n");
 }
 
 int main(int argc, char *const argv[]) {

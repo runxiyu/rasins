@@ -28,9 +28,9 @@ extern char *optarg;
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: head [-n NUMBER] [FILE]\n\n"
-	"Concatenate FILE to stdout\n\n"
-	"\t-n NUMBER\tNumber of lines to be copied to standard output\n");
+	"Usage: head [-n number] [file]\n\n"
+	"Copy file to standard output until <number> lines.\n\n"
+	"\t-n number\tNumber of lines to be copied to standard output\n");
 }
 
 int main(int argc, char *const argv[]) {

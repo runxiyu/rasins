@@ -23,7 +23,7 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: unlink <FILE>\n\n"
+	"Usage: unlink file\n\n"
 	"Call the unlink() function.\n\n");
 }
 

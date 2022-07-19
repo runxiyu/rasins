@@ -26,8 +26,9 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 void printUsage() {
 	printf("Ferass' Base System.\n\n"
-	"Usage: cat [FILE]\n\n"
-	"Concatenate FILE to stdout\n\n"
+	"Usage: cat [file]\n\n"
+	"Concatenate <file> to standard output.\n"
+	"When no file is specified or file is '-', read standard input\n\n"
 	"\t-u\tPrint unbuffered\n");
 }
 

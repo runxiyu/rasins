@@ -20,13 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: chmod mode file\n\n"
-	"Change file modes.\n\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 0;
@@ -104,4 +99,10 @@ int main(int argc, char *const argv[]) {
 
 	chmod(argv[2], owner_modes | group_modes | other_modes);
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: chmod mode file\n\n"
+	"Change file modes.\n\n");
 }

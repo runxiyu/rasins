@@ -19,15 +19,8 @@
 #include <stdio.h>
 #include <errno.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: rm [-Rr] file ...\n\n"
-	"Remove <file>.\n\n"
-	"\t-R\tRecursively remove the directory tree\n"
-	"\t-r\tEnable the -R option\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 1;
@@ -54,4 +47,12 @@ int main(int argc, char *const argv[]) {
 
 	if (errno) return errno;
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: rm [-Rr] file ...\n\n"
+	"Remove <file>.\n\n"
+	"\t-R\tRecursively remove the directory tree\n"
+	"\t-r\tEnable the -R option\n");
 }

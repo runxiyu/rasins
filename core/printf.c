@@ -18,13 +18,8 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: printf format [string]\n\n"
-	"Write formatted strings to stdout.\n\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 1;
@@ -41,4 +36,10 @@ int main(int argc, char *const argv[]) {
 	}
 	printf(argv[1], argv[2] ? argv[2] : "");
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: printf format [string]\n\n"
+	"Write formatted strings to stdout.\n\n");
 }

@@ -21,13 +21,8 @@
 #include <string.h>
 #include <libgen.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: basename string [suffix]\n\n"
-	"Return non-directory portion of <string>.\n\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *argv[]) {
 	int argument, status;
@@ -67,4 +62,10 @@ int main(int argc, char *argv[]) {
 
 	printf("%s\n", basenamestr);
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: basename string [suffix]\n\n"
+	"Return non-directory portion of <string>.\n\n");
 }

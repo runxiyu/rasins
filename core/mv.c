@@ -20,15 +20,8 @@
 #include <errno.h>
 #include <fcntl.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: mv [-if] file1 file2\n\n"
-	"Move <file1> to <file2>.\n\n"
-	"\t-i\tIf <file2> exists, ask for confirmation\n"
-	"\t-f\tNever ask for confirmation\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, file;
@@ -61,4 +54,12 @@ int main(int argc, char *const argv[]) {
 	rename(argv[1], argv[2]); /* Technically, moving files == renaming files */
 	if (errno) return errno;
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: mv [-if] file1 file2\n\n"
+	"Move <file1> to <file2>.\n\n"
+	"\t-i\tIf <file2> exists, ask for confirmation\n"
+	"\t-f\tNever ask for confirmation\n");
 }

@@ -22,13 +22,8 @@
 #include <string.h>
 #include <termios.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: more file ...\n\n"
-	"Display a file on a page-by-page basis.\n\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int i = 0, argument, success, read_file;
@@ -101,4 +96,10 @@ int main(int argc, char *const argv[]) {
 		}
 	}
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: more file ...\n\n"
+	"Display a file on a page-by-page basis.\n\n");
 }

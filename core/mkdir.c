@@ -20,13 +20,8 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: mkdir [-p] directory ...\n\n"
-	"Create a directory.\n\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	char param[256];
@@ -57,4 +52,10 @@ int main(int argc, char *const argv[]) {
 	}
 
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: mkdir [-p] directory ...\n\n"
+	"Create a directory.\n\n");
 }

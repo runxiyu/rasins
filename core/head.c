@@ -23,15 +23,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-extern char *optarg;
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: head [-n number] [file]\n\n"
-	"Copy file to standard output until <number> lines.\n\n"
-	"\t-n number\tNumber of lines to be copied to standard output\n");
-}
+/* Functions Prototypes */
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 1, lines, lines_printed;
@@ -71,4 +65,11 @@ int main(int argc, char *const argv[]) {
 		else i++;
 	}
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: head [-n number] [file]\n\n"
+	"Copy file to standard output until <number> lines.\n\n"
+	"\t-n number\tNumber of lines to be copied to standard output\n");
 }

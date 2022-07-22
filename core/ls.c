@@ -30,7 +30,70 @@
 #include <time.h>
 
 char param[256];
-int getopt(int argc, char *const argv[], const char *optstring);
+int  getopt(int argc, char *const argv[], const char *optstring);
+int  ls(char *path);
+void printUsage(char *params);
+
+int main(int argc, char *argv[]) {
+	int status = 0;
+	int success = 0;
+	int argument, i;
+	char* params = "aACR1imlpgno";
+
+	for(i=0; i<256; i++) {
+		param[i]=0;
+	}
+
+	while ((argument = getopt(argc, argv, params)) != -1) {
+		if (argument == '?') {
+			printUsage(params);
+			return 1;
+		}
+		param[argument] = argument;
+
+		if (argument=='C') {
+			param['1'] = 0;
+			param['m'] = 0;
+		}
+		else if (argument=='1' || argument=='g' || argument=='n') {
+			param['m'] = 0;
+			param['C'] = 0;
+		}
+		else if (argument=='m') {
+			param['1'] = 0;
+			param['C'] = 0;
+		}
+		if (argument=='o' || argument=='n' || argument=='g') {
+			param['l'] = 'l';
+		}
+	}
+	if (status) {
+		if(!param['1']) printf("\n");
+		return status;
+	}
+
+	if (!param['C'] && !param['m'] && !param['1'])
+		param['1'] = '1';
+
+	if (param['l'] || param['g']) {
+		param['m'] = 0;
+		param['C'] = 0;
+		param['1'] = '1';
+	}
+
+	for (i = 1; i < argc; i++) {
+		if ((success |= (argv[i][0] != '-' ? 1 : 0))) {
+			if (!strcmp(argv[i],".")) status |= ls("./");
+			else status |= ls(argv[i]);
+		}
+	}
+
+	i = success ? status : ls("./");
+	if(!param['1'])
+		printf("\n");
+
+	return i;
+}
 
 void printUsage(char *params) {
 	printf("Ferass' Base System.\n\n"
@@ -221,65 +284,4 @@ int ls(char *path) {
 	}
 
 	return errno;
-}
-
-int main(int argc, char *argv[]) {
-	int status = 0;
-	int success = 0;
-	int argument, i;
-	char* params = "aACR1imlpgno";
-
-	for(i=0; i<256; i++) {
-		param[i]=0;
-	}
-
-	while ((argument = getopt(argc, argv, params)) != -1) {
-		if (argument == '?') {
-			printUsage(params);
-			return 1;
-		}
-		param[argument] = argument;
-
-		if (argument=='C') {
-			param['1'] = 0;
-			param['m'] = 0;
-		}
-		else if (argument=='1' || argument=='g' || argument=='n') {
-			param['m'] = 0;
-			param['C'] = 0;
-		}
-		else if (argument=='m') {
-			param['1'] = 0;
-			param['C'] = 0;
-		}
-		if (argument=='o' || argument=='n' || argument=='g') {
-			param['l'] = 'l';
-		}
-	}
-	if (status) {
-		if(!param['1']) printf("\n");
-		return status;
-	}
-
-	if (!param['C'] && !param['m'] && !param['1'])
-		param['1'] = '1';
-
-	if (param['l'] || param['g']) {
-		param['m'] = 0;
-		param['C'] = 0;
-		param['1'] = '1';
-	}
-
-	for (i = 1; i < argc; i++) {
-		if ((success |= (argv[i][0] != '-' ? 1 : 0))) {
-			if (!strcmp(argv[i],".")) status |= ls("./");
-			else status |= ls(argv[i]);
-		}
-	}
-
-	i = success ? status : ls("./");
-	if(!param['1'])
-		printf("\n");
-
-	return i;
 }

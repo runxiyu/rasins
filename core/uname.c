@@ -20,20 +20,8 @@
 #include <sys/utsname.h>
 #include <errno.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: uname [-amnrsv] \n\n"
-	"Return system name.\n\n"
-	"\t-a\tSame as -mnrsv\n"
-	"\t-m\tWrite the hardware's architecture\n"
-	"\t-n\tWrite the network node hostname\n"
-	"\t-r\tWrite the operating system release\n"
-	"\t-s\tWrite the name of the operating system implementation\n"
-	"\t-v\tWrite the current version of this release of the operating "
-	"system implementation\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument;
@@ -70,4 +58,17 @@ int main(int argc, char *const argv[]) {
 		printf("%s\n", name.sysname);
 
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: uname [-amnrsv] \n\n"
+	"Return system name.\n\n"
+	"\t-a\tSame as -mnrsv\n"
+	"\t-m\tWrite the hardware's architecture\n"
+	"\t-n\tWrite the network node hostname\n"
+	"\t-r\tWrite the operating system release\n"
+	"\t-s\tWrite the name of the operating system implementation\n"
+	"\t-v\tWrite the current version of this release of the operating "
+	"system implementation\n");
 }

@@ -22,15 +22,8 @@
 #include <errno.h>
 #include <string.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: cat [file]\n\n"
-	"Concatenate <file> to standard output.\n"
-	"When no file is specified or file is '-', read standard input\n\n"
-	"\t-u\tPrint unbuffered\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int file, argument, i = 1, length;
@@ -62,4 +55,12 @@ int main(int argc, char *const argv[]) {
 		}
 	}
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: cat [file]\n\n"
+	"Concatenate <file> to standard output.\n"
+	"When no file is specified or file is '-', read standard input\n\n"
+	"\t-u\tPrint unbuffered\n");
 }

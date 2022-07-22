@@ -20,19 +20,8 @@
 #include <errno.h>
 #include <string.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: ln [-fs] [-P|-L] source_file target_file\n\n"
-	"Link files.\n\n"
-	"\t-s\tCreate symbolic links instead of hard links\n"
-	"\t-f\tIf <target_file> exists, override the file\n"
-	"\t-P\tIf <source_file> names a symbolic link, create a hard link to the "
-	"symbolic link itself (default)\n"
-	"\t-L\tIf <source_file> names a symbolic link, create a hard link to the "
-	"file referenced by the symbolic link\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument;
@@ -69,4 +58,16 @@ int main(int argc, char *const argv[]) {
 		}
 	}
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: ln [-fs] [-P|-L] source_file target_file\n\n"
+	"Link files.\n\n"
+	"\t-s\tCreate symbolic links instead of hard links\n"
+	"\t-f\tIf <target_file> exists, override the file\n"
+	"\t-P\tIf <source_file> names a symbolic link, create a hard link to the "
+	"symbolic link itself (default)\n"
+	"\t-L\tIf <source_file> names a symbolic link, create a hard link to the "
+	"file referenced by the symbolic link\n");
 }

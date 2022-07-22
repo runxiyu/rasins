@@ -19,13 +19,8 @@
 #include <stdio.h>
 #include <errno.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: unlink file\n\n"
-	"Call the unlink() function.\n\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 1;
@@ -39,4 +34,10 @@ int main(int argc, char *const argv[]) {
 	unlink(argv[1]);
 	if (errno) return errno;
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: unlink file\n\n"
+	"Call the unlink() function.\n\n");
 }

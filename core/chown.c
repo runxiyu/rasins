@@ -21,13 +21,8 @@
 #include <pwd.h>
 #include <stdlib.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: chown owner file\n\n"
-	"Change file ownership.\n\n");
-}
+int  getopt(int argc, char *const argv[], const char *optstring);
+void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument;
@@ -52,4 +47,10 @@ int main(int argc, char *const argv[]) {
 	if (errno) return errno;
 
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: chown owner file\n\n"
+	"Change file ownership.\n\n");
 }

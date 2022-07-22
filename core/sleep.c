@@ -19,11 +19,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: sleep seconds\n\n"
-	"Suspend execution for <seconds> seconds.\n\n");
-}
+void printUsage();
 
 int main(int argc, char *argv[]) {
 	long unsigned int seconds;
@@ -42,4 +38,10 @@ int main(int argc, char *argv[]) {
 	}
 
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: sleep seconds\n\n"
+	"Suspend execution for <seconds> seconds.\n\n");
 }

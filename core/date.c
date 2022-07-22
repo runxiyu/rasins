@@ -18,11 +18,7 @@
 #include <time.h>
 #include <stdio.h>
 
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: date [+format]\n\n"
-	"Output the date and time.\n\n");
-}
+void printUsage();
 
 int main(int argc, char *argv[]) {
 	time_t epoch = time(NULL);
@@ -39,4 +35,10 @@ int main(int argc, char *argv[]) {
 	strftime(date_s, 31, format, date);
 	printf("%s\n", date_s);
 	return 0;
+}
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: date [+format]\n\n"
+	"Output the date and time.\n\n");
 }

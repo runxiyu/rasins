@@ -55,11 +55,8 @@ int main(int argc, char *const argv[]) {
 		                                * 0 => don't read at all 
 									    * 2 => read on a line-by-line basis
 									    */
-		for (i = 0; i < lines; i++) {
+		for (i = 0; i < lines && read_file != 0; i++) {
 			if (fgets(buffer, 4096, file) != NULL) {
-				//printf("%ld ", strcspn(buffer, "\n"));
-				//if (read_file == 2)
-				//buffer[strcspn(buffer, "\n")] = 0; /* Remove trailing newline */
 				printf("%s", buffer);
 			}
 			else if (errno) return errno;
@@ -72,11 +69,6 @@ int main(int argc, char *const argv[]) {
 			}
 		}
 		read_file = 0;
-		/* TODO: Find a way of reading user commands 
-		 * without having the command printed on the screen or 
-		 * having them always at the bottom of the screen like 
-		 * other implementations of `more`.
-		 */
 		
 		/* Get a character */
 		tcgetattr(0, &oldattr); /* Get previous terminal parameters */
@@ -92,6 +84,7 @@ int main(int argc, char *const argv[]) {
 				return 0;
 			case 'h':
 				printUsage();
+				read_file = 0;
 				break;
 			case ' ':
 				read_file = 1; /* page-by-page */

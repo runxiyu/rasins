@@ -30,6 +30,7 @@ int main(int argc, char *const argv[]) {
 	long int columns, lines;
 	char buffer[4096], cmd;
 	FILE *file;
+	struct termios oldattr, newattr;
 	if (getenv("LINES")) lines = strtol(getenv("LINES"), NULL, 10) - 1;
 	/* TODO: Calculate terminal size */
 	else lines = 80;
@@ -76,23 +77,28 @@ int main(int argc, char *const argv[]) {
 		 * having them always at the bottom of the screen like 
 		 * other implementations of `more`.
 		 */
+		
+		/* Get a character */
+		tcgetattr(0, &oldattr); /* Get previous terminal parameters */
+		newattr = oldattr;
+		newattr.c_lflag &= ~( ICANON | ECHO ); /* Disable ECHO and ICANON */
+		tcsetattr( 0, TCSANOW, &newattr); /* Set net parameters */
 		cmd = getchar();
+		tcsetattr(0, TCSANOW, &oldattr); /* Restore old parameters */
+
 		if (errno) return errno;
 		switch (cmd) {
-		/* This code is commented because of the reason 
-		 * described in the previous comment. 
-		 */
 			case 'q':
 				return 0;
-		//	case 'h':
-		//		printUsage();
-		//		break;
+			case 'h':
+				printUsage();
+				break;
 			case ' ':
 				read_file = 1; /* page-by-page */
 				break;
-		//	default:
-		//		read_file = 2; /* line-by-line */
-		//		break;
+			default:
+				read_file = 2; /* line-by-line */
+				break;
 		}
 	}
 	return 0;

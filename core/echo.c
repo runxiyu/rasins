@@ -20,21 +20,9 @@
 
 int getopt(int argc, char *const argv[], const char *optstring);
 
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: echo [string]\n\n"
-	"Write <string> to standard output.\n\n");
-}
-
 int main(int argc, char *const argv[]) {
 	int argument, i = 1;
 
-	while ((argument = getopt(argc, argv, "")) != -1) {
-		if (argument == '?') {
-			printUsage();
-			return 1;
-		}
-	}
 	for (i = 1; i != argc; i++) {
 		printf("%s ", argv[i]);
 	}

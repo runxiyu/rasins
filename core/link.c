@@ -29,21 +29,9 @@ int main(int argc, char *const argv[]) {
 		printUsage();
 		return 1;
 	}
-	while ((argument = getopt(argc, argv, "")) != -1) {
-		if (argument == '?') {
-			printUsage();
-			return 1;
-		}
-	}
 	if (argc >= 2) {
 		link(argv[1], argv[2]);
 		if (errno) return errno;
 	}
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: link file1 file2\n\n"
-	"Link <file1> to <file2> using the link() function.\n\n");
 }

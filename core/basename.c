@@ -33,12 +33,6 @@ int main(int argc, char *argv[]) {
 		printUsage();
 		return 1;
 	}
-	while ((argument = getopt(argc, argv, "")) != -1) {
-		if (argument == '?') {
-			printUsage();
-			return 1;
-		}
-	}
 	basenamestr = basename(argv[1]);
 	if (argc == 3) {
 		for (i = 1; i <= strlen(argv[2]); ++i) {

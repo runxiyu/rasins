@@ -28,12 +28,6 @@ int main(int argc, char *const argv[]) {
 		printUsage();
 		return 1;
 	}
-	while ((argument = getopt(argc, argv, "")) != -1) {
-		if (argument == '?') {
-			printUsage();
-			return 1;
-		}
-	}
 	printf(argv[1], argv[2] ? argv[2] : "");
 	return 0;
 }

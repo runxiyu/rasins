@@ -35,3 +35,9 @@ int main(int argc, char *const argv[]) {
 	}
 	return 0;
 }
+
+void printUsage() {
+	printf("Ferass' Base System.\n\n"
+	"Usage: link file1 file2\n\n"
+	"Link <file1> to <file2> using the link() function.\n\n");
+}

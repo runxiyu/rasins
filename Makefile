@@ -24,48 +24,17 @@ include ./config.mk
 all: clean box
 
 genbox:
-	echo "/*	fasesiab - Ferass' Base System in a box "             > box.c
-	echo " *	Copyright (C) 2022 Ferass EL HAFIDI"                 >> box.c
-	echo " *"                                                        >> box.c
-	echo " *	This program is free software: you can redistribute it and/or modify"           >> box.c
-	echo " *	it under the terms of the GNU General Public License as published by"           >> box.c
-	echo " *	the Free Software Foundation, either version 3 of the License, or"              >> box.c
-	echo " *	(at your option) any later version."                 >> box.c
-	echo " *"                                                        >> box.c
-	echo " *	This program is distributed in the hope that it will be useful,"                >> box.c
-	echo " *	but WITHOUT ANY WARRANTY; without even the implied warranty of"                 >> box.c
-	echo " *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"                  >> box.c
-	echo " *	GNU General Public License for more details."        >> box.c
-	echo " *"                                                        >> box.c
-	echo " *	You should have received a copy of the GNU General Public License"              >> box.c
-	echo " *	along with this program.  If not, see <https://www.gnu.org/licenses/>."         >> box.c
-	echo " */"                                                       >> box.c
-	echo                                                             >> box.c
-	echo "/* Generated on $$(date) */"                               >> box.c
-	echo "#include <string.h>"                                       >> box.c
-	echo "#include <unistd.h>"                                       >> box.c
-	echo "#include <libgen.h>"                                       >> box.c
-	echo "#include <stdio.h>"                                        >> box.c
-	echo                                                             >> box.c
+	cat "box-templates/box_1-23.c"                                    > box.c
 	for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c
-	echo                                                             >> box.c
-	echo "int main(int argc, char *argv[]) {"                        >> box.c
-	echo "	if (!strcmp(basename(argv[0]),\"box\") && argc > 1) {"   >> box.c
-	echo "		argc--;"                                             >> box.c
-	echo "		argv++;"                                             >> box.c
-	echo "	} if(0);"                                                >> box.c
+	cat "box-templates/box_45-49.c"                                  >> box.c
 	for u in ${CORE}; do echo "	else if(!strcmp(basename(argv[0]), \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "	else if(!strcmp(argv[0], \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
-	echo "	else {"                                                  >> box.c
-	echo "		printf(\"Ferass' Base System in a box\n\n\");"       >> box.c
-	echo "		printf(\"Usage: box <COMMAND> [ARGS]\n\n\");"        >> box.c
-	echo "		printf(\"Commands available:\n\");"                  >> box.c
+	cat "box-templates/box_70-73.c"                                  >> box.c
 	for u in ${CORE}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
-	echo "		printf(\"\\n\");"                                    >> box.c
-	echo "	}"                                                       >> box.c
-	echo "}"                                                         >> box.c
+	cat "box-templates/box_94-96.c"                                  >> box.c
+	echo "/* Generated on $$(date) */"                               >> box.c
 
 prepbox:
 	mkdir -p box_tmp

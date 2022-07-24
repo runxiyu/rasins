@@ -14,13 +14,13 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+/* START */
 
-/* Generated on Sat 23 Jul 20:54:23 CEST 2022 */
 #include <string.h>
 #include <unistd.h>
 #include <libgen.h>
 #include <stdio.h>
-
+/*  END  */
 int basename_main(int, char**);
 int cat_main(int, char**);
 int chmod_main(int, char**);
@@ -41,12 +41,13 @@ int sleep_main(int, char**);
 int true_main(int, char**);
 int uname_main(int, char**);
 int unlink_main(int, char**);
-
+/* START */
 int main(int argc, char *argv[]) {
 	if (!strcmp(basename(argv[0]),"box") && argc > 1) {
 		argc--;
 		argv++;
 	} if(0);
+/*  END  */
 	else if(!strcmp(basename(argv[0]), "basename")) return basename_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "cat")) return cat_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "chmod")) return chmod_main(argc, argv);
@@ -67,10 +68,12 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(basename(argv[0]), "true")) return true_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "uname")) return uname_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "unlink")) return unlink_main(argc, argv);
+/* START */
 	else {
 		printf("Ferass' Base System in a box\n\n");
 		printf("Usage: box <COMMAND> [ARGS]\n\n");
 		printf("Commands available:\n");
+/*  END  */
 		printf("basename ");
 		printf("cat ");
 		printf("chmod ");
@@ -91,6 +94,9 @@ int main(int argc, char *argv[]) {
 		printf("true ");
 		printf("uname ");
 		printf("unlink ");
+/* START */
 		printf("\n");
 	}
 }
+/*  END  */
+/* Generated on Sun 24 Jul 19:09:33 CEST 2022 */

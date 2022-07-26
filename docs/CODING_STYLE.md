@@ -25,7 +25,7 @@ the program less portable) ;
 
 - Utilities shall only implement POSIX-compliant options, if the utility 
 supports options, and the specified option is invalid, the utility shall 
-print a help text ;
+print a help text (this applies only to coreutils) ;
 
 - Utilities shall only use the **standard C library and POSIX libraries** ;
 

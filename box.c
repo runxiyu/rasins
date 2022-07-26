@@ -26,6 +26,7 @@ int cat_main(int, char**);
 int chmod_main(int, char**);
 int chown_main(int, char**);
 int date_main(int, char**);
+int dirname_main(int, char**);
 int echo_main(int, char**);
 int false_main(int, char**);
 int head_main(int, char**);
@@ -53,6 +54,7 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(basename(argv[0]), "chmod")) return chmod_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "chown")) return chown_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "date")) return date_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "dirname")) return dirname_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "echo")) return echo_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "false")) return false_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "head")) return head_main(argc, argv);
@@ -79,6 +81,7 @@ int main(int argc, char *argv[]) {
 		printf("chmod ");
 		printf("chown ");
 		printf("date ");
+		printf("dirname ");
 		printf("echo ");
 		printf("false ");
 		printf("head ");
@@ -99,4 +102,4 @@ int main(int argc, char *argv[]) {
 	}
 }
 /*  END  */
-/* Generated on Sun 24 Jul 19:09:33 CEST 2022 */
+/* Generated on Tue 26 Jul 22:26:58 CEST 2022 */

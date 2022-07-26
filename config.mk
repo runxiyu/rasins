@@ -31,6 +31,7 @@ CORE=\
 	chmod\
 	chown\
 	date\
+	dirname\
 	echo\
 	false\
 	head\
@@ -50,8 +51,8 @@ CORE=\
 INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
 # Extra utilities
 EXTRA=\
-	yes\
-	errno
+	errno\
+	yes
 
 # Destination directory
 DESTDIR=

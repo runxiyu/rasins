@@ -44,6 +44,7 @@ CORE=\
 	printf\
 	rm\
 	sleep\
+	tail\
 	true\
 	uname\
 	unlink

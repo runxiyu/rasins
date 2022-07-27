@@ -107,6 +107,10 @@ chown: chown.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) chown.o -o bin/chown
 
+tail: tail.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) tail.o -o bin/tail
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -176,3 +180,6 @@ more.o:
 
 chown.o:
 	$(CC) $(CFLAGS) $(NOLINKER) chown.c -o chown.o
+
+tail.o:
+	$(CC) $(CFLAGS) $(NOLINKER) tail.c -o tail.o

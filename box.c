@@ -39,6 +39,7 @@ int mv_main(int, char**);
 int printf_main(int, char**);
 int rm_main(int, char**);
 int sleep_main(int, char**);
+int tail_main(int, char**);
 int true_main(int, char**);
 int uname_main(int, char**);
 int unlink_main(int, char**);
@@ -67,6 +68,7 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(basename(argv[0]), "printf")) return printf_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "rm")) return rm_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "sleep")) return sleep_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "tail")) return tail_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "true")) return true_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "uname")) return uname_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "unlink")) return unlink_main(argc, argv);
@@ -94,6 +96,7 @@ int main(int argc, char *argv[]) {
 		printf("printf ");
 		printf("rm ");
 		printf("sleep ");
+		printf("tail ");
 		printf("true ");
 		printf("uname ");
 		printf("unlink ");
@@ -102,4 +105,4 @@ int main(int argc, char *argv[]) {
 	}
 }
 /*  END  */
-/* Generated on Tue 26 Jul 22:26:58 CEST 2022 */
+/* Generated on Sat 30 Jul 22:07:14 CEST 2022 */

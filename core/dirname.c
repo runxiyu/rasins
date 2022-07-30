@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 	}
 	dirnamestr = dirname(argv[1]);
 
-	printf("%s\n", basenamestr);
+	printf("%s\n", dirnamestr);
 	return 0;
 }
 

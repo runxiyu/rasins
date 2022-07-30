@@ -36,6 +36,9 @@ use `/*` and `*/` (as in `/* Comment */`) ;
 
 - **Variable names** shall describe the variable's purpose ;
 
+- The `main()` function shall be placed at the top, after function 
+prototypes, to increase code readability ;
+
 ### Blocks
 
 - In a block, do not use `{` and `}` if there's only one instruction inside ;

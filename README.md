@@ -25,6 +25,30 @@ such as OpenBSD and Linux. It also tries to be completly modular and as such
 one utility should **not** depend on another in order to work. The coreutils 
 are still a work-in-progress.
 
+## Directory structure
+
+```
+fases.git
+  ├── box.c
+  ├── box-templates
+  │   ├── box_1-23.c
+  │   ├── box_45-49.c
+  │   ├── box_70-73.c
+  │   └── box_94-96.c
+  ├── config.mk
+  ├── COPYING
+  ├── core
+  │   └── <core utilities>
+  ├── docs
+  │   └── <documentation>
+  ├── extras
+  │   └── <extra utilities>
+  ├── Makefile
+  ├── man
+  │   └── <manpages>
+  └── README.md
+```
+
 ## Chat
 
 The `fases` project has 2 IRC channels hosted on 2 IRC Networks:

@@ -12,8 +12,6 @@
 
 - [Coding Style](docs/CODING_STYLE.md)
 
-- [Benchmarks](docs/BENCH.md)
-
 - [Incomplete TODO list](docs/TODO.md)
 
 ## Goal

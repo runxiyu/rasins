@@ -25,10 +25,10 @@ all: clean box
 
 genbox:
 	cat "box-templates/box_1-23.c"                                    > box.c
-	for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c
+	for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);" | sed "s/\[_/test_/g"; done>> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c
 	cat "box-templates/box_45-49.c"                                  >> box.c
-	for u in ${CORE}; do echo "	else if(!strcmp(basename(argv[0]), \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
+	for u in ${CORE}; do echo "	else if(!strcmp(basename(argv[0]), \"$${u%.c}\")) return $${u%.c}_main(argc, argv);" | sed "s/\[_/test_/g"; done >> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "	else if(!strcmp(argv[0], \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
 	cat "box-templates/box_70-73.c"                                  >> box.c
 	for u in ${CORE}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
@@ -38,7 +38,8 @@ genbox:
 
 prepbox:
 	mkdir -p box_tmp
-	for f in ${CORE}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
+	for f in ${CORE}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" | sed "s/\[_/test_/g" > "box_tmp/"$$f"_box.c"; done
+	rm -f "box_tmp/[_box.c"
 	test ${INCLUDE_EXTRA} == n || for f in ${EXTRA}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "extras/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
 
 box: box.o

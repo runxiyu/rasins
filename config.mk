@@ -26,6 +26,7 @@ CFLAGS=-I. -Wall -Wextra -g $(FORCEC99) $(OPTIMIZE) # C Compiler flags
 NOLINKER=-c # C Compiler flag to disable the linker
 # Core utilities
 CORE=\
+	[\
 	basename\
 	cat\
 	chmod\

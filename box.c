@@ -21,6 +21,7 @@
 #include <libgen.h>
 #include <stdio.h>
 /*  END  */
+int test_main(int, char**);
 int basename_main(int, char**);
 int cat_main(int, char**);
 int chmod_main(int, char**);
@@ -40,6 +41,7 @@ int printf_main(int, char**);
 int rm_main(int, char**);
 int sleep_main(int, char**);
 int tail_main(int, char**);
+int test_main(int, char**);
 int true_main(int, char**);
 int uname_main(int, char**);
 int unlink_main(int, char**);
@@ -50,6 +52,7 @@ int main(int argc, char *argv[]) {
 		argv++;
 	} if(0);
 /*  END  */
+	else if(!strcmp(basename(argv[0]), "[")) return test_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "basename")) return basename_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "cat")) return cat_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "chmod")) return chmod_main(argc, argv);
@@ -69,6 +72,7 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(basename(argv[0]), "rm")) return rm_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "sleep")) return sleep_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "tail")) return tail_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "test")) return test_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "true")) return true_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "uname")) return uname_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "unlink")) return unlink_main(argc, argv);
@@ -78,6 +82,7 @@ int main(int argc, char *argv[]) {
 		printf("Usage: box <COMMAND> [ARGS]\n\n");
 		printf("Commands available:\n");
 /*  END  */
+		printf("[ ");
 		printf("basename ");
 		printf("cat ");
 		printf("chmod ");
@@ -97,6 +102,7 @@ int main(int argc, char *argv[]) {
 		printf("rm ");
 		printf("sleep ");
 		printf("tail ");
+		printf("test ");
 		printf("true ");
 		printf("uname ");
 		printf("unlink ");
@@ -105,4 +111,4 @@ int main(int argc, char *argv[]) {
 	}
 }
 /*  END  */
-/* Generated on Sat 30 Jul 22:07:14 CEST 2022 */
+/* Generated on Thu 11 Aug 18:26:04 CEST 2022 */

@@ -111,6 +111,14 @@ tail: tail.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) tail.o -o bin/tail
 
+[: test.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) test.o -o bin/\[
+
+test: test.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) test.o -o bin/test
+
 clean:
 	rm -f *.o
 	rm -Rf bin
@@ -183,3 +191,6 @@ chown.o:
 
 tail.o:
 	$(CC) $(CFLAGS) $(NOLINKER) tail.c -o tail.o
+
+test.o:
+	$(CC) $(CFLAGS) $(NOLINKER) test.c -o test.o

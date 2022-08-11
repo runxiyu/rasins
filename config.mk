@@ -45,6 +45,7 @@ CORE=\
 	rm\
 	sleep\
 	tail\
+	test\
 	true\
 	uname\
 	unlink

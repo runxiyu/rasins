@@ -87,7 +87,10 @@ int main(int argc, char *argv[]) {
 						|| file_status.st_mode & S_IXOTH))             return true;
 		}
 		else if (errno && param['e']) return false;
-		if (param['t']) printf("unimplemented\n");
+		if (param['t']) {
+			if (isatty(strtol(argv[2], NULL, 10)))                     return true;
+			else                                                       return false;
+		}
 		                           /*    Strings     */
 		if (param['n'] && strlen(argv[2]))       return true;
 		else if (param['z'] && !strlen(argv[2])) return true;

@@ -111,10 +111,3 @@ int main(int argc, char *argv[]) {
 	/* TODO: Better error handling. */
 	return falsee;
 }
-
-void printUsage() {
-	printf("Ferass' Base System.\n\n"
-	"Usage: test [expression]\n"
-	"   or: [ [expression] ]\n\n"
-	"Evaluate expression\n\n");
-}

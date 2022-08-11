@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(basename(argv[0]), "uname")) return uname_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "unlink")) return unlink_main(argc, argv);
 /* START */
-	else {
+	else if (!strcmp(basename(argv[0]), "box") && argc == 1) {
 		printf("Ferass' Base System in a box\n\n");
 		printf("Usage: box <COMMAND> [ARGS]\n\n");
 		printf("Commands available:\n");
@@ -109,6 +109,10 @@ int main(int argc, char *argv[]) {
 /* START */
 		printf("\n");
 	}
+	else {
+		printf("box: %s: Not found or not implemented.\n", argv[0]);
+	}
+	return 0;
 }
 /*  END  */
-/* Generated on Thu 11 Aug 19:09:40 CEST 2022 */
+/* Generated on Thu 11 Aug 19:28:54 CEST 2022 */

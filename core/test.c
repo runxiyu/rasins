@@ -28,9 +28,9 @@
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
 
-/* For readability reasons, define truee, falsee */
-int truee  = 0;
-int falsee = 1;
+/* For readability reasons, define true, false */
+int true  = 0;
+int false = 1;
 
 int main(int argc, char *argv[]) {
 	int argument;
@@ -49,10 +49,10 @@ int main(int argc, char *argv[]) {
 		argv[argc] = 0;
 	}
 	
-	if (argc < 2) return falsee;
+	if (argc < 2) return false;
 	if (!strcmp(argv[1], "!")) {
-		truee  = 1;
-		falsee = 0;
+		true  = 1;
+		false = 0;
 		argc--;
 		argv++;
 	}
@@ -61,53 +61,53 @@ int main(int argc, char *argv[]) {
 		                            /*     Files     */
 		stat(argv[2], &file_status);
 		if (!errno) {
-			if (param['b'] && S_ISBLK(file_status.st_mode) != 0)       return truee;
-			else if (param['c'] && S_ISCHR(file_status.st_mode) != 0)  return truee;
-			else if (param['d'] && S_ISDIR(file_status.st_mode) != 0)  return truee;
-			/* Just return truee, if -e is used. If it was false, stat() would 
+			if (param['b'] && S_ISBLK(file_status.st_mode) != 0)       return true;
+			else if (param['c'] && S_ISCHR(file_status.st_mode) != 0)  return true;
+			else if (param['d'] && S_ISDIR(file_status.st_mode) != 0)  return true;
+			/* Just return true, if -e is used. If it was false, stat() would 
 			 * have failed. If it failed, there's a check about which value 
-			 * to return. Return falsee if -e is used, otherwise, return errno 
+			 * to return. Return false if -e is used, otherwise, return errno 
 			 */
-			else if (param['e'])                                       return truee;
-			else if (param['f'] && S_ISREG(file_status.st_mode) != 0)  return truee;
-			else if (param['g'] && file_status.st_mode & S_ISGID)      return truee;
+			else if (param['e'])                                       return true;
+			else if (param['f'] && S_ISREG(file_status.st_mode) != 0)  return true;
+			else if (param['g'] && file_status.st_mode & S_ISGID)      return true;
 			else if ((param['h'] || param['L']) 
-					&& S_ISLNK(file_status.st_mode) != 0)              return truee;
-			else if (param['p'] && S_ISFIFO(file_status.st_mode) != 0) return truee;
+					&& S_ISLNK(file_status.st_mode) != 0)              return true;
+			else if (param['p'] && S_ISFIFO(file_status.st_mode) != 0) return true;
 			/* TODO: Better check for -r/-w. */
 			else if (param['r'] && (file_status.st_mode & S_IRUSR
-						|| file_status.st_mode & S_IROTH))             return truee;
-			else if (param['S'] && S_ISSOCK(file_status.st_mode) != 0) return truee;
-			else if (param['s'] && file_status.st_size > 0)            return truee;
+						|| file_status.st_mode & S_IROTH))             return true;
+			else if (param['S'] && S_ISSOCK(file_status.st_mode) != 0) return true;
+			else if (param['s'] && file_status.st_size > 0)            return true;
 			else if (param['u'] && S_ISDIR(file_status.st_mode)
-					&& file_status.st_mode & S_ISUID)                  return truee;
+					&& file_status.st_mode & S_ISUID)                  return true;
 			else if (param['w'] && (file_status.st_mode & S_IWUSR
-						|| file_status.st_mode & S_IWOTH))             return truee;
+						|| file_status.st_mode & S_IWOTH))             return true;
 			else if (param['x'] && (file_status.st_mode & S_IXUSR
-						|| file_status.st_mode & S_IXOTH))             return truee;
+						|| file_status.st_mode & S_IXOTH))             return true;
 		}
-		else if (errno && param['e']) return falsee;
+		else if (errno && param['e']) return false;
 		if (param['t']) printf("unimplemented\n");
 		                           /*    Strings     */
-		if (param['n'] && strlen(argv[2]))       return truee;
-		else if (param['z'] && !strlen(argv[2])) return truee;
+		if (param['n'] && strlen(argv[2]))       return true;
+		else if (param['z'] && !strlen(argv[2])) return true;
 	}
 
 	else if (argc == 4) {
-		if (!strcmp(argv[2], "=") && !strcmp(argv[1], argv[3]))        return truee;
-		else if (!strcmp(argv[2], "!=") && strcmp(argv[1], argv[3]))   return truee;
-		else if (!strcmp(argv[2], "-eq") && !strcmp(argv[1], argv[3])) return truee;
-		else if (!strcmp(argv[2], "-ne") && strcmp(argv[1], argv[3]))  return truee;
+		if (!strcmp(argv[2], "=") && !strcmp(argv[1], argv[3]))        return true;
+		else if (!strcmp(argv[2], "!=") && strcmp(argv[1], argv[3]))   return true;
+		else if (!strcmp(argv[2], "-eq") && !strcmp(argv[1], argv[3])) return true;
+		else if (!strcmp(argv[2], "-ne") && strcmp(argv[1], argv[3]))  return true;
 		else if (!strcmp(argv[2], "-gt") && 
-				strtol(argv[1], NULL, 10) > strtol(argv[3], NULL, 10)) return truee;
+				strtol(argv[1], NULL, 10) > strtol(argv[3], NULL, 10)) return true;
 		else if (!strcmp(argv[2], "-ge") && 
-				strtol(argv[1], NULL, 10)>= strtol(argv[3], NULL, 10)) return truee;
+				strtol(argv[1], NULL, 10)>= strtol(argv[3], NULL, 10)) return true;
 		else if (!strcmp(argv[2], "-lt") && 
-				strtol(argv[1], NULL, 10) < strtol(argv[3], NULL, 10)) return truee;
+				strtol(argv[1], NULL, 10) < strtol(argv[3], NULL, 10)) return true;
 		else if (!strcmp(argv[2], "-le") && 
-				strtol(argv[1], NULL, 10)<= strtol(argv[3], NULL, 10)) return truee;
+				strtol(argv[1], NULL, 10)<= strtol(argv[3], NULL, 10)) return true;
 	}
 
 	/* TODO: Better error handling. */
-	return falsee;
+	return false;
 }

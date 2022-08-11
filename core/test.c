@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
 				strtol(argv[1], NULL, 10)<= strtol(argv[3], NULL, 10)) return truee;
 	}
 
-	if (errno) return errno;
+	/* TODO: Better error handling. */
 	return falsee;
 }
 

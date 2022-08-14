@@ -17,6 +17,11 @@
 
 #include <time.h>
 #include <stdio.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 void printUsage();
 
@@ -38,7 +43,7 @@ int main(int argc, char *argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: date [+format]\n\n"
-	"Output the date and time.\n\n");
+	"Output the date and time.\n\n", COMPILETIME);
 }

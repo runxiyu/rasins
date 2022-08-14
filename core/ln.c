@@ -19,6 +19,11 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -61,7 +66,7 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: ln [-fs] [-P|-L] source_file target_file\n\n"
 	"Link files.\n\n"
 	"\t-s\tCreate symbolic links instead of hard links\n"
@@ -69,5 +74,5 @@ void printUsage() {
 	"\t-P\tIf <source_file> names a symbolic link, create a hard link to the "
 	"symbolic link itself (default)\n"
 	"\t-L\tIf <source_file> names a symbolic link, create a hard link to the "
-	"file referenced by the symbolic link\n");
+	"file referenced by the symbolic link\n", COMPILETIME);
 }

@@ -28,6 +28,11 @@
 #include <pwd.h>
 #include <grp.h>
 #include <time.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 char param[256];
 int  getopt(int argc, char *const argv[], const char *optstring);
@@ -96,7 +101,7 @@ int main(int argc, char *argv[]) {
 }
 
 void printUsage(char *params) {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: "
 	"ls [-%s] [directory] ...\n\n"
 	"Print <directory>'s contents to standard output.\n\n"
@@ -113,7 +118,8 @@ void printUsage(char *params) {
 	"\t-g\tEnable the -l option but don't print the file owner's name\n"
 	"\t-n\tEnable the -l option but print the file owner and group's numeric "
 	"UID and GID instead of their name\n"
-	"\t-o\tEnable the -l option but don't print the file group's name\n", params);
+	"\t-o\tEnable the -l option but don't print the file group's name\n", 
+	COMPILETIME, params);
 }
 
 int ls(char *path) {

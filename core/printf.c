@@ -17,6 +17,11 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -33,7 +38,7 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: printf format [string]\n\n"
-	"Write formatted strings to stdout.\n\n");
+	"Write formatted strings to stdout.\n\n", COMPILETIME);
 }

@@ -23,6 +23,13 @@ include ../config.mk
 
 all: clean $(CORE)
 
+ver:
+	echo "#ifndef VERSION_H"                 > version.h
+	echo "#define VERSION_H"                >> version.h
+	echo "#define COMPILETIME \"$$(date)\"" >> version.h
+	echo                                    >> version.h
+	echo "#endif"                           >> version.h
+
 head: head.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) head.o -o bin/head
@@ -126,71 +133,71 @@ clean:
 # Utilities
 # =========
 
-head.o:
+head.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) head.c -o head.o
 
-cat.o:
+cat.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) cat.c -o cat.o
 
-ls.o:
+ls.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) ls.c -o ls.o
 
-date.o:
+date.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) date.c -o date.o
 
-yes.o:
+yes.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) yes.c -o yes.o
 
-mkdir.o:
+mkdir.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) mkdir.c -o mkdir.o
 
-echo.o:
+echo.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) echo.c -o echo.o
 
-true.o:
+true.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) true.c -o true.o
 
-false.o:
+false.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) false.c -o false.o
 
-sleep.o:
+sleep.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) sleep.c -o sleep.o
 
-printf.o:
+printf.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) printf.c -o printf.o
 
-uname.o:
+uname.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) uname.c -o uname.o
 
-link.o:
+link.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) link.c -o link.o
 
-ln.o:
+ln.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) ln.c -o ln.o
 
-chmod.o:
+chmod.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) chmod.c -o chmod.o
 
-basename.o:
+basename.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) basename.c -o basename.o
 
-unlink.o:
+unlink.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) unlink.c -o unlink.o
 
-mv.o:
+mv.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) mv.c -o mv.o
 
-rm.o:
+rm.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) rm.c -o rm.o
 
-more.o:
+more.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) more.c -o more.o
 
-chown.o:
+chown.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) chown.c -o chown.o
 
-tail.o:
+tail.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) tail.c -o tail.o
 
-test.o:
+test.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) test.c -o test.o

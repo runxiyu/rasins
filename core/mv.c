@@ -19,6 +19,11 @@
 #include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -57,9 +62,9 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: mv [-if] file1 file2\n\n"
 	"Move <file1> to <file2>.\n\n"
 	"\t-i\tIf <file2> exists, ask for confirmation\n"
-	"\t-f\tNever ask for confirmation\n");
+	"\t-f\tNever ask for confirmation\n", COMPILETIME);
 }

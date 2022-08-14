@@ -19,6 +19,11 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -55,7 +60,7 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: mkdir [-p] directory ...\n\n"
-	"Create a directory.\n\n");
+	"Create a directory.\n\n", COMPILETIME);
 }

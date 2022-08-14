@@ -21,6 +21,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <termios.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -98,7 +103,7 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: more file ...\n\n"
-	"Display a file on a page-by-page basis.\n\n");
+	"Display a file on a page-by-page basis.\n\n", COMPILETIME);
 }

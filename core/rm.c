@@ -18,6 +18,11 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -50,9 +55,9 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: rm [-Rr] file ...\n\n"
 	"Remove <file>.\n\n"
 	"\t-R\tRecursively remove the directory tree\n"
-	"\t-r\tEnable the -R option\n");
+	"\t-r\tEnable the -R option\n", COMPILETIME);
 }

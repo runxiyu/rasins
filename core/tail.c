@@ -22,6 +22,11 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 /* Functions Prototypes */
 int  getopt(int argc, char *const argv[], const char *optstring);
@@ -73,8 +78,9 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: head [-n number] [file]\n\n"
 	"Copy file to standard output until <number> lines.\n\n"
-	"\t-n number\tNumber of lines to be copied to standard output\n");
+	"\t-n number\tNumber of lines to be copied to standard output\n", 
+	COMPILETIME);
 }

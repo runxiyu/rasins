@@ -20,6 +20,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -59,7 +64,7 @@ int main(int argc, char *argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: basename string [suffix]\n\n"
-	"Return non-directory portion of <string>.\n\n");
+	"Return non-directory portion of <string>.\n\n", COMPILETIME);
 }

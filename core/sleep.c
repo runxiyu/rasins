@@ -18,6 +18,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 void printUsage();
 
@@ -41,7 +46,7 @@ int main(int argc, char *argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: sleep seconds\n\n"
-	"Suspend execution for <seconds> seconds.\n\n");
+	"Suspend execution for <seconds> seconds.\n\n", COMPILETIME);
 }

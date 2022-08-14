@@ -19,6 +19,11 @@
 #include <stdio.h>
 #include <sys/utsname.h>
 #include <errno.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -61,7 +66,7 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: uname [-amnrsv] \n\n"
 	"Return system name.\n\n"
 	"\t-a\tSame as -mnrsv\n"
@@ -70,5 +75,5 @@ void printUsage() {
 	"\t-r\tWrite the operating system release\n"
 	"\t-s\tWrite the name of the operating system implementation\n"
 	"\t-v\tWrite the current version of this release of the operating "
-	"system implementation\n");
+	"system implementation\n", COMPILETIME);
 }

@@ -18,6 +18,11 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -37,7 +42,7 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: link file1 file2\n\n"
-	"Link <file1> to <file2> using the link() function.\n\n");
+	"Link <file1> to <file2> using the link() function.\n\n", COMPILETIME);
 }

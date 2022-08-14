@@ -21,6 +21,11 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include "version.h"
+
+#ifndef COMPILETIME
+#define COMPILETIME
+#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
@@ -58,9 +63,9 @@ int main(int argc, char *const argv[]) {
 }
 
 void printUsage() {
-	printf("Ferass' Base System.\n\n"
+	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: cat [file]\n\n"
 	"Concatenate <file> to standard output.\n"
 	"When no file is specified or file is '-', read standard input\n\n"
-	"\t-u\tPrint unbuffered\n");
+	"\t-u\tPrint unbuffered\n", COMPILETIME);
 }

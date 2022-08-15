@@ -78,6 +78,32 @@ The mailing list's address is: ***fases -at- andrewyu -dot- org*** (
 [archive](https://www.mail-archive.com/fases@andrewyu.org/)). If you want 
 to subscribe to this mailing list, please ask on IRC.
 
+## Donations
+
+Donations really help this project, no matter how small. People that work 
+on this project are unpaid volunteers that do it on their freetime.
+We currently only accept XMR/Monero. You can use these addresses for 
+donating.
+
+Project Donations: 
+`
+83bXvP25H5SX3kfTXMcjdm816KFUapPdN2eUV1gAF3JTNcoqNtG5ZxvfRUF81bZMMWXcX5kES1h1jCJCNyYZmrHGVeQBGNK
+`
+
+![docs/FasesDonationsQR.png]()
+
+The server hosting the project also costs money. To keep the server up and 
+running, you can donate to this address:
+
+Server Donations: 
+`
+85q7XiHDpjYVq3cQ3uBSMN9JchP4mgpBGRc6SY9G6vyjF22QAugJxYAabLt9bQDvj3DcqkDjQKmduCNPVbzq7xVdTLmu2LF
+`
+
+![docs/ServerDonationsQR.png]()
+
+You can also donate to other contributors separately. Thanks!
+
 ## Thank you!
 
 I would like to thank a few people there, mainly:
@@ -88,6 +114,7 @@ OpenBSD and for hosting the mailing list.
 
 - Leah Rowe, for adding lots of improvements on her 
 [git repo](https://notabug.org/vimuser/fases) and for testing fases on OpenBSD.
+[Donate](https://www.patreon.com/libreleah).
 
 - Ron Nazarov, for fixing a weird bug in `yes` and adding useful features in 
 it.
@@ -101,6 +128,8 @@ this project by:
 - Testing utilities and reporting bugs ;
 
 - Talking about fases ;
+
+- Donating XMR/Monero ;
 
 - Giving me recommendations.
 

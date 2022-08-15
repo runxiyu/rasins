@@ -24,6 +24,11 @@ include ./config.mk
 all: clean box
 
 genbox:
+	echo "#ifndef VERSION_H"                 > version.h
+	echo "#define VERSION_H"                >> version.h
+	echo "#define COMPILETIME \"$$(date)\"" >> version.h
+	echo                                    >> version.h
+	echo "#endif"                           >> version.h
 	cat "box-templates/box_1-23.c"                                    > box.c
 	for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);" | sed "s/\[_/test_/g"; done>> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c
@@ -44,6 +49,7 @@ prepbox:
 
 box: box.o
 	$(CC) $(CFLAGS) box_tmp/*.c box.o -o box 
+	rm -f version.h
 
 clean:
 	rm -f box *.o extras-bin core-bin

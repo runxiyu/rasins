@@ -90,7 +90,7 @@ Project Donations:
 83bXvP25H5SX3kfTXMcjdm816KFUapPdN2eUV1gAF3JTNcoqNtG5ZxvfRUF81bZMMWXcX5kES1h1jCJCNyYZmrHGVeQBGNK
 `
 
-![docs/FasesDonationsQR.png]()
+![](docs/FasesDonationsQR.png)
 
 The server hosting the project also costs money. To keep the server up and 
 running, you can donate to this address:
@@ -100,7 +100,7 @@ Server Donations:
 85q7XiHDpjYVq3cQ3uBSMN9JchP4mgpBGRc6SY9G6vyjF22QAugJxYAabLt9bQDvj3DcqkDjQKmduCNPVbzq7xVdTLmu2LF
 `
 
-![docs/ServerDonationsQR.png]()
+![](docs/ServerDonationsQR.png)
 
 You can also donate to other contributors separately. Thanks!
 

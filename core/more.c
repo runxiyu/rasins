@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <termios.h>
+#include <sys/ioctl.h>
 #include "version.h"
 
 #ifndef COMPILETIME
@@ -34,14 +35,14 @@ int main(int argc, char *const argv[]) {
 	int i = 0, argument, success, read_file;
 	long int columns, lines;
 	char buffer[4096], cmd;
+	struct winsize w;
 	FILE *file;
 	struct termios oldattr, newattr;
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	if (getenv("LINES")) lines = strtol(getenv("LINES"), NULL, 10) - 1;
-	/* TODO: Calculate terminal size */
-	else lines = 80;
+	else lines = w.ws_row - 1;
 	if (getenv("COLUMNS")) columns = strtol(getenv("COLUMNS"), NULL, 10);
-	/* TODO: Calculate terminal size */
-	else columns = 80;
+	else columns = w.ws_col - 1;
 
 	while ((argument = getopt(argc, argv, "")) != -1) {
 		if (argument == '?') {

@@ -140,9 +140,11 @@ int ls(char *path) {
 		return errno;
 	}
 
-	if (param['R'])
-		printf("%s:\n", path);
-
+	if (param['R']) {
+		printf("The previous ls -R implementation had so much "
+		"flaws that it got removed from the ls codebase.\n");
+		return 0;
+	}
 	while ((dirtree = readdir(directory)) != NULL) {
 		name = dirtree->d_name;
 
@@ -241,53 +243,6 @@ int ls(char *path) {
 			printf(", ");
 	}
 	closedir(directory);
-
-	/* Recursively list all subdirectories */
-	if (param['R']) {
-		int status;
-		directory = opendir(path);
-		while ((dirtree = readdir(directory)) != NULL) {
-			name = dirtree->d_name;
-
-			cwdname = strcmp(name, ".") ? 0 : 1;
-			prevdir = strcmp(name, "..") ? 0 : 1;
-			dotname = (name[0]=='.' && !cwdname && !prevdir) ? 1 : 0;
-			dot = strcmp(name, "./") ? 0 : 1;
-			dot |= dotname | prevdir | cwdname;
-			if (dot) continue;
-
-			int offset = path[strlen(path)-1] == '/' ? 0 : 1;
-			char* subpath = malloc(
-				strlen(path)+strlen(name)+offset);
-
-			if (subpath == NULL) {
-				free(subpath);
-				closedir(directory);
-				printf("ls: Out of memory\n");
-				return errno;
-			}
-
-			memcpy(subpath, path, strlen(path));
-			if (offset) subpath[strlen(path)] = '/';
-			memcpy(subpath+strlen(path)+offset, name, strlen(name));
-
-			subdirectory = opendir(subpath);
-			if (subdirectory == NULL) {
-				free(subpath);
-				closedir(subdirectory);
-				continue;
-			}
-			closedir(subdirectory);
-
-			printf("\n");
-			if(!param['1']) printf("\n");
-
-			status |= ls(subpath);
-			free(subpath);
-		}
-		closedir(directory);
-		return status;
-	}
 
 	return errno;
 }

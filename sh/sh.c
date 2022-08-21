@@ -15,8 +15,12 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/* Define feature test macro. It doesn't compile with gcc without that for 
+ * some reason.
+ */
+#define _POSIX_C_SOURCE
+
 /* POSIX Header files */
-#include <unistd.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -27,6 +31,7 @@
 #include <sys/wait.h>
 #include <spawn.h>
 #include <libgen.h>
+#include <signal.h>
 
 /* Our own header files */
 #include "parser.h"
@@ -36,6 +41,9 @@
 #define COMPILETIME
 #endif
 
+#warning "This shell implementation is really buggy and incomplete. \
+ Please don't use this as a /bin/sh replacement."
+
 void  commandLoop();
 int   getopt(int argc, char *const argv[], const char *optstring);
 char *pathSearch(const char *path, const char *name);
@@ -44,6 +52,9 @@ void  printUsage();
 int main(int argc, char *const argv[]) {
 	int argument, i = 1;
 	char param[256];
+	struct sigaction signal_action;
+	signal_action.sa_handler = SIG_IGN;
+	sigemptyset(&signal_action.sa_mask);
 	for (; i <= 256; i++) param[i] = 0;
 
 	while ((argument = getopt(argc, argv, "c")) != -1) {
@@ -53,6 +64,9 @@ int main(int argc, char *const argv[]) {
 		}
 		param[(uint8_t)argument] = argument;
 	}
+
+	sigaction(SIGINT, &signal_action, NULL);
+	if (errno) return errno;
 	commandLoop(1);
 	return 0;
 }
@@ -66,7 +80,7 @@ int main(int argc, char *const argv[]) {
  * This function is the actual command prompt.
  */
 
-void commandLoop(int needprompt) {
+void commandLoop(int isinteractive) {
 	char *prompt = NULL;
 	char *path   = getenv("PATH");
 	char *command[4096];
@@ -80,7 +94,7 @@ void commandLoop(int needprompt) {
 			name[i] = 0; /* (Re)Initialise name, very important. */
 		}
 		setvbuf(stdout, NULL, _IONBF, 0);
-		if (needprompt) printf(prompt);
+		if (isinteractive) { printf(prompt); }
 		read(STDIN_FILENO, name, 4096);
 		if (!strcmp(name, "\n")) {
 			continue;
@@ -97,7 +111,7 @@ void commandLoop(int needprompt) {
 				 */
 				return_code = execvp(command[0], command);
 				/* If the child process is still alive, we know execvp(3) failed. */
-				printf("sh: %s: Not found\n", command[0]);
+				printf("sh: %s: %s\n", command[0], strerror(errno));
 				exit(0);
 			}
 		}

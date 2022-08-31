@@ -44,9 +44,14 @@ int main(int argc, char *const argv[]) {
 		else
 			setvbuf(stdout, NULL, _IOFBF, 0);
 	}
+
+	
 	if (argc < 2) {
-		while (read(STDIN_FILENO, s, 4096) > 0)
+		while (read(STDIN_FILENO, s, 4096) > 0) {
 			printf("%s", s);
+			for (; i <= 4096 && (s[i] = 0); i++)
+				/* (Re)initialise the buffer. */ ;
+		}
 	}
 
 	for (i = 1; i != argc; i++) {

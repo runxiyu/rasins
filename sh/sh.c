@@ -18,7 +18,7 @@
 /* Define feature test macro. It doesn't compile with gcc without that for 
  * some reason.
  */
-#define _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 1
 
 /* POSIX Header files */
 #include <stdio.h>
@@ -81,6 +81,7 @@ int main(int argc, char *const argv[]) {
  */
 
 void commandLoop(int isinteractive) {
+	struct sigaction signal_action;
 	char *prompt = NULL;
 	char *path   = getenv("PATH");
 	char *command[4096];
@@ -91,7 +92,9 @@ void commandLoop(int isinteractive) {
 	if (prompt == NULL) prompt = "sh$ ";
 	for (;;) {
 		for (int i = 0; i <= 4096; i++) {
-			name[i] = 0; /* (Re)Initialise name, very important. */
+			name[i]    = 0; /* (Re)Initialise name and command, 
+			                 * very important. */
+			command[i] = 0;
 		}
 		setvbuf(stdout, NULL, _IONBF, 0);
 		if (isinteractive) { printf(prompt); }
@@ -104,7 +107,11 @@ void commandLoop(int isinteractive) {
 		if (parseCommand(command_argc, command) == 127 /* See parser.c */ ) { 
 			isparent = fork();
 			wait(NULL);
-			if (!isparent) { 
+			if (!isparent) {
+				/* Do not ignore SIGINT when in a child process. */
+				signal_action.sa_handler = SIG_DFL; 
+				sigemptyset(&signal_action.sa_mask);
+				sigaction(SIGINT, &signal_action, NULL);
 				/* Some sh implementations manually search for the command in PATH.
 				 * This is not needed here because execvp is going to search for 
 				 * that command in PATH anyway.

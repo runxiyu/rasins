@@ -28,9 +28,10 @@
 #define COMPILETIME
 #endif
 
-/* Functions Prototypes */
-int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
+/* Functions Prototypes & Variables */
+extern char *optarg;
+int         getopt(int argc, char *const argv[], const char *optstring);
+void        printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 1, lines, file_lines;

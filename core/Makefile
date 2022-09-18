@@ -26,7 +26,7 @@ all: clean $(CORE)
 ver:
 	echo "#ifndef VERSION_H"                 > version.h
 	echo "#define VERSION_H"                >> version.h
-	echo "#define COMPILETIME \"$$(date)\"" >> version.h
+	echo "#define COMPILETIME \"$$(git show --no-patch --pretty=format:%H)\"" >> version.h
 	echo                                    >> version.h
 	echo "#endif"                           >> version.h
 

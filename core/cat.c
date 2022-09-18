@@ -16,6 +16,7 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define _POSIX_C_SOURCE 200809L
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -27,12 +28,11 @@
 #define COMPILETIME
 #endif
 
-int  getopt(int argc, char *const argv[], const char *optstring);
+int  cat(int flides, int unbuffered);
 void printUsage();
 
 int main(int argc, char *const argv[]) {
-	int file, argument, i = 1, length;
-	char s[4096];
+	int file, argument, i = 1, unbuffered;
 
 	while ((argument = getopt(argc, argv, "u")) != -1) {
 		if (argument == '?') {
@@ -40,18 +40,12 @@ int main(int argc, char *const argv[]) {
 			return 1;
 		}
 		else if (argument == 'u')
-			setvbuf(stdout, NULL, _IONBF, 0);
-		else
-			setvbuf(stdout, NULL, _IOFBF, 0);
+			unbuffered = 1;
 	}
 
 	
 	if (argc < 2) {
-		while (read(STDIN_FILENO, s, 4096) > 0) {
-			printf("%s", s);
-			for (; i <= 4096 && (s[i] = 0); i++)
-				/* (Re)initialise the buffer. */ ;
-		}
+		cat(STDIN_FILENO, unbuffered);
 	}
 
 	for (i = 1; i != argc; i++) {
@@ -59,11 +53,25 @@ int main(int argc, char *const argv[]) {
 			if (strcmp(argv[i], "-")) file = open(argv[i], O_RDONLY);
 			else file = STDIN_FILENO;
 			if (file == -1) return errno; /* Something went wrong */
-			while ((length = read(file, s, 4096)) > 0)
-				write(STDOUT_FILENO, s, length);
+			cat(file, unbuffered);
 			close(file);
 		}
 	}
+	return 0;
+}
+
+int cat(int fildes, int unbuffered) {
+	char s[4096];
+	FILE *filstr;
+	size_t length;
+	if (unbuffered) while ((length = read(fildes, s, 4096)) > 0)
+		write(STDOUT_FILENO, s, length);
+	else {
+		filstr = fdopen(fildes, "r");
+		while ((length = fread(s, 4096, 1, filstr)) > 0)
+			fwrite(s, length, 1, stdout);
+	}
+	if (errno) return errno;
 	return 0;
 }
 

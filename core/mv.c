@@ -32,7 +32,7 @@ int main(int argc, char *const argv[]) {
 	int argument, file;
 	char cmd, param[256];
 	setvbuf(stdout, NULL, _IONBF, 0);
-	for (int i; i < 256; i++) param[i] = 0; /* Initialise param, 
+	for (int i = 0; i < 256; i++) param[i] = 0; /* Initialise param, 
 	                                         * very important. */
 	while ((argument = getopt(argc, argv, "if")) != -1) {
 		if (argument == '?') {

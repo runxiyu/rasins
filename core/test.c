@@ -15,6 +15,7 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define _POSIX_C_SOURCE 200809L
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
@@ -42,7 +43,7 @@ int main(int argc, char *argv[]) {
 	if (!strcmp(basename(argv[0]), "[")) {
 		if (strcmp(argv[argc - 1], "]")) {
 			/* FIXME: Is printing an error message POSIX-compliant? */
-			printf("[: No matching ]\n");
+			fprintf(stderr, "[: No matching ]\n");
 			return 1;
 		}
 		argc--;

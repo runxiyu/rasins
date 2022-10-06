@@ -82,14 +82,14 @@ int main(int argc, char *const argv[]) {
 
 void commandLoop(int isinteractive) {
 	struct sigaction signal_action;
-	char *prompt = NULL;
+	char *prompt = getenv("PS1");
 	char *path   = getenv("PATH");
 	char *command[4096];
 	pid_t isparent;
 	char name[4096];
 	int return_code;
 	int command_argc;
-	if (prompt == NULL) prompt = "sh$ ";
+	if (prompt == NULL) prompt = "$ ";
 	for (;;) {
 		for (int i = 0; i <= 4096; i++) {
 			name[i]    = 0; /* (Re)Initialise name and command, 

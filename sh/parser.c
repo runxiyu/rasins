@@ -23,6 +23,7 @@
 
 /* sh Header Files */
 #include "parser.h"
+#include "commands.h"
 
 int parseCommand(int, char **);
 int splitCommand(char [4096], char *[4096]);
@@ -35,11 +36,12 @@ int splitCommand(char [4096], char *[4096]);
  * -----------
  * Parse a shell command and determine if the command to run is built-in or
  * external. It then runs the command if it's built-in, or returns 127 if the 
- * command isn't built-in.
+ * command isn't built-in. <It also could in the future handle tokens.>
  */
 
 int parseCommand(int argc, char *argv[]) {
-	return 127; /* We don't have any built-in commands yet. */
+	if (!strcmp(argv[0], "cd")) return builtin_cd(argc, argv);
+	else return 127; /* The command isn't built-in, exit! */
 }
 
 /* USAGE

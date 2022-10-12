@@ -18,7 +18,7 @@
 /* Define feature test macro. It doesn't compile with gcc without that for 
  * some reason.
  */
-#define _POSIX_C_SOURCE 1
+#define _POSIX_C_SOURCE 200809L
 
 /* POSIX Header files */
 #include <stdio.h>
@@ -99,28 +99,16 @@ void commandLoop(int isinteractive) {
 		setvbuf(stdout, NULL, _IONBF, 0);
 		if (isinteractive) { printf(prompt); }
 		read(STDIN_FILENO, name, 4096);
-		if (!strcmp(name, "\n")) {
+		if (!strcmp(name, "\n"))
 			continue;
+		else if (*name == 0 || *name == EOF) {
+			putchar('\n');
+			break;
 		}
 		name[strlen(name) - 1] = 0;
 		command_argc = splitCommand(name, command); /* See parser.c */
-		if (parseCommand(command_argc, command) == 127 /* See parser.c */ ) { 
-			isparent = fork();
-			wait(NULL);
-			if (!isparent) {
-				/* Do not ignore SIGINT when in a child process. */
-				signal_action.sa_handler = SIG_DFL; 
-				sigemptyset(&signal_action.sa_mask);
-				sigaction(SIGINT, &signal_action, NULL);
-				/* Some sh implementations manually search for the command in PATH.
-				 * This is not needed here because execvp is going to search for 
-				 * that command in PATH anyway.
-				 */
-				return_code = execvp(command[0], command);
-				/* If the child process is still alive, we know execvp(3) failed. */
-				printf("sh: %s: %s\n", command[0], strerror(errno));
-				exit(0);
-			}
+		if ((errno = parseCommand(command_argc, command)) != 0 /* See parser.c */ ) { 
+			printf("sh: %s: %s\n", command[0], strerror(errno));
 		}
 	}
 }

@@ -47,6 +47,7 @@ int parseCommand(int argc, char *argv[]) {
 	struct sigaction signal_action;
 	int status_code = 0, err = 0;
 	pid_t isparent;
+	if (argc == 0) return 0; /* There's no argument. */
 	if (!strcmp(argv[0], "cd")) return builtin_cd(argc, argv);
 	/* The command isn't built-in. */
 	isparent = fork();
@@ -88,9 +89,12 @@ int parseCommand(int argc, char *argv[]) {
 int splitCommand(char name[4096], char *splitted_name[4096]) {
 	long unsigned int array_index = 1;
 	char *token;
-	if ((token = strtok(name, " ")) != NULL) splitted_name[0] = token;
+	if ((token = strtok(name, " ")) != NULL && token[0] != '#')
+		splitted_name[0] = token;
+	else return 0;
 	/* WARNING: Not thread-safe! */
 	for (; (token = strtok(NULL, " ")) != NULL && 
+			token[0] != '#' &&
 			(splitted_name[array_index] = token); array_index++)
 		/* Do nothing. */ ;
 	return array_index;

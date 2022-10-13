@@ -45,7 +45,7 @@ int splitCommand(char [4096], char *[4096]);
 
 int parseCommand(int argc, char *argv[]) {
 	struct sigaction signal_action;
-	int status_code = 0;
+	int status_code = 0, err = 0;
 	pid_t isparent;
 	if (!strcmp(argv[0], "cd")) return builtin_cd(argc, argv);
 	/* The command isn't built-in. */
@@ -62,12 +62,15 @@ int parseCommand(int argc, char *argv[]) {
 		 */
 		status_code = execvp(argv[0], argv);
 		/* If the child process is still alive, we know execvp(3) failed. */
-		exit(127);
+		exit(errno);
 	}
 	/* This code may be used to store the exit value in $?. */
 	//if (errno != EINTR && WEXITSTATUS(status_code) !=) return WEXITSTATUS(status_code);
 	//else return 0;
-	if (WEXITSTATUS(status_code) == 127) return 127;
+	err = WEXITSTATUS(status_code);
+	if (err == E2BIG || err == EACCES || err == EINVAL || err == ELOOP || 
+			err == ENAMETOOLONG || err == ENOENT || err == ENOTDIR)
+		return err;
 	return 0;
 }
 

@@ -51,6 +51,7 @@ void  printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 1;
+	FILE *file;
 	char param[256];
 	struct sigaction signal_action;
 	signal_action.sa_handler = SIG_IGN;
@@ -64,10 +65,18 @@ int main(int argc, char *const argv[]) {
 		}
 		param[(uint8_t)argument] = argument;
 	}
+	argc -= optind;
+	argv += optind;
 
 	sigaction(SIGINT, &signal_action, NULL);
 	if (errno) return errno;
-	commandLoop(1);
+
+	if (argv[0]) {
+		file = fopen(argv[0], "r");
+		if (errno) return errno;
+		commandLoop(file);
+	}
+	else commandLoop(stdin);
 	return 0;
 }
 
@@ -80,7 +89,7 @@ int main(int argc, char *const argv[]) {
  * This function is the actual command prompt.
  */
 
-void commandLoop(int isinteractive) {
+void commandLoop(FILE *filstr) {
 	struct sigaction signal_action;
 	char *prompt = getenv("PS1");
 	char *path   = getenv("PATH");
@@ -97,8 +106,10 @@ void commandLoop(int isinteractive) {
 			command[i] = 0;
 		}
 		setvbuf(stdout, NULL, _IONBF, 0);
-		if (isinteractive) { printf(prompt); }
-		read(STDIN_FILENO, name, 4096);
+		if (filstr == stdin && isatty(STDIN_FILENO)) printf(prompt);
+		if (fgets(name, 4096, filstr) == NULL)
+			break;
+		//read(fildes, name, 4096);
 		if (!strcmp(name, "\n"))
 			continue;
 		else if (*name == 0 || *name == EOF) {

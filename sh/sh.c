@@ -93,6 +93,7 @@ void commandLoop(FILE *filstr) {
 	struct sigaction signal_action;
 	char *prompt = getenv("PS1");
 	char *path   = getenv("PATH");
+	char *token, *tokenstate;
 	char *command[4096];
 	pid_t isparent;
 	char name[4096];
@@ -117,9 +118,18 @@ void commandLoop(FILE *filstr) {
 			break;
 		}
 		name[strlen(name) - 1] = 0;
-		command_argc = splitCommand(name, command); /* See parser.c */
-		if ((errno = parseCommand(command_argc, command)) != 0 /* See parser.c */ ) { 
-			printf("sh: %s: %s\n", command[0], strerror(errno));
+		if ((token = strtok_r(name, ";", &tokenstate)) != NULL) {
+			for (; token != NULL;) {
+				command_argc = splitCommand(token, command); /* See parser.c */
+				if ((errno = parseCommand(command_argc, command)) != 0 /* See parser.c */ )
+					printf("sh: %s: %s\n", command[0], strerror(errno));
+				token = strtok_r(NULL, ";", &tokenstate);
+			}
+		}
+		else {
+			command_argc = splitCommand(token, command); /* See parser.c */
+			if ((errno = parseCommand(command_argc, command)) != 0 /* See parser.c */ )
+				printf("sh: %s: %s\n", command[0], strerror(errno));
 		}
 	}
 }

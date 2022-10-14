@@ -121,8 +121,7 @@ void commandLoop(FILE *filstr) {
 		if ((token = strtok_r(name, ";", &tokenstate)) != NULL) {
 			for (; token != NULL;) {
 				command_argc = splitCommand(token, command); /* See parser.c */
-				if ((errno = parseCommand(command_argc, command)) != 0 /* See parser.c */ )
-					printf("sh: %s: %s\n", command[0], strerror(errno));
+				parseCommand(command_argc, command); /* See parser.c */
 				token = strtok_r(NULL, ";", &tokenstate);
 			}
 		}

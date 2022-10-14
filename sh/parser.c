@@ -71,8 +71,8 @@ int parseCommand(int argc, char *argv[]) {
 	err = WEXITSTATUS(status_code);
 	if (err == E2BIG || err == EACCES || err == EINVAL || err == ELOOP || 
 			err == ENAMETOOLONG || err == ENOENT || err == ENOTDIR)
-		return err;
-	return 0;
+		printf("sh: %s: %s", argv[0], strerror(err));
+	return err;
 }
 
 /* USAGE

@@ -96,7 +96,7 @@ void commandLoop(FILE *filstr) {
 	char *token, *tokenstate;
 	char *command[4096];
 	pid_t isparent;
-	char name[4096];
+	char name[4096], tempstr[4096];
 	int return_code;
 	int command_argc;
 	if (prompt == NULL) prompt = "$ ";
@@ -118,7 +118,12 @@ void commandLoop(FILE *filstr) {
 			break;
 		}
 		name[strlen(name) - 1] = 0;
-		if ((token = strtok_r(name, ";", &tokenstate)) != NULL) {
+		strcpy(tempstr, name); /* We don't want to override `name`. */
+		if (strtok(tempstr, ";") != NULL && strtok(NULL, ";") != NULL) {
+			printf(";\n");
+			/* Hacky wacky hack. */
+			strcpy(tempstr, name);
+			token = strtok_r(tempstr, ";", &tokenstate);
 			for (; token != NULL;) {
 				command_argc = splitCommand(token, command); /* See parser.c */
 				parseCommand(command_argc, command); /* See parser.c */
@@ -126,7 +131,8 @@ void commandLoop(FILE *filstr) {
 			}
 		}
 		else {
-			command_argc = splitCommand(token, command); /* See parser.c */
+			printf("normal\n");
+			command_argc = splitCommand(name, command); /* See parser.c */
 			if ((errno = parseCommand(command_argc, command)) != 0 /* See parser.c */ )
 				printf("sh: %s: %s\n", command[0], strerror(errno));
 		}

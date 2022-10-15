@@ -63,15 +63,16 @@ int parseCommand(int argc, char *argv[]) {
 		 */
 		status_code = execvp(argv[0], argv);
 		/* If the child process is still alive, we know execvp(3) failed. */
-		exit(errno);
+		exit(-errno);
 	}
 	/* This code may be used to store the exit value in $?. */
 	//if (errno != EINTR && WEXITSTATUS(status_code) !=) return WEXITSTATUS(status_code);
 	//else return 0;
 	err = WEXITSTATUS(status_code);
-	if (err == E2BIG || err == EACCES || err == EINVAL || err == ELOOP || 
-			err == ENAMETOOLONG || err == ENOENT || err == ENOTDIR)
-		printf("sh: %s: %s", argv[0], strerror(err));
+	if (err-256 == -E2BIG || err-256 == -EACCES || err-256 == -EINVAL || 
+			err-256 == -ELOOP || 
+			err-256 == -ENAMETOOLONG || err-256 == -ENOENT || err-256 == -ENOTDIR)
+		printf("sh: %s: %s\n", argv[0], strerror(-(err-256)));
 	return err;
 }
 

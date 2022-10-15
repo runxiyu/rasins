@@ -134,8 +134,7 @@ void commandLoop(FILE *filstr) {
 		}
 		else {
 			command_argc = splitCommand(name, command); /* See parser.c */
-			if ((errno = parseCommand(command_argc, command)) != 0 /* See parser.c */ )
-				printf("sh: %s: %s\n", command[0], strerror(errno));
+			parseCommand(command_argc, command); /* See parser.c */
 		}
 	}
 }

@@ -15,6 +15,9 @@
  *	along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/* Here's the POSIX specification of sh: */
+/* https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html */
+
 /* Define feature test macro. It doesn't compile with gcc without that for 
  * some reason.
  */
@@ -120,7 +123,6 @@ void commandLoop(FILE *filstr) {
 		name[strlen(name) - 1] = 0;
 		strcpy(tempstr, name); /* We don't want to override `name`. */
 		if (strtok(tempstr, ";") != NULL && strtok(NULL, ";") != NULL) {
-			printf(";\n");
 			/* Hacky wacky hack. */
 			strcpy(tempstr, name);
 			token = strtok_r(tempstr, ";", &tokenstate);
@@ -131,7 +133,6 @@ void commandLoop(FILE *filstr) {
 			}
 		}
 		else {
-			printf("normal\n");
 			command_argc = splitCommand(name, command); /* See parser.c */
 			if ((errno = parseCommand(command_argc, command)) != 0 /* See parser.c */ )
 				printf("sh: %s: %s\n", command[0], strerror(errno));

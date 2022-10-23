@@ -127,7 +127,7 @@ int ls(char *path) {
 	DIR *directory, *subdirectory;
 	struct stat file_status;
 	struct dirent *dirtree;
-	char *name, *file_moddate;
+	char *name, file_moddate[256];
 	char file_modes[] = "----------";
 
 	directory = opendir(path);
@@ -215,12 +215,11 @@ int ls(char *path) {
 			/* This code is unreliable because sometimes it segfaults ls, 
 			 * that's why that code is commented. Patches welcome.
 			 */
-			// strftime(file_moddate, 50, "%b %e %H:%M", 
-			//		localtime(&file_status.st_mtime));
-			// /* It should be st_mtim right? */
-			// file_moddate[strlen(file_moddate) - 1] = 0; /* Remove newline */
-			// printf("%s ", file_moddate ? file_moddate : "?????????");
-			printf("??? ?? ??:?? ");
+			int strftime_status = strftime(file_moddate, sizeof(file_moddate), "%b %e %H:%MM", 
+				localtime(&file_status.st_mtime));
+			/* It should be st_mtim right? */
+			file_moddate[strlen(file_moddate) - 1] = 0; /* Remove newline */
+			printf("%s ", strftime_status ? file_moddate : "<strftime() returned 0>");
 			free(fullpath);
 		}
 		printf("%s", name);

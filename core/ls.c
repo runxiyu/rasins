@@ -28,6 +28,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <time.h>
+#include <sys/ioctl.h>
 #include "version.h"
 
 #ifndef COMPILETIME
@@ -124,13 +125,19 @@ void printUsage(char *params) {
 
 int ls(char *path) {
 	int file, dotname, cwdname, prevdir, dot;
+	long unsigned int cols_used;
 	DIR *directory, *subdirectory;
 	struct stat file_status;
 	struct dirent *dirtree;
+	struct winsize columns;
 	char *name, file_moddate[256];
 	char file_modes[] = "----------";
-
 	directory = opendir(path);
+
+	if (param['C']) {
+		ioctl(STDOUT_FILENO, TIOCGWINSZ, &columns);
+		cols_used = 0;
+	}
 
 	if (directory == NULL) {
 		file = open(path, O_RDONLY);
@@ -212,11 +219,8 @@ int ls(char *path) {
 			                   /* Size of file */
 			printf("%lu ", file_status.st_size);
 			                   /* Date and time */
-			/* This code is unreliable because sometimes it segfaults ls, 
-			 * that's why that code is commented. Patches welcome.
-			 */
-			int strftime_status = strftime(file_moddate, sizeof(file_moddate), "%b %e %H:%MM", 
-				localtime(&file_status.st_mtime));
+			int strftime_status = strftime(file_moddate, sizeof(file_moddate), 
+					"%b %e %H:%MM", localtime(&file_status.st_mtime));
 			/* It should be st_mtim right? */
 			file_moddate[strlen(file_moddate) - 1] = 0; /* Remove newline */
 			printf("%s ", strftime_status ? file_moddate : "<strftime() returned 0>");
@@ -234,8 +238,16 @@ int ls(char *path) {
 			if (S_ISDIR(file_status.st_mode)) printf("/");
 			free(fullpath);
 		}
-		if (param['C'])
-			printf("  "); /* TODO: Calculate based on the terminal's size */
+		if (param['C']) {
+			if (cols_used < (long unsigned int)((columns.ws_col) / 12)) {
+				for (long unsigned int i = strlen(name); i < 11; i++) printf(" ");
+				cols_used++;
+			}
+			if (cols_used == (long unsigned int)((columns.ws_col) / 12)) {
+				printf("\n");
+				cols_used = 0;
+			}
+		}
 		else if (param['1'])
 			printf("\n");
 		else if (param['m'])

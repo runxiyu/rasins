@@ -164,7 +164,7 @@ int ls(char *path) {
 				if (path[strlen(path) - 1] != '/') strcat(fullpath, "/");
 				strcat(fullpath, name);
 			}
-			stat(fullpath, &file_status);
+			lstat(fullpath, &file_status);
 			                     /* File modes */
 			/* File type */
 			{

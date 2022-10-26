@@ -126,8 +126,16 @@ test: test.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) test.o -o bin/test
 
+ed: ed.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) ed.o -o bin/ed
+
+dirname: dirname.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) dirname.o -o bin/dirname
+
 clean:
-	rm -f *.o
+	rm -f *.o version.h
 	rm -Rf bin
 
 # Utilities
@@ -201,3 +209,9 @@ tail.o: ver
 
 test.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) test.c -o test.o
+
+ed.o: ver
+	$(CC) $(CFLAGS) $(NOLINKER) ed.c -o ed.o
+
+dirname.o: ver
+	$(CC) $(CFLAGS) $(NOLINKER) dirname.c -o dirname.o

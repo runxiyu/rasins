@@ -4,6 +4,8 @@
 
 ***Project Documentation***
 
+(!) Please note that documentation is incomplete and can be very outdated (!)
+
 - [Compile fases](docs/COMPILE.md)
 
 - [Mirrors](docs/MIRRORS.md)
@@ -14,6 +16,8 @@
 
 - [Incomplete TODO list](docs/TODO.md)
 
+- [FAQ](docs/FAQ.md)
+
 ## Goal
 
 The `fases` project tries to provide friendly, functionnal and simple core 
@@ -22,6 +26,9 @@ be entirely portable and working on any UNIX-like Operating System and kernel
 such as OpenBSD and Linux. It also tries to be completly modular and as such 
 one utility should **not** depend on another in order to work. The coreutils 
 are still a work-in-progress.
+The `fases` utilities are currently tested on Artix, Alpine, OpenBSD, OS X and
+FreeBSD. We expect all utilities to work on all systems implementing POSIX 
+due to us using only POSIX-compliant functions.
 
 ## Directory structure
 

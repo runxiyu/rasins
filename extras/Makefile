@@ -23,6 +23,13 @@ include ../config.mk
 
 all: clean yes errno
 
+version:
+	echo "#ifndef VERSION_H"                 > version.h
+	echo "#define VERSION_H"                >> version.h
+	echo "#define COMPILETIME \"$$(git show --no-patch --pretty=format:%H)\"" >> version.h
+	echo                                    >> version.h
+	echo "#endif"                           >> version.h
+
 yes: yes.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) yes.o -o bin/yes
@@ -37,5 +44,8 @@ clean:
 # Utilities
 # =========
 
-errno.o:
+errno.o: version
 	$(CC) $(CFLAGS) $(NOLINKER) errno.c -o errno.o
+
+yes.o: version
+	$(CC) $(CFLAGS) $(NOLINKER) yes.c -o yes.o

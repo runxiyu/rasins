@@ -134,6 +134,14 @@ dirname: dirname.o
 	mkdir -p bin
 	$(CC) $(CFLAGS) dirname.o -o bin/dirname
 
+vi: vi.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) vi.o -o bin/vi
+
+ex: vi.o
+	mkdir -p bin
+	$(CC) $(CFLAGS) vi.o -o bin/ex
+
 clean:
 	rm -f *.o version.h
 	rm -Rf bin
@@ -215,3 +223,6 @@ ed.o: ver
 
 dirname.o: ver
 	$(CC) $(CFLAGS) $(NOLINKER) dirname.c -o dirname.o
+
+vi.o: ver
+	$(CC) $(CFLAGS) $(NOLINKER) vi.c -o vi.o

@@ -1,24 +1,32 @@
-.TH BASENAME 1 2022-07-10 Ferass'\ Base\ System.
-.SH NAME
+BASENAME(1) "Ferass' Base System"
+
+# NAME
+
 basename \- Return non-directory portion of a pathname
-.SH SYNOPSIS
-.B basename
-.RB < STRING >
-.RB [ SUFFIX ]
-.SH DESCRIPTION
-Return non-directory portion of the STRING pathname.
-.SH EXAMPLES
-.TP
-.B basename /bin/sh
-Return non-directory portion ("sh").
-.TP
-.B basename /usr/bin/basename name
-Remove the suffix "name" from "basename" and return "base".
-.SH AUTHOR
+
+# SYNOPSIS
+
+*basename* _string_ [*suffix*]
+
+# DESCRIPTION
+
+Return non-directory portion of the *string* pathname.
+
+# EXAMPLES
+
+*basename /bin/sh*
+	Return non-directory portion ("sh").
+
+*basename /usr/bin/basename name*
+	Remove the suffix "name" from "basename" and return "base".
+
+# AUTHOR
+
 Written by Ferass EL HAFIDI as part of the fases 
-project \- Ferass' Base System.
-.P
+project - Ferass' Base System.
+
 Source code is at http://git.vitali64.duckdns.org/utils/fases.git.
-.SH COPYRIGHT
-.P
+
+# COPYRIGHT
+
 Copyright (C) 2022 Ferass EL HAFIDI

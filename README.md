@@ -79,11 +79,21 @@ is sent on the other Network.
 
 ## Mailing Lists
 
+(!) The ***fases -at- andrewyu -dot- org*** mailing list is going to be 
+deprecated soon in favor of the new 
+***fases-general -at- andrewyu -dot- org*** which includes a new UI and 
+a mail archive that isn't provided by a third-party. Please use that 
+mailing list instead. (!)
+
 The `fases` project also has a mailing list ran by Andrew Yu (thanks!).
 
-The mailing list's address is: ***fases -at- andrewyu -dot- org*** (
-[archive](https://www.mail-archive.com/fases@andrewyu.org/)). If you want 
-to subscribe to this mailing list, please ask on IRC.
+The mailing list's address is: 
+***fases-general -at- andrewyu -dot- org*** 
+(
+[subscribe](https://mail.andrewyu.org/mailman/listinfo/fases-general)). 
+
+To send patches, please use `git-send-email`. A tutorial on how to use 
+it can be found [here](https://git-send-email.io/).
 
 ## Donations
 

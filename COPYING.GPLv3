@@ -1,6 +1,6 @@
-# This license applies to all source code fases provides, unless stated 
-# otherwise. This includes fases box, fases extra (extra/), and fases 
-# core (core/).
+# This license applies to all non-POSIX utilities fases provides, 
+# unless stated otherwise. This includes fases box and fases extra 
+# (extra/).
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

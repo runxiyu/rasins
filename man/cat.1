@@ -1,40 +1,46 @@
-.TH CAT 1 2022-07-02 Ferass'\ Base\ System.
-.SH NAME
-cat \- concatenate files to stdout
-.SH SYNOPSIS
-.B cat
-.RB [ \-u ]
-.RB [ FILE ] ...
-.SH DESCRIPTION
+CAT(1) "Ferass' Base System"
+
+# NAME
+
+cat - concatenate files to stdout
+
+# SYNOPSIS
+
+*cat* [*-u*] [*file*] ...
+
+# DESCRIPTION
+
 Concatenate files to standard output (stdout).
-.P
 With no file or when file is -, read and concatenate standard input 
 to standard output.
-.TP
-.B -u
-Print unbuffered.
-.P
-.SH EXAMPLES
-.TP
-.B cat foobar
-Output foobar's contents to standard output.
-.TP
-.B cat
-Output standard input to standard output.
-.TP
-.B cat -u hello.c
-Output hello.c's contents unbuffered to standard output. 
-.TP
-.B cat foo bar baz
-Output foo's contents, then bar's, then baz's to standard output.
-.SH AUTHOR
+
+*-u*
+	Print unbuffered.
+
+# EXAMPLES
+
+*cat foobar*
+	Output foobar's contents to standard output.
+
+*cat*
+	Output standard input to standard output.
+
+*cat -u hello.c*
+	Output hello.c's contents unbuffered to standard output. 
+
+*cat foo bar baz*
+	Output foo's contents, then bar's, then baz's to standard output.
+
+# AUTHOR
+
 Originally written by Ferass EL HAFIDI as part of the fases 
-project \- Ferass' Base System. Part of the code is written by 
+project - Ferass' Base System.  Part of the code is written by 
 Leah Rowe.
-.P
+
 Source code is at http://git.vitali64.duckdns.org/utils/fases.git.
-.SH COPYRIGHT
-.P
+
+# COPYRIGHT
+
 Copyright (C) 2022 Ferass EL HAFIDI
-.P
+
 Copyright (C) 2022 Leah Rowe

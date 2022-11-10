@@ -41,7 +41,9 @@ fases.git
   │   ├── box_70-73.c
   │   └── box_94-96.c
   ├── config.mk
-  ├── COPYING
+  ├── COPYING.3BSD
+  ├── COPYING.FBDL
+  ├── COPYING.GPLv3
   ├── core
   │   └── <core utilities>
   ├── docs
@@ -53,6 +55,18 @@ fases.git
   │   └── <manpages>
   └── README.md
 ```
+
+## Licensing
+
+The `fases` project is licensed under 3 separate licenses:
+
+- POSIX core utilities are licensed under the permissive 3-clause BSD license ;
+
+- The documentation, including manpages, are licensed under the FreeBSD 
+documentation license ;
+
+- Non-POSIX utilities such as box and extras are licensed under the copyleft 
+GPLv3 license. The `fases` box binary is also licensed under the GPLv3.
 
 ## Chat
 

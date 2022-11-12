@@ -75,23 +75,20 @@ struct cursor_pos {
 int  _vi_main(int argc, char *argv[]);
 int  _vi_set_cursor_pos(unsigned int x, unsigned int y);
 int  _vi_init(unsigned int lines, unsigned int columns, 
-		char buffer[4096], struct cursor_pos cposition, long int offset_position, 
+		char buffer[BUFSIZ], struct cursor_pos cposition, long int offset_position, 
 		FILE *filstr);
-long int _vi_go_up(unsigned int lines, unsigned int columns, 
-		char buffer[4096], FILE *filstr, long int offset_position);
-long int _vi_go_down(unsigned int lines, unsigned int columns, 
-		char buffer[4096], FILE *filstr, long int offset_position);
 void _vi_printUsage();
+int _vi_print_buffer_line(char s[BUFSIZ], unsigned int numlines);
 
 int _vi_main(int argc, char *argv[]) {
 	int argument, offset;
 	char cmd;
 	FILE *filstr;
-	char buffer[4096];
+	char buffer[BUFSIZ];
 	struct sigaction signal_action;
 	struct termios oldattr, newattr;
 	struct winsize w;
-	struct cursor_pos cposition;
+	struct cursor_pos cposition, fposition;
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	unsigned int lines   = w.ws_row - 1;
 	unsigned int columns = w.ws_col - 1;
@@ -127,29 +124,39 @@ int _vi_main(int argc, char *argv[]) {
 		switch (cmd) {
 			/*********************** Moving the cursor ***********************/
 			case 'k': /* up */
+				if (fposition.y > 0) fposition.y--;
+				else break;
 				if (cposition.y != 1)
 					_vi_set_cursor_pos(cposition.x, (cposition.y = cposition.y - 1));
-				else {
+				else if (fposition.y == 0) {
 					_vi_set_cursor_pos(1, 1);
-					offset = _vi_go_up(lines, columns, buffer, filstr, offset);	
+					print_string(ANSI_CLEARALL); /* Clear screen */
+					fposition.y--; /* Say, 118 */
+					for (unsigned int i = lines - 1 /* 79 */; i > 0; i--) {
+						_vi_print_buffer_line(buffer, fposition.y - i); /* 120 - 78 */
+					}
 					_vi_set_cursor_pos(cposition.x, cposition.y);
 				}
 				break;
 			case 'j': /* down */
-				if (cposition.y != lines - 1)
+				if (cposition.y != (lines - 1) && fposition.y++)
 					_vi_set_cursor_pos(cposition.x, (cposition.y = cposition.y + 1));
-				else if (!feof(filstr)) {
+				else if (cposition.y == lines - 1) {
 					_vi_set_cursor_pos(1, 1);
-					offset = _vi_go_down(lines, columns, buffer, filstr, offset);	
+					print_string(ANSI_CLEARALL); /* Clear screen */
+					fposition.y++; /* Say, 120 */
+					for (unsigned int i = lines - 1 /* 79 */; i > 0; i--) {
+						_vi_print_buffer_line(buffer, fposition.y - i); /* 120 - 78 */
+					}
 					_vi_set_cursor_pos(cposition.x, cposition.y);
 				}
 				break;
 			case 'l': /* right */
-				if (cposition.x != columns)
+				if (cposition.x != columns && fposition.x++)
 					_vi_set_cursor_pos((cposition.x = cposition.x + 1), cposition.y);
 				break;
 			case 'h': /* left */
-				if (cposition.x != 0)
+				if (cposition.x != 1 && fposition.x--)
 					_vi_set_cursor_pos((cposition.x = cposition.x - 1), cposition.y);
 				break;
 			/************************* Command mode: *************************/
@@ -183,83 +190,25 @@ int _vi_main(int argc, char *argv[]) {
 }
 
 int _vi_init(unsigned int lines, unsigned int columns, 
-		char buffer[4096], struct cursor_pos cposition, 
+		char buffer[BUFSIZ], struct cursor_pos cposition, 
 		long int offset_position, FILE *filstr) {
 	int status = 0;
 	print_string(ANSI_CLEARALL); /* Clear screen */
-	_vi_set_cursor_pos(1, 0);
+	_vi_set_cursor_pos(1, 1);
 	if (filstr) {
-		if (fgets(buffer, 4096, filstr) != NULL) {
-			offset_position = ftell(filstr);
-			fputs(buffer, stdout);
-		}
-		for (unsigned int i = 1; i < (lines - 1); i++) {
-			if (fgets(buffer, 4096, filstr) != NULL) {
-				fputs(buffer, stdout);
-			}
-			else {
-				fputs("~\n", stdout);
-				status = 1; /* EOF */
-			}
-		}
+		fread(buffer, BUFSIZ, 1, filstr);
+		//if (fgets(buffer, 4096, filstr) != NULL) {
+		//	offset_position = ftell(filstr);
+		//	fputs(buffer, stdout);
+		//}
+		for (unsigned int i = 0; i < lines - 1; i++)
+			_vi_print_buffer_line(buffer, i);
 	} else {
 		for (unsigned int i = 1; i < (lines ); i++)
 			fputs("~\n", stdout);
 		status = 2; /* No file */
 	} _vi_set_cursor_pos((cposition.x = 1), (cposition.y = 1));
 	return status;
-}
-
-long int _vi_go_up(unsigned int lines, unsigned int columns, 
-		char buffer[4096], FILE *filstr, long int offset_position) {
-	/* Really hacky stuff. TODO: Rewrite. */
-	int status = 0, offset_one_line_before;
-	print_string(ANSI_CLEARALL); /* Clear screen */
-	rewind(filstr);
-	if (ftell(filstr) == offset_position) return offset_position;
-	for (; fgets(buffer, 4096, filstr) != NULL && 
-			(ftell(filstr) != offset_position && 
-			 (offset_one_line_before = ftell(filstr)));)
-		/* Do nothing. */ ;
-	for (unsigned int i = 0; i < (lines - 1); i++) {
-		if (fgets(buffer, 4096, filstr) != NULL) {
-			fputs(buffer, stdout);
-		}
-		else {
-			fputs("~\n", stdout);
-			status = 1; /* EOF */
-		}
-	}	/* Hacky hack */
-	_vi_set_cursor_pos(1, lines);
-	print_string(ANSI_CLEARLINE);
-	return offset_one_line_before;
-}
-
-long int _vi_go_down(unsigned int lines, unsigned int columns, 
-		char buffer[4096], FILE *filstr, long int offset_position) {
-	int status = 0;
-	print_string(ANSI_CLEARALL); /* Clear screen */
-	fseek(filstr, offset_position, SEEK_SET);
-	if (fgets(buffer, 4096, filstr) != NULL)
-		offset_position = ftell(filstr);
-
-	for (unsigned int i = 0; i < (lines); i++) {
-		if (fgets(buffer, 4096, filstr) != NULL) {
-			fputs(buffer, stdout);
-		}
-		else {
-			fputs("~\n", stdout);
-			status = 1; /* EOF */
-		}
-	}
-	//fposition.start = ftell(filstr);
-	//fposition_start_backup = ftell(filstr);
-	//if (fgets(buffer, 4096, filstr) != NULL)
-	//	fposition.end = ftell(filstr);
-	/* Hacky hack */
-	_vi_set_cursor_pos(1, lines);
-	print_string(ANSI_CLEARLINE);
-	return offset_position;
 }
 
 int _vi_set_cursor_pos(unsigned int x, unsigned int y) {
@@ -270,6 +219,19 @@ void _vi_printUsage() {
 	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: vi [filename]\n\n"
 	"Visual editor.\n\n", COMPILETIME);
+}
+
+int _vi_print_buffer_line(char s[BUFSIZ], unsigned int numlines) {
+	unsigned int lines_found, chars;
+	/* Search for <numlines> - 1 lines and skip them entirely. */
+	for (chars = 0, lines_found = 0; 
+			s[chars] && lines_found < numlines; s[chars] == '\n' && lines_found++, chars++)
+		/* TODO: Use strchr(). */ ;
+	/* Print the last line found. */
+	for (; s[chars] && s[chars] != '\n'; chars++) putchar((int)s[chars])
+		/* TODO: Do not print character-by-character. */ ;
+	putchar((int)'\n');
+	return 0;
 }
 
 /************ main() ************/

@@ -2,6 +2,8 @@
 
 *Simple coreutils for a fully functionnal UNIX-like system*
 
+![](./wip.gif)
+
 ***Project Documentation***
 
 (!) Please note that documentation is incomplete and can be very outdated (!)
@@ -64,6 +66,8 @@ The `fases` project is licensed under 3 separate licenses:
 
 - The documentation, including manpages, are licensed under the FreeBSD 
 documentation license ;
+
+- The "Work in progress" GIF is licensed under CC-BY-SA 4.0 ;
 
 - Non-POSIX utilities such as box and extras are licensed under the copyleft 
 GPLv3 license. The `fases` box binary is also licensed under the GPLv3.

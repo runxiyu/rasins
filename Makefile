@@ -21,7 +21,7 @@ include ./config.mk
 # Commands
 # ========
 
-all: clean box
+all: clean prepbox genbox box
 
 genbox:
 	echo "#ifndef VERSION_H"                 > version.h

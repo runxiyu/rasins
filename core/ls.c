@@ -137,7 +137,7 @@ void printUsage(char *params) {
 int ls(char *path) {
 	int file, dotname, cwdname, prevdir, dot;
 	long unsigned int cols_used;
-	DIR *directory, *subdirectory;
+	DIR *directory;
 	struct stat file_status;
 	struct dirent *dirtree;
 	struct winsize columns;

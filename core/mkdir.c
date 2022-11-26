@@ -40,9 +40,7 @@ int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
 
 int main(int argc, char *const argv[]) {
-	char param[256];
 	int success, argument, i = 1;
-	char *basenamestr[256];
 
 	if (argc == 1) {
 		printUsage();
@@ -54,11 +52,9 @@ int main(int argc, char *const argv[]) {
 			printUsage();
 			return 0;
 		}
-		param[argument] = argument;
 	}
 
 	for (; i < argc; i++) {
-		printf("Warning: -p ignored.\n");
 		if (argv[i][0] != '-')
 			success = !mkdir(argv[i], S_IRWXU | S_IRWXG | S_IRWXO) ? 0 : 1; 
 		if (success == 1) {

@@ -41,8 +41,6 @@ int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
 
 int main(int argc, char *argv[]) {
-	int argument, status;
-	long unsigned int i;
 	char *dirnamestr;
 
 	if (argc != 2) {

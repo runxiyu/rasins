@@ -32,7 +32,7 @@
 int getopt(int argc, char *const argv[], const char *optstring);
 
 int main(int argc, char *const argv[]) {
-	int argument, i = 1;
+	int i = 1;
 
 	for (i = 1; i != argc; i++) {
 		printf("%s ", argv[i]);

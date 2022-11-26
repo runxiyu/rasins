@@ -39,8 +39,6 @@ int  getopt(int argc, char *const argv[], const char *optstring);
 void printUsage();
 
 int main(int argc, char *const argv[]) {
-	int argument;
-
 	if (argc == 1) {
 		printUsage();
 		return 1;

@@ -41,7 +41,7 @@ void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument;
-	char param[256], *params = "s", *buffer;
+	char param[256], *params = "s", *buffer = NULL;
 
 	if (argc == 1) {
 		printUsage();

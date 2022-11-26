@@ -45,7 +45,6 @@ int true  = 0;
 int false = 1;
 
 int main(int argc, char *argv[]) {
-	int argument;
 	char param[256];
 	struct stat file_status;
 

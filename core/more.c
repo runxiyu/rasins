@@ -44,7 +44,7 @@ void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int i = 0, argument, success, read_file;
-	long int columns, lines;
+	long int /* columns, */ lines;
 	char buffer[4096], cmd;
 	struct winsize w;
 	FILE *file;
@@ -52,8 +52,8 @@ int main(int argc, char *const argv[]) {
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	if (getenv("LINES")) lines = strtol(getenv("LINES"), NULL, 10) - 1;
 	else lines = w.ws_row - 1;
-	if (getenv("COLUMNS")) columns = strtol(getenv("COLUMNS"), NULL, 10);
-	else columns = w.ws_col - 1;
+	//if (getenv("COLUMNS")) columns = strtol(getenv("COLUMNS"), NULL, 10);
+	//else columns = w.ws_col - 1;
 
 	while ((argument = getopt(argc, argv, "")) != -1) {
 		if (argument == '?') {

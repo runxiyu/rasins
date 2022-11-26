@@ -61,7 +61,7 @@ int main(int argc, char *const argv[]) {
 	}
 	if ((file = open(argv[2], O_RDONLY)) != -1 && param['i']) {
 		printf("File exists, override it? (y/n) ");
-		read(STDIN_FILENO, &cmd, 3);
+		read(STDIN_FILENO, &cmd, 1);
 		if (cmd == 'n' || cmd == 'N') {
 			close(file);
 			return 0;

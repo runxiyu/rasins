@@ -65,7 +65,6 @@ ALLUTILS=\
 	c99\
 	cal\
 	cat\
-	cd\
 	cflow\
 	chgrp\
 	chmod\
@@ -168,7 +167,6 @@ ALLUTILS=\
 	sact\
 	sccs\
 	sed\
-	sh\
 	sleep\
 	sort\
 	split\
@@ -216,7 +214,7 @@ ALLUTILS=\
 ifeq ($(UTILTOTEST),)
 testsuite: $(CORE)
 	@echo "TEST all"
-	for util in $(ALLUTILS); do [ -e $${util} ] || echo "ERR Utility $${util} is missing."; done
+	for util in $(ALLUTILS); do [ -e $${util}.c ] || echo "ERR Utility $${util} is missing."; done
 	# TODO: See if utilities already implemented are fully POSIX-compliant, from the source to the behaviour.
 	#for util in $(CORE); do grep $${util} utilities.csv && $$(grep $${util} utilities.csv | awk -F',' '{ print $$3 }') (bin/$${util} $$(grep $${util} utilities.csv | awk -F',' '{ print $$1 }') || echo "ERR Utility $${util} isn't fully POSIX-compliant.") || echo "ERR Utility $${util} isn't in utilities.csv"; done
 	@echo "Done."

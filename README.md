@@ -92,8 +92,16 @@ ssl: `6697` (recommended) ;
 
 plain: `6667`.
 
-Both of these channels are linked so all messages sent in one of them 
-is sent on the other Network.
+There's also an XMPP channel/room:
+
+- `vitali64.duckdns.org`:
+
+server: `[conference.]vitali64.duckdns.org` ;
+
+room: `fases@conference.vitali64.duckdns.org`.
+
+All those channels are bridged together so you can talk to us regardless of 
+which chat platform you use.
 
 ## Mailing Lists
 

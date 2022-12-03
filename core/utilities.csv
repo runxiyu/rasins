@@ -1,0 +1,2 @@
+UTILITY,OPTIONS AND OPERANDS,PREP,TYPE
+cat,/tmp/fasesmake_testfile,sh -c "echo HelloWorld > /tmp/fasesmake_testfile",file read

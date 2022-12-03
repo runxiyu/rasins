@@ -18,211 +18,212 @@
 
 include ../config.mk
 
-# Commands
-# ========
+# Special
+.SILENT:
+.SUFFIXES: .o .c
+.POSIX:
 
+# Utilities
 all: clean $(CORE)
 
-ver:
+.c:
 	echo "#ifndef VERSION_H"                 > version.h
 	echo "#define VERSION_H"                >> version.h
 	echo "#define COMPILETIME \"$$(git show --no-patch --pretty=format:%H)\"" >> version.h
 	echo                                    >> version.h
 	echo "#endif"                           >> version.h
-
-head: head.o
+	[ -e $@.c ] || echo "$@ is not implemented." ;
+	@echo "CC $@"
+	$(CC) $(CFLAGS) $(NOLINKER) $< -o $@.o
+	@echo "LD $@"
 	mkdir -p bin
-	$(CC) $(CFLAGS) head.o -o bin/head
+	$(CC) $(CFLAGS) $@.o -o bin/$@
+	@echo "Done."
 
-cat: cat.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) cat.o -o bin/cat
-
-ls: ls.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) ls.o -o bin/ls
-
-date: date.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) date.o -o bin/date
-
-yes: yes.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) yes.o -o bin/yes
-
-mkdir: mkdir.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) mkdir.o -o bin/mkdir
-
-echo: echo.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) echo.o -o bin/echo
-
-true: true.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) true.o -o bin/true
-
-false: false.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) false.o -o bin/false
-
-sleep: sleep.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) sleep.o -o bin/sleep
-
-printf: printf.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) printf.o -o bin/printf
-
-uname: uname.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) uname.o -o bin/uname
-
-link: link.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) link.o -o bin/link
-
-ln: ln.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) ln.o -o bin/ln
-
-chmod: chmod.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) chmod.o -o bin/chmod
-
-basename: basename.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) basename.o -o bin/basename
-
-unlink: unlink.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) unlink.o -o bin/unlink
-
-mv: mv.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) mv.o -o bin/mv
-
-rm: rm.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) rm.o -o bin/rm
-
-more: more.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) more.o -o bin/more
-
-chown: chown.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) chown.o -o bin/chown
-
-tail: tail.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) tail.o -o bin/tail
-
-[: test.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) test.o -o bin/\[
-
-test: test.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) test.o -o bin/test
-
-ed: ed.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) ed.o -o bin/ed
-
-dirname: dirname.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) dirname.o -o bin/dirname
-
-vi: vi.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) vi.o -o bin/vi
-
-ex: vi.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) vi.o -o bin/ex
-
+# Cleaning
 clean:
+	@echo "RM *.o"
+	@echo "RM version.h"
+	@echo "RM bin/*"
 	rm -f *.o version.h
 	rm -Rf bin
+	@echo "Done."
 
-# Utilities
-# =========
+# Test Suite
+UTILTOTEST=
+ALLUTILS=\
+	admin\
+	alias\
+	ar\
+	asa\
+	at\
+	awk\
+	basename\
+	batch\
+	bc\
+	bg\
+	c99\
+	cal\
+	cat\
+	cd\
+	cflow\
+	chgrp\
+	chmod\
+	chown\
+	cksum\
+	cmp\
+	comm\
+	command\
+	compress\
+	cp\
+	crontab\
+	csplit\
+	ctags\
+	cut\
+	cxref\
+	date\
+	dd\
+	delta\
+	df\
+	diff\
+	dirname\
+	du\
+	echo\
+	ed\
+	env\
+	ex\
+	expand\
+	expr\
+	false\
+	fc\
+	fg\
+	file\
+	find\
+	fold\
+	fort77\
+	fuser\
+	gencat\
+	get\
+	getconf\
+	getopts\
+	grep\
+	hash\
+	head\
+	iconv\
+	id\
+	ipcrm\
+	ipcs\
+	jobs\
+	join\
+	kill\
+	lex\
+	link\
+	ln\
+	locale\
+	localedef\
+	logger\
+	logname\
+	lp\
+	ls\
+	m4\
+	mailx\
+	make\
+	man\
+	mesg\
+	mkdir\
+	mkfifo\
+	more\
+	mv\
+	newgrp\
+	nice\
+	nl\
+	nm\
+	nohup\
+	od\
+	paste\
+	patch\
+	pathchk\
+	pax\
+	pr\
+	printf\
+	prs\
+	ps\
+	pwd\
+	qalter\
+	qdel\
+	qhold\
+	qmove\
+	qmsg\
+	qrerun\
+	qrls\
+	qselect\
+	qsig\
+	qstat\
+	qsub\
+	read\
+	renice\
+	rm\
+	rmdel\
+	rmdir\
+	sact\
+	sccs\
+	sed\
+	sh\
+	sleep\
+	sort\
+	split\
+	strings\
+	strip\
+	stty\
+	tabs\
+	tail\
+	talk\
+	tee\
+	test\
+	time\
+	touch\
+	tput\
+	tr\
+	true\
+	tsort\
+	tty\
+	type\
+	ulimit\
+	umask\
+	unalias\
+	uname\
+	uncompress\
+	unexpand\
+	unget\
+	uniq\
+	unlink\
+	uucp\
+	uudecode\
+	uuencode\
+	uustat\
+	uux\
+	val\
+	vi\
+	wait\
+	wc\
+	what\
+	who\
+	write\
+	xargs\
+	yacc\
+	zcat
 
-head.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) head.c -o head.o
-
-cat.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) cat.c -o cat.o
-
-ls.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) ls.c -o ls.o
-
-date.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) date.c -o date.o
-
-yes.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) yes.c -o yes.o
-
-mkdir.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) mkdir.c -o mkdir.o
-
-echo.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) echo.c -o echo.o
-
-true.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) true.c -o true.o
-
-false.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) false.c -o false.o
-
-sleep.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) sleep.c -o sleep.o
-
-printf.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) printf.c -o printf.o
-
-uname.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) uname.c -o uname.o
-
-link.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) link.c -o link.o
-
-ln.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) ln.c -o ln.o
-
-chmod.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) chmod.c -o chmod.o
-
-basename.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) basename.c -o basename.o
-
-unlink.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) unlink.c -o unlink.o
-
-mv.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) mv.c -o mv.o
-
-rm.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) rm.c -o rm.o
-
-more.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) more.c -o more.o
-
-chown.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) chown.c -o chown.o
-
-tail.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) tail.c -o tail.o
-
-test.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) test.c -o test.o
-
-ed.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) ed.c -o ed.o
-
-dirname.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) dirname.c -o dirname.o
-
-vi.o: ver
-	$(CC) $(CFLAGS) $(NOLINKER) vi.c -o vi.o
+ifeq ($(UTILTOTEST),)
+testsuite: $(CORE)
+	@echo "TEST all"
+	for util in $(ALLUTILS); do [ -e $${util} ] || echo "ERR Utility $${util} is missing."; done
+	# TODO: See if utilities already implemented are fully POSIX-compliant, from the source to the behaviour.
+	#for util in $(CORE); do grep $${util} utilities.csv && $$(grep $${util} utilities.csv | awk -F',' '{ print $$3 }') (bin/$${util} $$(grep $${util} utilities.csv | awk -F',' '{ print $$1 }') || echo "ERR Utility $${util} isn't fully POSIX-compliant.") || echo "ERR Utility $${util} isn't in utilities.csv"; done
+	@echo "Done."
+else
+testsuite: $(UTILTOTEST)
+	#@echo "TEST $(UTILTOTEST)"
+	#[ -e $(UTILTOTEST) ] && $$(grep $(UTILTOTEST) utilities.csv | awk -F',' '{ print $$3 }') && bin/$(UTILTOTEST) $$(grep $(UTILTOTEST) utilities.csv | awk -F',' '{ print $$1 $$2 }') || echo "ERR Utility $(UTILTOTEST) isn't fully POSIX-compliant."
+	#@echo "Done."
+	@echo "Not implemented."
+endif

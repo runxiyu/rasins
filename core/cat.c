@@ -34,20 +34,24 @@
 #include <errno.h>
 #include <string.h>
 #include "version.h"
+#include "print_usage.h"
 
 #ifndef COMPILETIME
 #define COMPILETIME
 #endif
 
+#define DESCRIPTION "Concatenate a file to standard output. \
+	If no file is specified or file is '-', read standard input."
+#define OPERANDS    "[-u] [file] ..."
+
 int  cat(int flides, int unbuffered);
-void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int file, argument, i = 1, unbuffered;
 
 	while ((argument = getopt(argc, argv, "u")) != -1) {
 		if (argument == '?') {
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 		}
 		else if (argument == 'u')
@@ -84,12 +88,4 @@ int cat(int fildes, int unbuffered) {
 	}
 	if (errno) return errno;
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: cat [file]\n\n"
-	"Concatenate <file> to standard output.\n"
-	"When no file is specified or file is '-', read standard input\n\n"
-	"\t-u\tPrint unbuffered\n", COMPILETIME);
 }

@@ -30,13 +30,16 @@
 #include <stdio.h>
 #include <errno.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Remove files."
+#define OPERANDS    "[-Rr] file ..."
 
 #ifndef COMPILETIME
 #define COMPILETIME
 #endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 1;
@@ -44,13 +47,13 @@ int main(int argc, char *const argv[]) {
 
 	while ((argument = getopt(argc, argv, "Rr")) != -1) {
 		if (argument == '?') {
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 		}
 		param[argument] = argument;
 	}
 	if (argc <= 1) {
-		printUsage();
+		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 		return 1;
 	}
 
@@ -63,12 +66,4 @@ int main(int argc, char *const argv[]) {
 
 	if (errno) return errno;
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: rm [-Rr] file ...\n\n"
-	"Remove <file>.\n\n"
-	"\t-R\tRecursively remove the directory tree\n"
-	"\t-r\tEnable the -R option\n", COMPILETIME);
 }

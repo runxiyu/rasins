@@ -32,29 +32,26 @@
 #include <string.h>
 #include <libgen.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Return directory portion of <string>."
+#define OPERANDS    "string"
 
 #ifndef COMPILETIME
 #define COMPILETIME
 #endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
 
 int main(int argc, char *argv[]) {
 	char *dirnamestr;
 
 	if (argc != 2) {
-		printUsage();
+		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 		return 1;
 	}
 	dirnamestr = dirname(argv[1]);
 
 	printf("%s\n", dirnamestr);
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: dirname string\n\n"
-	"Return directory portion of <string>.\n\n", COMPILETIME);
 }

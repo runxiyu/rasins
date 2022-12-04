@@ -29,6 +29,10 @@
 #include <unistd.h>
 #include <stdio.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Write formatted strings to standard output."
+#define OPERANDS    "format [string]"
 
 #ifndef COMPILETIME
 #define COMPILETIME
@@ -39,15 +43,9 @@ void printUsage();
 
 int main(int argc, char *const argv[]) {
 	if (argc == 1) {
-		printUsage();
+		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 		return 1;
 	}
 	printf(argv[1], argv[2] ? argv[2] : "");
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: printf format [string]\n\n"
-	"Write formatted strings to stdout.\n\n", COMPILETIME);
 }

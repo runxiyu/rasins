@@ -41,6 +41,11 @@
 #include <time.h>
 #include <sys/ioctl.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Print <directory>'s contents to standard output.\
+	If no directory is specified, print the current directory's contents."
+#define OPERANDS    "[-1aACRimlpgno] [directory]"
 
 #ifndef COMPILETIME
 #define COMPILETIME
@@ -63,7 +68,7 @@ int main(int argc, char *argv[]) {
 
 	while ((argument = getopt(argc, argv, params)) != -1) {
 		if (argument == '?') {
-			printUsage(params);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 		}
 		param[argument] = argument;
@@ -110,28 +115,6 @@ int main(int argc, char *argv[]) {
 		printf("\n");
 
 	return i;
-}
-
-void printUsage(char *params) {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: "
-	"ls [-%s] [directory] ...\n\n"
-	"Print <directory>'s contents to standard output.\n\n"
-	"\t-a\tInclude names starting with a dot, including '.' and '..'\n"
-	"\t-A\tSame as `-a` but don't include '.' and '..'\n"
-	"\t-C\tPrint in columns\n"
-	"\t-1\tPrint in lines\n"
-	"\t-R\tRecursively list directories\n"
-	"\t-i\tFor each file, write its serial number\n"
-	"\t-m\tList names followed by a comma and space character\n"
-	"\t-l\tDo not follow symbolic links named as operands and "
-	"write in long format (unfinished)\n"
-	"\t-p\tShow '/' after each name if that name is a directory\n"
-	"\t-g\tEnable the -l option but don't print the file owner's name\n"
-	"\t-n\tEnable the -l option but print the file owner and group's numeric "
-	"UID and GID instead of their name\n"
-	"\t-o\tEnable the -l option but don't print the file group's name\n", 
-	COMPILETIME, params);
 }
 
 int ls(char *path) {

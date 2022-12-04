@@ -31,24 +31,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Change file modes."
+#define OPERANDS    "mode file"
 
 #ifndef COMPILETIME
 #define COMPILETIME
 #endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 0;
 	mode_t owner_modes, group_modes, other_modes;
 	if (argc == 1) {
-		printUsage();
+		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 		return 1;
 	}
 	while ((argument = getopt(argc, argv, "")) != -1) {
 		if (argument == '?') {
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 		}
 	}
@@ -71,7 +74,7 @@ int main(int argc, char *const argv[]) {
 			owner_modes = S_IXUSR;
 			break;
 		default:
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 	}
 	i++;
@@ -90,7 +93,7 @@ int main(int argc, char *const argv[]) {
 			group_modes = S_IXGRP;
 			break;
 		default:
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 	}
 	i++;
@@ -109,16 +112,10 @@ int main(int argc, char *const argv[]) {
 			other_modes = S_IXOTH;
 			break;
 		default:
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 	}
 
 	chmod(argv[2], owner_modes | group_modes | other_modes);
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: chmod mode file\n\n"
-	"Change file modes.\n\n", COMPILETIME);
 }

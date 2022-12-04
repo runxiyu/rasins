@@ -34,8 +34,6 @@
 #define COMPILETIME
 #endif
 
-void printUsage();
-
 int main(int argc, char *argv[]) {
 	time_t epoch = time(NULL);
 	struct tm* date = localtime(&epoch);
@@ -51,10 +49,4 @@ int main(int argc, char *argv[]) {
 	strftime(date_s, 31, format, date);
 	printf("%s\n", date_s);
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: date [+format]\n\n"
-	"Output the date and time.\n\n", COMPILETIME);
 }

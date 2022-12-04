@@ -217,8 +217,8 @@ int _vi_set_cursor_pos(unsigned int x, unsigned int y) {
 
 void _vi_printUsage() {
 	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: vi [filename]\n\n"
-	"Visual editor.\n\n", COMPILETIME);
+	"Usage: vi [filename]\n"
+	"Visual editor.\n", COMPILETIME);
 }
 
 int _vi_print_buffer_line(char s[BUFSIZ], unsigned int numlines) {

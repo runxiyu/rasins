@@ -32,24 +32,27 @@
 #include <pwd.h>
 #include <stdlib.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Change file ownership."
+#define OPERANDS    "owner file"
 
 #ifndef COMPILETIME
 #define COMPILETIME
 #endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument;
 	struct passwd *user;
 	if (argc == 1) {
-		printUsage();
+		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 		return 1;
 	}
 	while ((argument = getopt(argc, argv, "")) != -1) {
 		if (argument == '?') {
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 		}
 	}
@@ -63,10 +66,4 @@ int main(int argc, char *const argv[]) {
 	if (errno) return errno;
 
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: chown owner file\n\n"
-	"Change file ownership.\n\n", COMPILETIME);
 }

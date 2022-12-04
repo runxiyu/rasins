@@ -31,13 +31,16 @@
 #include <errno.h>
 #include <fcntl.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Move files."
+#define OPERANDS    "[-if] source dest"
 
 #ifndef COMPILETIME
 #define COMPILETIME
 #endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, file;
@@ -47,7 +50,7 @@ int main(int argc, char *const argv[]) {
 	                                         * very important. */
 	while ((argument = getopt(argc, argv, "if")) != -1) {
 		if (argument == '?') {
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 		}
 		param[argument] = argument;
@@ -56,7 +59,7 @@ int main(int argc, char *const argv[]) {
 	}
 	if (!param['f']) param['i'] = 'i';
 	if (argc < 3) {
-		printUsage();
+		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 		return 1;
 	}
 	if ((file = open(argv[2], O_RDONLY)) != -1 && param['i']) {
@@ -72,12 +75,4 @@ int main(int argc, char *const argv[]) {
 	rename(argv[1], argv[2]); /* Technically, moving files == renaming files */
 	if (errno) return errno;
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: mv [-if] file1 file2\n\n"
-	"Move <file1> to <file2>.\n\n"
-	"\t-i\tIf <file2> exists, ask for confirmation\n"
-	"\t-f\tNever ask for confirmation\n", COMPILETIME);
 }

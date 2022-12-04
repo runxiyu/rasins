@@ -30,6 +30,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Suspend execution for an interval."
+#define OPERANDS    "time"
 
 #ifndef COMPILETIME
 #define COMPILETIME
@@ -43,21 +47,15 @@ int main(int argc, char *argv[]) {
 	if (argc == 2) {
 		seconds = strtol(argv[1], NULL, 10);
 		if (!seconds) {
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 		}
 		sleep(seconds);
 	}
 	else if (argc == 1) {
-		printUsage();
+		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 		return 1;
 	}
 
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: sleep seconds\n\n"
-	"Suspend execution for <seconds> seconds.\n\n", COMPILETIME);
 }

@@ -34,6 +34,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Copy file to standard output until <number> lines."
+#define OPERANDS    "[-n number] [file] ..."
 
 #ifndef COMPILETIME
 #define COMPILETIME
@@ -41,7 +45,6 @@
 
 /* Functions Prototypes */
 int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 1, lines, lines_printed;
@@ -51,7 +54,7 @@ int main(int argc, char *const argv[]) {
 
 	while ((argument = getopt(argc, argv, "n:")) != -1) {
 		if (argument == '?' || argument == ':') {
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 		}
 		else if (argument == 'n') {
@@ -81,12 +84,4 @@ int main(int argc, char *const argv[]) {
 		else i++;
 	}
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: head [-n number] [file]\n\n"
-	"Copy file to standard output until <number> lines.\n\n"
-	"\t-n number\tNumber of lines to be copied to standard output\n", 
-	COMPILETIME);
 }

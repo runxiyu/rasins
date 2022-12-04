@@ -30,17 +30,20 @@
 #include <stdio.h>
 #include <errno.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Call the link() function."
+#define OPERANDS    "source dest"
 
 #ifndef COMPILETIME
 #define COMPILETIME
 #endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
 
 int main(int argc, char *const argv[]) {
 	if (argc == 1) {
-		printUsage();
+		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 		return 1;
 	}
 	if (argc >= 2) {
@@ -48,10 +51,4 @@ int main(int argc, char *const argv[]) {
 		if (errno) return errno;
 	}
 	return 0;
-}
-
-void printUsage() {
-	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: link file1 file2\n\n"
-	"Link <file1> to <file2> using the link() function.\n\n", COMPILETIME);
 }

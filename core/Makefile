@@ -37,7 +37,7 @@ all: clean $(CORE)
 	$(CC) $(CFLAGS) $(NOLINKER) $< -o $@.o
 	@echo "LD $@"
 	mkdir -p bin
-	$(CC) $(CFLAGS) $@.o -o bin/$@
+	$(CC) $(CFLAGS) $@.o print_usage.c -o bin/$@
 	@echo "Done."
 
 # Cleaning

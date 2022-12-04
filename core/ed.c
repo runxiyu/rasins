@@ -33,12 +33,15 @@
 #include <signal.h>
 #include <string.h>
 #include "version.h"
+#include "print_usage.h"
+
+#define DESCRIPTION "Edit text."
+#define OPERANDS    "[-p prompt]"
 
 #ifndef COMPILETIME
 #define COMPILETIME
 #endif
 
-void   printUsage();
 void   print_error();
 size_t c_append(char buffer[4096]);
 
@@ -51,7 +54,7 @@ int main(int argc, char *argv[]) {
 
 	while ((argument = getopt(argc, argv, "p:")) != -1) {
 		if (argument == '?') {
-			printUsage();
+			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 			return 1;
 		}
 		else if (argument == 'p')
@@ -130,6 +133,7 @@ int main(int argc, char *argv[]) {
 				}
 				/* If help_mode was equal to 1, set it to 0 and vice-versa. */
 				help_mode = !help_mode;
+				/* FALLTHROUGH */
 			case 'h': /* Help Command */
 				/* FALLTHROUGH */
 				print_error(error, help_mode + 2); /* Print the last encountered error. */

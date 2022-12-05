@@ -26,8 +26,8 @@ CFLAGS=-D_POSIX_C_SOURCE=200809L -I. -Wall -Werror -Wextra -g $(FORCEC99) $(OPTI
 NOLINKER=-c # C Compiler flag to disable the linker
 # Core utilities
 CORE=\
-	basename\
 	[\
+	basename\
 	cat\
 	chmod\
 	chown\
@@ -50,8 +50,8 @@ CORE=\
 	test\
 	true\
 	uname\
-	unlink\
-	vi
+	unlink#\
+	#vi
 
 INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
 # Extra utilities

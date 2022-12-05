@@ -29,6 +29,7 @@ int chown_main(int, char**);
 int date_main(int, char**);
 int dirname_main(int, char**);
 int echo_main(int, char**);
+int ed_main(int, char**);
 int false_main(int, char**);
 int head_main(int, char**);
 int link_main(int, char**);
@@ -60,6 +61,7 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(basename(argv[0]), "date")) return date_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "dirname")) return dirname_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "echo")) return echo_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "ed")) return ed_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "false")) return false_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "head")) return head_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "link")) return link_main(argc, argv);
@@ -78,9 +80,8 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(basename(argv[0]), "unlink")) return unlink_main(argc, argv);
 /* START */
 	else if (!strcmp(basename(argv[0]), "box") && argc == 1) {
-		printf("Ferass' Base System in a box\n\n");
-		printf("Usage: box <COMMAND> [ARGS]\n\n");
-		printf("Commands available:\n");
+		printf("Ferass' Base System.\n");
+		printf("Usage: box command [args] ...\n");
 /*  END  */
 		printf("[ ");
 		printf("basename ");
@@ -90,6 +91,7 @@ int main(int argc, char *argv[]) {
 		printf("date ");
 		printf("dirname ");
 		printf("echo ");
+		printf("ed ");
 		printf("false ");
 		printf("head ");
 		printf("link ");
@@ -115,4 +117,4 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 /*  END  */
-/* Generated on Sun 23 Oct 19:30:23 CEST 2022 */
+/* Generated on Sun  4 Dec 20:20:14 CET 2022 */

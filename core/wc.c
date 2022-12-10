@@ -30,11 +30,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <errno.h>
 #include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Word, line, and byte/character count."
-#define OPERANDS    "[file] ..."
+#define OPERANDS    "[-clwm] [file...]"
 
 #ifndef COMPILETIME
 #define COMPILETIME
@@ -66,18 +67,22 @@ int main(int argc, char *const argv[]) {
 
 	for (int i = 0; i != argc; i++) {
 		file = fopen(argv[i], "r");
+		if (errno) return errno;
 		while ((length = getline(&line, &len_getd, file)) != -1) {
 			if (param['l']) newlines++;
 			if (param['c'] || param['m']) bytes += length;
 		} rewind(file);
+		if (errno) return errno;
 		if (param['w']) while ((length = getdelim(&line, &len_getd, (int)' ', file)) != -1) {
 			words++;
 		}
+		if (errno) return errno;
 		if (param['l']) printf("%zu ", newlines);
 		if (param['w']) printf("%zu ", words);
 		if (param['m'] || param['c']) printf("%zu ", bytes);
 		printf("%s\n", argv[i]);
 		fclose(file);
+		if (errno) return errno;
 		total_bytes += bytes;
 		total_words += words;
 		total_newlines += newlines;
@@ -90,5 +95,6 @@ int main(int argc, char *const argv[]) {
 		printf("total\n");
 	}
 	free(line);
+	if (errno) return errno;
 	return 0;
 }

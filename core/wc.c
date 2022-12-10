@@ -46,7 +46,8 @@ int main(int argc, char *const argv[]) {
 	size_t len_getd = 4096;
 	char *line = NULL;
 	char param[256];
-	ssize_t total_bytes = 0, total_newlines = 0, total_words = 0;
+	ssize_t bytes = 0, newlines = 0, words = 0, 
+			total_bytes = 0, total_newlines = 0, total_words = 0;
 	if (argc < 2)
 		return print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
 	while ((argument = getopt(argc, argv, "clmw")) != -1) {
@@ -62,20 +63,32 @@ int main(int argc, char *const argv[]) {
 		param['c'] = 'c';
 		param['w'] = 'w';
 	}
-	file = fopen(argv[0], "r");
 
-	while ((length = getline(&line, &len_getd, file)) != -1) {
-		if (param['l']) total_newlines++;
-		if (param['c'] || param['m']) total_bytes += length;
-	} rewind(file);
-	if (param['w']) while ((length = getdelim(&line, &len_getd, (int)' ', file)) != -1) {
-		total_words++;
+	for (int i = 0; i != argc; i++) {
+		file = fopen(argv[i], "r");
+		while ((length = getline(&line, &len_getd, file)) != -1) {
+			if (param['l']) newlines++;
+			if (param['c'] || param['m']) bytes += length;
+		} rewind(file);
+		if (param['w']) while ((length = getdelim(&line, &len_getd, (int)' ', file)) != -1) {
+			words++;
+		}
+		if (param['l']) printf("%zu ", newlines);
+		if (param['w']) printf("%zu ", words);
+		if (param['m'] || param['c']) printf("%zu ", bytes);
+		printf("%s\n", argv[i]);
+		fclose(file);
+		total_bytes += bytes;
+		total_words += words;
+		total_newlines += newlines;
+		words = 0; bytes = 0; newlines = 0;
 	}
-	if (param['l']) printf("%zu ", total_newlines);
-	if (param['w']) printf("%zu ", total_words);
-	if (param['m'] || param['c']) printf("%zu ", total_bytes);
-	printf("%s\n", argv[0]);
-	fclose(file);
+	if (total_bytes != bytes) {
+		if (param['l']) printf("%zu ", total_newlines);
+		if (param['w']) printf("%zu ", total_words);
+		if (param['m'] || param['c']) printf("%zu ", total_bytes);
+		printf("total\n");
+	}
 	free(line);
 	return 0;
 }

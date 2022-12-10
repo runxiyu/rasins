@@ -26,12 +26,10 @@
  *	POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/stat.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <fcntl.h>
 #include "version.h"
 #include "print_usage.h"
 
@@ -41,8 +39,6 @@
 #ifndef COMPILETIME
 #define COMPILETIME
 #endif
-
-int  getopt(int argc, char *const argv[], const char *optstring);
 
 int main(int argc, char *const argv[]) {
 	int argument, length;

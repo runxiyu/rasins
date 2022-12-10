@@ -20,8 +20,6 @@
 
 ## Goal
 
-![](./wip.gif)
-
 The `fases` project tries to provide friendly, functionnal and simple core 
 utilities for a fully functionnal UNIX-like Operating System. It tries to 
 be entirely portable and working on any UNIX-like Operating System and kernel 
@@ -177,3 +175,5 @@ this project by:
 - Giving me recommendations.
 
 Help is greatly appreciated, thanks!
+
+![](./wip.gif)

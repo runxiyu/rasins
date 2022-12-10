@@ -2,8 +2,6 @@
 
 *Simple coreutils for a fully functionnal UNIX-like system*
 
-![](./wip.gif)
-
 ***Project Documentation***
 
 (!) Please note that documentation is incomplete and can be very outdated (!)
@@ -21,6 +19,8 @@
 - [FAQ](docs/FAQ.md)
 
 ## Goal
+
+![](./wip.gif)
 
 The `fases` project tries to provide friendly, functionnal and simple core 
 utilities for a fully functionnal UNIX-like Operating System. It tries to 

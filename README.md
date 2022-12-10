@@ -113,8 +113,7 @@ The `fases` project also has a mailing list ran by Andrew Yu (thanks!).
 
 The mailing list's address is: 
 ***fases-general -at- andrewyu -dot- org*** 
-(
-[subscribe](https://mail.andrewyu.org/mailman/listinfo/fases-general)). 
+([subscribe](https://mail.andrewyu.org/mailman/listinfo/fases-general)). 
 
 To send patches, please use `git-send-email`. A tutorial on how to use 
 it can be found [here](https://git-send-email.io/).

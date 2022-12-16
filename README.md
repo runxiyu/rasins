@@ -18,6 +18,8 @@
 
 - [FAQ](docs/FAQ.md)
 
+- [Contributions](docs/CONTRIBUTE.md).
+
 ## Goal
 
 The `fases` project tries to provide friendly, functionnal and simple core 
@@ -117,6 +119,8 @@ The mailing list's address is:
 
 To send patches, please use `git-send-email`. A tutorial on how to use 
 it can be found [here](https://git-send-email.io/).
+
+See [docs/CONTRIBUTE.md](docs/CONTRIBUTE.md).
 
 ## Donations
 

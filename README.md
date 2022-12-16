@@ -1,22 +1,14 @@
-# fases - Ferass' Base System
-
-*Simple coreutils for a fully functionnal UNIX-like system*
-
-***Project Documentation***
-
-(!) Please note that documentation is incomplete and can be very outdated (!)
-
-- [Compile fases](docs/COMPILE.md)
-
-- [Mirrors](docs/MIRRORS.md)
-
-- [Status](docs/STATUS.md)
-
-- [Coding Style](docs/CODING_STYLE.md)
-
-- [Incomplete TODO list](docs/TODO.md)
-
-- [FAQ](docs/FAQ.md)
+```
+┌────────────────────────────────────────────────────────────────────────────┐
+│                                                                            │
+│   m""                                                                      │
+│ mm#mm   mmm    mmm    mmm    mmm                                           │
+│   #    "   #  #   "  #"  #  #   "   ___ Simple core utilities for a fully  │
+│   #    m"""#   """m  #""""   """m       functional UNIX-like system.       │
+│   #    "mm"#  "mmm"  "#mm"  "mmm"                                          │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+```
 
 - [Contributions](docs/CONTRIBUTE.md).
 

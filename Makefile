@@ -23,13 +23,7 @@
 all: config clean prepbox genbox box
 include ./config.mk
 
-
 genbox:
-	echo "#ifndef VERSION_H"                 > version.h
-	echo "#define VERSION_H"                >> version.h
-	echo "#define COMPILETIME \"$$(git show --no-patch --pretty=format:%H)\"" >> version.h
-	echo                                    >> version.h
-	echo "#endif"                           >> version.h
 	cat "box-templates/box_1-23.c"                                    > box.c
 	for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);" | sed "s/\[_/test_/g"; done>> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c

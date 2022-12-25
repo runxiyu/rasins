@@ -31,15 +31,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Return directory portion of <string>."
 #define OPERANDS    "string"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -47,7 +42,7 @@ int main(int argc, char *argv[]) {
 	char *dirnamestr;
 
 	if (argc != 2) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
 	dirnamestr = dirname(argv[1]);

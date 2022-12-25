@@ -30,15 +30,10 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Create directories."
 #define OPERANDS    "directory ..."
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -46,13 +41,13 @@ int main(int argc, char *const argv[]) {
 	int success, argument, i = 1;
 
 	if (argc == 1) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
 
 	while ((argument = getopt(argc, argv, "p")) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 0;
 		}
 	}

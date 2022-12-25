@@ -30,15 +30,10 @@
 #include <stdio.h>
 #include <sys/utsname.h>
 #include <errno.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Return system name."
 #define OPERANDS    "[-amnrsv]"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -50,7 +45,7 @@ int main(int argc, char *const argv[]) {
 
 	while ((argument = getopt(argc, argv, "amnrsv")) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 		param[argument] = argument;

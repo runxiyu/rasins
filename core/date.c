@@ -28,11 +28,6 @@
 
 #include <time.h>
 #include <stdio.h>
-#include "version.h"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int main(int argc, char *argv[]) {
 	time_t epoch = time(NULL);

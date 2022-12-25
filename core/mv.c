@@ -30,15 +30,10 @@
 #include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Move files."
 #define OPERANDS    "[-if] source dest"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -50,7 +45,7 @@ int main(int argc, char *const argv[]) {
 	                                         * very important. */
 	while ((argument = getopt(argc, argv, "if")) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 		param[argument] = argument;
@@ -59,7 +54,7 @@ int main(int argc, char *const argv[]) {
 	}
 	if (!param['f']) param['i'] = 'i';
 	if (argc < 3) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
 	if ((file = open(argv[2], O_RDONLY)) != -1 && param['i']) {

@@ -28,20 +28,15 @@ all: clean $(CORE)
 
 OBJ=$(CORE:=.o)
 $(CORE): $(@:=.o)
-$(OBJ): config version
+$(OBJ): config
 
 config:
+	@echo "VERSION       = $(VERSION)"
 	@echo "CFLAGS        = $(CFLAGS)"
 	@echo "CC            = $(CC)"
 	@echo "DESTDIR       = $(DESTDIR)"
 	@echo "PREFIX        = $(PREFIX)"
 	@echo "INCLUDE_EXTRA = $(INCLUDE_EXTRA)"
-
-version:
-	@echo "#ifndef VERSION_H"                 > version.h
-	@echo "#define VERSION_H"                >> version.h
-	@echo "#define COMPILETIME \"$$(git show --no-patch --pretty=format:%H)\"" >> version.h
-	@echo "#endif"                           >> version.h
 
 .o:
 	@mkdir -p bin

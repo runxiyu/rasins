@@ -31,15 +31,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Return non-directory portion of <string>."
 #define OPERANDS    "string [suffix]"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -49,7 +44,7 @@ int main(int argc, char *argv[]) {
 	char *basenamestr;
 
 	if (argc < 2) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
 	basenamestr = basename(argv[1]);

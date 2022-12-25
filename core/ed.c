@@ -32,15 +32,11 @@
 #include <errno.h>
 #include <signal.h>
 #include <string.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Edit text."
 #define OPERANDS    "[-p prompt]"
 
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 void   print_error();
 size_t c_append(char buffer[4096]);
@@ -54,7 +50,7 @@ int main(int argc, char *argv[]) {
 
 	while ((argument = getopt(argc, argv, "p:")) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 		else if (argument == 'p')
@@ -159,7 +155,7 @@ void printUsage() {
 	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: ed [-p prompt_string]\n\n"
 	"Edit text.\n\n"
-	"\t-p prompt_string\tAppend a prompt string.\n", COMPILETIME);
+	"\t-p prompt_string\tAppend a prompt string.\n", VERSION);
 }
 
 void print_error(const char *error, int help_mode) {

@@ -33,12 +33,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
-#include "version.h"
 #include "print_usage.h"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 #define DESCRIPTION "Concatenate a file to standard output. \
 	If no file is specified or file is '-', read standard input."
@@ -51,7 +46,7 @@ int main(int argc, char *const argv[]) {
 
 	while ((argument = getopt(argc, argv, "u")) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 		else if (argument == 'u')

@@ -31,15 +31,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <errno.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Word, line, and byte/character count."
 #define OPERANDS    "[-clwm] [file...]"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int main(int argc, char *const argv[]) {
 	int argument, length;
@@ -50,10 +45,10 @@ int main(int argc, char *const argv[]) {
 	ssize_t bytes = 0, newlines = 0, words = 0, 
 			total_bytes = 0, total_newlines = 0, total_words = 0;
 	if (argc < 2)
-		return print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+		return print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 	while ((argument = getopt(argc, argv, "clmw")) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 		param[(uint8_t)argument] = argument;

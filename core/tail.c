@@ -33,15 +33,10 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Copy the last part of files."
 #define OPERANDS    "[-n number] [file] ..."
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 /* Functions Prototypes & Variables */
 extern char *optarg;
@@ -55,7 +50,7 @@ int main(int argc, char *const argv[]) {
 
 	while ((argument = getopt(argc, argv, "n:")) != -1) {
 		if (argument == '?' || argument == ':') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 		else if (argument == 'n') {

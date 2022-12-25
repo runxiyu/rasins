@@ -29,15 +29,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Suspend execution for an interval."
 #define OPERANDS    "time"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 void printUsage();
 
@@ -47,13 +42,13 @@ int main(int argc, char *argv[]) {
 	if (argc == 2) {
 		seconds = strtol(argv[1], NULL, 10);
 		if (!seconds) {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 		sleep(seconds);
 	}
 	else if (argc == 1) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
 

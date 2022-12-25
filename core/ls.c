@@ -40,16 +40,11 @@
 #include <grp.h>
 #include <time.h>
 #include <sys/ioctl.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Print <directory>'s contents to standard output.\
 	If no directory is specified, print the current directory's contents."
 #define OPERANDS    "[-1aACRimlpgno] [directory]"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 char param[256];
 int  getopt(int argc, char *const argv[], const char *optstring);
@@ -68,7 +63,7 @@ int main(int argc, char *argv[]) {
 
 	while ((argument = getopt(argc, argv, params)) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 		param[argument] = argument;

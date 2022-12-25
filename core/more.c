@@ -33,15 +33,10 @@
 #include <string.h>
 #include <termios.h>
 #include <sys/ioctl.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Display files in a page-by-page basis."
 #define OPERANDS    "file ..."
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -60,12 +55,12 @@ int main(int argc, char *const argv[]) {
 
 	while ((argument = getopt(argc, argv, "")) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 	}
 	if (argc != 2) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME); return 1;
+		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION); return 1;
 	}
 	file = fopen(argv[1], "r");
 	if (errno) return errno;
@@ -103,7 +98,7 @@ int main(int argc, char *const argv[]) {
 			case 'q':
 				return 0;
 			case 'h':
-				print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+				print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 				read_file = 0;
 				break;
 			case ' ':

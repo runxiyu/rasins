@@ -36,11 +36,6 @@
 #include <termios.h>
 #include <sys/ioctl.h>
 #include <libgen.h>
-#include "version.h"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 /*** ANSI VT100 escape codes ***/
 /*           Colors            */
@@ -218,7 +213,7 @@ int _vi_set_cursor_pos(unsigned int x, unsigned int y) {
 void _vi_printUsage() {
 	printf("Ferass' Base System. (%s)\n\n"
 	"Usage: vi [filename]\n"
-	"Visual editor.\n", COMPILETIME);
+	"Visual editor.\n", VERSION);
 }
 
 int _vi_print_buffer_line(char s[BUFSIZ], unsigned int numlines) {

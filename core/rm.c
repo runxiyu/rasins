@@ -29,15 +29,10 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Remove files."
 #define OPERANDS    "[-Rr] file ..."
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -47,13 +42,13 @@ int main(int argc, char *const argv[]) {
 
 	while ((argument = getopt(argc, argv, "Rr")) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 		param[argument] = argument;
 	}
 	if (argc <= 1) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
 

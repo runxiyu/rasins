@@ -30,15 +30,10 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "version.h"
 #include "print_usage.h"
 
 #define DESCRIPTION "Change file modes."
 #define OPERANDS    "mode file"
-
-#ifndef COMPILETIME
-#define COMPILETIME
-#endif
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -46,12 +41,12 @@ int main(int argc, char *const argv[]) {
 	int argument, i = 0;
 	mode_t owner_modes, group_modes, other_modes;
 	if (argc == 1) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
 	while ((argument = getopt(argc, argv, "")) != -1) {
 		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
 	}
@@ -74,7 +69,7 @@ int main(int argc, char *const argv[]) {
 			owner_modes = S_IXUSR;
 			break;
 		default:
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 	}
 	i++;
@@ -93,7 +88,7 @@ int main(int argc, char *const argv[]) {
 			group_modes = S_IXGRP;
 			break;
 		default:
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 	}
 	i++;
@@ -112,7 +107,7 @@ int main(int argc, char *const argv[]) {
 			other_modes = S_IXOTH;
 			break;
 		default:
-			print_usage(argv[0], DESCRIPTION, OPERANDS, COMPILETIME);
+			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 	}
 

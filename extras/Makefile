@@ -16,36 +16,37 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# Special
+.POSIX:
+.SUFFIXES: .o .c
+
+# config.mk
 include ../config.mk
 
-# Commands
-# ========
-
-all: clean yes errno
-
-version:
-	echo "#ifndef VERSION_H"                 > version.h
-	echo "#define VERSION_H"                >> version.h
-	echo "#define COMPILETIME \"$$(git show --no-patch --pretty=format:%H)\"" >> version.h
-	echo                                    >> version.h
-	echo "#endif"                           >> version.h
-
-yes: yes.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) yes.o -o bin/yes
-
-errno: errno.o
-	mkdir -p bin
-	$(CC) $(CFLAGS) errno.o -o bin/errno
-
-clean:
-	rm -Rf bin/ *.o
-
 # Utilities
-# =========
+OBJ=$(EXTRA:=.o)
+all: clean $(EXTRA)
 
-errno.o: version
-	$(CC) $(CFLAGS) $(NOLINKER) errno.c -o errno.o
+config:
+	@echo "CFLAGS        = $(CFLAGS)"
+	@echo "CC            = $(CC)"
+	@echo "DESTDIR       = $(DESTDIR)"
+	@echo "PREFIX        = $(PREFIX)"
+	@echo "INCLUDE_EXTRA = $(INCLUDE_EXTRA)"
 
-yes.o: version
-	$(CC) $(CFLAGS) $(NOLINKER) yes.c -o yes.o
+$(EXTRA): $(@:=.o)
+$(OBJ): config
+
+.o:
+	@mkdir -p bin
+	$(CC) $(CFLAGS) $< -o bin/$@
+
+.c.o:
+	@[ -e $< ] || echo "$@ is not implemented." ;
+	$(CC) $(CFLAGS) $(NOLINKER) $< -o $@
+
+# Cleaning
+clean:
+	rm -f *.o version.h
+	rm -Rf bin
+

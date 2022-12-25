@@ -16,23 +16,20 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-include ./config.mk
 .POSIX:
-.SILENT:
 
 # Commands
-# ========
 
-all: clean prepbox genbox box
+all: config clean prepbox genbox box
+include ./config.mk
+
 
 genbox:
-	@echo "GEN version.h"
 	echo "#ifndef VERSION_H"                 > version.h
 	echo "#define VERSION_H"                >> version.h
 	echo "#define COMPILETIME \"$$(git show --no-patch --pretty=format:%H)\"" >> version.h
 	echo                                    >> version.h
 	echo "#endif"                           >> version.h
-	@echo "GEN box.c"
 	cat "box-templates/box_1-23.c"                                    > box.c
 	for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);" | sed "s/\[_/test_/g"; done>> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c
@@ -52,26 +49,18 @@ prepbox:
 	test ${INCLUDE_EXTRA} == n || for f in ${EXTRA}; do echo "GEN "$$f"_box.c"; sed "s/^int main(/int $$(echo "$$f")_main(/" < "extras/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
 
 box: box.o
-	@echo "CC box_tmp/*.c"
-	@echo "LD box.o"
 	$(CC) $(CFLAGS) box_tmp/*.c core/print_usage.c box.o -o box 
 	rm -f version.h
 
 clean:
-	@echo "RM box"
-	@echo "RM *.o"
-	@echo "RM box_tmp/"
-	@echo "RM */bin/*"
 	rm -f box *.o
 	rm -Rf box_tmp */bin/*
 
 install:
-	@echo "INST core/bin/* $(DESTDIR)$(PREFIX)/bin"
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -r core/bin/* $(DESTDIR)$(PREFIX)/bin
 
 install-box:
-	@echo "INST box $(DESTDIR)$(PREFIX)/bin"
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -r box $(DESTDIR)$(PREFIX)/bin
 
@@ -79,7 +68,6 @@ links:
 	for u in ${CORE}; do echo "LN $$u"; ln -s "$(DESTDIR)$(PREFIX)/bin/box" "$(DESTDIR)$(PREFIX)/bin/$$u"; done
 
 remove:
-	@echo "UNINST box core"
 	rm -f $(DESTDIR)$(PREFIX)/bin/box
 	for u in ${CORE}; do rm -f "$(DESTDIR)$(PREFIX)/bin/$$u"; done
 
@@ -88,5 +76,4 @@ remove:
 # =========
 
 box.o: prepbox
-	@echo "CC box.c"
 	$(CC) $(CFLAGS) $(NOLINKER) box.c -o box.o

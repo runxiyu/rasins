@@ -16,38 +16,45 @@
 #	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-include ../config.mk
-
 # Special
-.SILENT:
-.SUFFIXES: .o .c
 .POSIX:
+.SUFFIXES: .o .c
+
+# config.mk
+include ../config.mk
 
 # Utilities
 all: clean $(CORE)
 
-.c:
-	echo "#ifndef VERSION_H"                 > version.h
-	echo "#define VERSION_H"                >> version.h
-	echo "#define COMPILETIME \"$$(git show --no-patch --pretty=format:%H)\"" >> version.h
-	echo                                    >> version.h
-	echo "#endif"                           >> version.h
-	[ -e $@.c ] || echo "$@ is not implemented." ;
-	@echo "CC $@"
-	$(CC) $(CFLAGS) $(NOLINKER) $< -o $@.o
-	@echo "LD $@"
-	mkdir -p bin
-	$(CC) $(CFLAGS) $@.o print_usage.c -o bin/$@
-	@echo "Done."
+OBJ=$(CORE:=.o)
+$(CORE): $(@:=.o)
+$(OBJ): config version
+
+config:
+	@echo "CFLAGS        = $(CFLAGS)"
+	@echo "CC            = $(CC)"
+	@echo "DESTDIR       = $(DESTDIR)"
+	@echo "PREFIX        = $(PREFIX)"
+	@echo "INCLUDE_EXTRA = $(INCLUDE_EXTRA)"
+
+version:
+	@echo "#ifndef VERSION_H"                 > version.h
+	@echo "#define VERSION_H"                >> version.h
+	@echo "#define COMPILETIME \"$$(git show --no-patch --pretty=format:%H)\"" >> version.h
+	@echo "#endif"                           >> version.h
+
+.o:
+	@mkdir -p bin
+	$(CC) $(CFLAGS) $< print_usage.c -o bin/$@
+
+.c.o:
+	@[ -e $< ] || echo "$@ is not implemented." ;
+	$(CC) $(CFLAGS) $(NOLINKER) $< -o $@
 
 # Cleaning
 clean:
-	@echo "RM *.o"
-	@echo "RM version.h"
-	@echo "RM bin/*"
 	rm -f *.o version.h
 	rm -Rf bin
-	@echo "Done."
 
 # Test Suite
 UTILTOTEST=
@@ -213,15 +220,13 @@ ALLUTILS=\
 
 ifeq ($(UTILTOTEST),)
 testsuite: $(CORE)
-	@echo "TEST all"
-	for util in $(ALLUTILS); do [ -e $${util}.c ] || echo "ERR Utility $${util} is missing."; done
+	for util in $(ALLUTILS); do [ -e $${util}.c ] || echo "utility $${util} is missing."; done
 	# TODO: See if utilities already implemented are fully POSIX-compliant, from the source to the behaviour.
 	#for util in $(CORE); do grep $${util} utilities.csv && $$(grep $${util} utilities.csv | awk -F',' '{ print $$3 }') (bin/$${util} $$(grep $${util} utilities.csv | awk -F',' '{ print $$1 }') || echo "ERR Utility $${util} isn't fully POSIX-compliant.") || echo "ERR Utility $${util} isn't in utilities.csv"; done
-	@echo "Done."
 else
 testsuite: $(UTILTOTEST)
 	#@echo "TEST $(UTILTOTEST)"
 	#[ -e $(UTILTOTEST) ] && $$(grep $(UTILTOTEST) utilities.csv | awk -F',' '{ print $$3 }') && bin/$(UTILTOTEST) $$(grep $(UTILTOTEST) utilities.csv | awk -F',' '{ print $$1 $$2 }') || echo "ERR Utility $(UTILTOTEST) isn't fully POSIX-compliant."
 	#@echo "Done."
-	@echo "Not implemented."
+	@echo "not implemented."
 endif

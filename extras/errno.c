@@ -21,9 +21,9 @@
 #include <stdlib.h>
 
 void printUsage() {
-	printf("Ferass' Extra Utilities.\n\n"
+	printf("fases extra.\n"
 	"Usage: errno [STRING]\n"
-	"Give information about error codes.\n\n");
+	"Give information about error codes.\n");
 }
 
 int main(int argc, char *argv[]) {

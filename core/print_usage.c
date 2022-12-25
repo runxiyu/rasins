@@ -30,7 +30,7 @@
 #include "print_usage.h"
 
 int print_usage(char *name, char *desc, char *params, char *version) {
-	printf("Ferass' Base System. (%s)\n"
+	printf("fases core. (%s)\n"
 	"Usage: %s %s\n"
 	"%s\n", version, name, params, desc);
 	return 1; /* This function is mostly called on error so return 1 */

@@ -40,11 +40,10 @@ config:
 
 .o:
 	@mkdir -p bin
-	$(CC) $(CFLAGS) $< common.c -o bin/$@
+	[ ! -e $< ] || $(CC) $(CFLAGS) $< common.c -o bin/$@
 
 .c.o:
-	@[ -e $< ] || echo "$@ is not implemented." ;
-	$(CC) $(CFLAGS) $(NOLINKER) $< -o $@
+	[ ! -e $< ] || $(CC) $(CFLAGS) $(NOLINKER) $< -o $@
 
 # Cleaning
 clean:
@@ -53,169 +52,10 @@ clean:
 
 # Test Suite
 UTILTOTEST=
-ALLUTILS=\
-	admin\
-	alias\
-	ar\
-	asa\
-	at\
-	awk\
-	basename\
-	batch\
-	bc\
-	bg\
-	c99\
-	cal\
-	cat\
-	cflow\
-	chgrp\
-	chmod\
-	chown\
-	cksum\
-	cmp\
-	comm\
-	command\
-	compress\
-	cp\
-	crontab\
-	csplit\
-	ctags\
-	cut\
-	cxref\
-	date\
-	dd\
-	delta\
-	df\
-	diff\
-	dirname\
-	du\
-	echo\
-	ed\
-	env\
-	ex\
-	expand\
-	expr\
-	false\
-	fc\
-	fg\
-	file\
-	find\
-	fold\
-	fort77\
-	fuser\
-	gencat\
-	get\
-	getconf\
-	getopts\
-	grep\
-	hash\
-	head\
-	iconv\
-	id\
-	ipcrm\
-	ipcs\
-	jobs\
-	join\
-	kill\
-	lex\
-	link\
-	ln\
-	locale\
-	localedef\
-	logger\
-	logname\
-	lp\
-	ls\
-	m4\
-	mailx\
-	make\
-	man\
-	mesg\
-	mkdir\
-	mkfifo\
-	more\
-	mv\
-	newgrp\
-	nice\
-	nl\
-	nm\
-	nohup\
-	od\
-	paste\
-	patch\
-	pathchk\
-	pax\
-	pr\
-	printf\
-	prs\
-	ps\
-	pwd\
-	qalter\
-	qdel\
-	qhold\
-	qmove\
-	qmsg\
-	qrerun\
-	qrls\
-	qselect\
-	qsig\
-	qstat\
-	qsub\
-	read\
-	renice\
-	rm\
-	rmdel\
-	rmdir\
-	sact\
-	sccs\
-	sed\
-	sleep\
-	sort\
-	split\
-	strings\
-	strip\
-	stty\
-	tabs\
-	tail\
-	talk\
-	tee\
-	test\
-	time\
-	touch\
-	tput\
-	tr\
-	true\
-	tsort\
-	tty\
-	type\
-	ulimit\
-	umask\
-	unalias\
-	uname\
-	uncompress\
-	unexpand\
-	unget\
-	uniq\
-	unlink\
-	uucp\
-	uudecode\
-	uuencode\
-	uustat\
-	uux\
-	val\
-	vi\
-	wait\
-	wc\
-	what\
-	who\
-	write\
-	xargs\
-	yacc\
-	zcat
 
 ifeq ($(UTILTOTEST),)
 testsuite: $(CORE)
-	for util in $(ALLUTILS); do [ -e $${util}.c ] || echo "utility $${util} is missing."; done
+	for util in $(CORE); do [ -e $${util}.c ] || echo "utility $${util} is missing."; done
 	# TODO: See if utilities already implemented are fully POSIX-compliant, from the source to the behaviour.
 	#for util in $(CORE); do grep $${util} utilities.csv && $$(grep $${util} utilities.csv | awk -F',' '{ print $$3 }') (bin/$${util} $$(grep $${util} utilities.csv | awk -F',' '{ print $$1 }') || echo "ERR Utility $${util} isn't fully POSIX-compliant.") || echo "ERR Utility $${util} isn't in utilities.csv"; done
 else

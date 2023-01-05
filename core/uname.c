@@ -30,10 +30,12 @@
 #include <stdio.h>
 #include <sys/utsname.h>
 #include <errno.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Return system name."
 #define OPERANDS    "[-amnrsv]"
+#include "common.h"
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -59,7 +61,7 @@ int main(int argc, char *const argv[]) {
 	}
 
 	uname(&name);
-	if (errno) return errno;
+	if (errno) return errprint(argv[0], NULL, errno);
 	if (argc > 1) {
 		if (param['s']) printf("%s ", name.sysname);
 		if (param['n']) printf("%s ", name.nodename);

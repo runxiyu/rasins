@@ -26,7 +26,6 @@
  *	POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define _POSIX_C_SOURCE 200809L
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
@@ -38,7 +37,6 @@
 #include <stdlib.h>
 
 int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
 
 /* For readability reasons, define true, false */
 int true  = 0;

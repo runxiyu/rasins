@@ -28,13 +28,11 @@
 
 #include <unistd.h>
 #include <stdio.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
 #define DESCRIPTION "Write formatted strings to standard output."
 #define OPERANDS    "format [string]"
-
-int  getopt(int argc, char *const argv[], const char *optstring);
-void printUsage();
+#include "common.h"
 
 int main(int argc, char *const argv[]) {
 	if (argc == 1) {

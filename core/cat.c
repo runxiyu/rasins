@@ -27,23 +27,24 @@
  *	POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define _POSIX_C_SOURCE 200809L
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Concatenate a file to standard output. \
 	If no file is specified or file is '-', read standard input."
 #define OPERANDS    "[-u] [file] ..."
+#include "common.h"
 
-int  cat(int flides, int unbuffered);
+int cat(int flides, int unbuffered);
 
 int main(int argc, char *const argv[]) {
-	int file, argument, i = 1, unbuffered;
-
+	int file, argument, i = 1, unbuffered, err;
+	char *argv0 = strdup(argv[0]);
 	while ((argument = getopt(argc, argv, "u")) != -1) {
 		if (argument == '?') {
 			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
@@ -51,23 +52,22 @@ int main(int argc, char *const argv[]) {
 		}
 		else if (argument == 'u')
 			unbuffered = 1;
-	}
+	} argc -= optind; argv += optind;
 
 	
-	if (argc < 2) {
-		cat(STDIN_FILENO, unbuffered);
+	if (argc < 1) {
+		return errprint(argv0, "-", cat(STDIN_FILENO, unbuffered));
 	}
 
-	for (i = 1; i != argc; i++) {
-		if (strcmp(argv[i], "-u")) {
-			if (strcmp(argv[i], "-")) file = open(argv[i], O_RDONLY);
-			else file = STDIN_FILENO;
-			if (file == -1) return errno; /* Something went wrong */
-			cat(file, unbuffered);
-			close(file);
-		}
+	for (i = 0; i != argc; i++) {
+		if (strcmp(argv[i], "-")) file = open(argv[i], O_RDONLY);
+		else file = STDIN_FILENO;
+		if (file == -1)
+			return errprint(argv0, argv[i], errno); /* Something went wrong */
+		err = errprint(argv0, argv[i], cat(file, unbuffered));
+		close(file);
 	}
-	return 0;
+	return err;
 }
 
 int cat(int fildes, int unbuffered) {

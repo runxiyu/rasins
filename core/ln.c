@@ -30,16 +30,18 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Link files."
 #define OPERANDS    "[-fs] [-P|-L] source_file target_file"
+#include "common.h"
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
 int main(int argc, char *const argv[]) {
 	int argument;
-	char param[256], *params = "s", *buffer = NULL;
+	char param[256], *params = "s", *buffer = NULL, *argv0 = strdup(argv[0]);
 
 	if (argc == 1) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
@@ -63,12 +65,11 @@ int main(int argc, char *const argv[]) {
 			 */
 			else if (param['L']) {
 				readlink(argv[i], buffer, strlen(buffer)); /* Read the link */
-				if (errno) return errno;
+				if (errno) return errprint(argv0, argv[i], errno);
 				link(buffer, argv[argc - 1]);
 			}
 			else link(argv[i], argv[argc - 1]);
-			
-			if (errno) return errno;
+			if (errno) return errprint(argv0, argv[i], errno);
 		}
 	}
 	return 0;

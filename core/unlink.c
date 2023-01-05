@@ -29,10 +29,12 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Call the unlink() function."
 #define OPERANDS    "file"
+#include "common.h"
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -42,6 +44,6 @@ int main(int argc, char *const argv[]) {
 		return 1;
 	}
 	unlink(argv[1]);
-	if (errno) return errno;
+	if (errno) return errprint(argv[0], argv[1], errno);
 	return 0;
 }

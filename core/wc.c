@@ -31,16 +31,19 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <errno.h>
-#include "print_usage.h"
+#include <string.h>
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Word, line, and byte/character count."
 #define OPERANDS    "[-clwm] [file...]"
+#include "common.h"
 
 int main(int argc, char *const argv[]) {
 	int argument, length;
 	FILE *file;
 	size_t len_getd = 4096;
-	char *line = NULL;
+	char *line = NULL, *argv0 = strdup(argv[0]);
 	char param[256];
 	ssize_t bytes = 0, newlines = 0, words = 0, 
 			total_bytes = 0, total_newlines = 0, total_words = 0;
@@ -62,22 +65,22 @@ int main(int argc, char *const argv[]) {
 
 	for (int i = 0; i != argc; i++) {
 		file = fopen(argv[i], "r");
-		if (errno) return errno;
+		if (errno) return errprint(argv0, argv[i], errno);
 		while ((length = getline(&line, &len_getd, file)) != -1) {
 			if (param['l']) newlines++;
 			if (param['c'] || param['m']) bytes += length;
 		} rewind(file);
-		if (errno) return errno;
+		if (errno) return errprint(argv0, argv[i], errno);
 		if (param['w']) while ((length = getdelim(&line, &len_getd, (int)' ', file)) != -1) {
 			words++;
 		}
-		if (errno) return errno;
+		if (errno) return errprint(argv0, argv[i], errno);
 		if (param['l']) printf("%zu ", newlines);
 		if (param['w']) printf("%zu ", words);
 		if (param['m'] || param['c']) printf("%zu ", bytes);
 		printf("%s\n", argv[i]);
 		fclose(file);
-		if (errno) return errno;
+		if (errno) return errprint(argv0, argv[i], errno);
 		total_bytes += bytes;
 		total_words += words;
 		total_newlines += newlines;
@@ -90,6 +93,6 @@ int main(int argc, char *const argv[]) {
 		printf("total\n");
 	}
 	free(line);
-	if (errno) return errno;
+	if (errno) return errprint(argv0, NULL, errno);
 	return 0;
 }

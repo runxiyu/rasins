@@ -40,11 +40,12 @@
 #include <grp.h>
 #include <time.h>
 #include <sys/ioctl.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
 #define DESCRIPTION "Print <directory>'s contents to standard output.\
 	If no directory is specified, print the current directory's contents."
 #define OPERANDS    "[-1aACRimlpgno] [directory]"
+#include "common.h"
 
 char param[256];
 int  getopt(int argc, char *const argv[], const char *optstring);

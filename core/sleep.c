@@ -29,12 +29,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
 #define DESCRIPTION "Suspend execution for an interval."
 #define OPERANDS    "time"
-
-void printUsage();
+#include "common.h"
 
 int main(int argc, char *argv[]) {
 	long unsigned int seconds;

@@ -31,17 +31,18 @@
 #include <stdio.h>
 #include <pwd.h>
 #include <stdlib.h>
-#include "print_usage.h"
+#include <string.h>
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Change file ownership."
 #define OPERANDS    "owner file"
-
-
-int  getopt(int argc, char *const argv[], const char *optstring);
+#include "common.h"
 
 int main(int argc, char *const argv[]) {
 	int argument;
 	struct passwd *user;
+	char *argv0 = strdup(argv[0]);
 	if (argc == 1) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
@@ -51,15 +52,15 @@ int main(int argc, char *const argv[]) {
 			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
-	}
-	if ((user = getpwnam(argv[1])) == NULL && (user = getpwuid(strtol(argv[1], NULL, 10))) == NULL)
-		return errno; /* User doesn't exist */
+	} argc -= optind; argv += optind;
+	if ((user = getpwnam(argv[0])) == NULL && (user = getpwuid(strtol(argv[0], NULL, 10))) == NULL)
+		return errprint(argv0, argv[0], errno); /* User doesn't exist */
 	/* User found! */
-	else if ((user = getpwnam(argv[1])) != NULL)
+	else if ((user = getpwnam(argv[0])) != NULL)
 		chown(argv[2], user->pw_uid, user->pw_gid);
-	else if ((user = getpwuid(strtol(argv[1], NULL, 10))) != NULL)
+	else if ((user = getpwuid(strtol(argv[0], NULL, 10))) != NULL)
 		chown(argv[2], user->pw_uid, user->pw_gid);
-	if (errno) return errno;
+	if (errno) return errprint(argv0, argv[0], errno);
 
 	return 0;
 }

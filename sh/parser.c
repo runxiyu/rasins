@@ -35,6 +35,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <signal.h>
+#include <sys/wait.h>
 
 /* sh Header Files */
 #include "parser.h"

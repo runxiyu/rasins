@@ -30,12 +30,12 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Create directories."
 #define OPERANDS    "directory ..."
-
-int  getopt(int argc, char *const argv[], const char *optstring);
+#include "common.h"
 
 int main(int argc, char *const argv[]) {
 	int success, argument, i = 1;
@@ -56,7 +56,7 @@ int main(int argc, char *const argv[]) {
 		if (argv[i][0] != '-')
 			success = !mkdir(argv[i], S_IRWXU | S_IRWXG | S_IRWXO) ? 0 : 1; 
 		if (success == 1) {
-			return errno;
+			return errprint(argv[0], argv[i], errno);
 		}
 
 	}

@@ -31,12 +31,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* print_usage() from common.h */
 #define DESCRIPTION "Return non-directory portion of <string>."
 #define OPERANDS    "string [suffix]"
-
-int  getopt(int argc, char *const argv[], const char *optstring);
+#include "common.h"
 
 int main(int argc, char *argv[]) {
 	int status;

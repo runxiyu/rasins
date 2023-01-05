@@ -29,8 +29,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int getopt(int argc, char *const argv[], const char *optstring);
-
 int main(int argc, char *const argv[]) {
 	int i = 1;
 

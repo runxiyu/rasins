@@ -30,12 +30,11 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
 #define DESCRIPTION "Change file modes."
 #define OPERANDS    "mode file"
-
-int  getopt(int argc, char *const argv[], const char *optstring);
+#include "common.h"
 
 int main(int argc, char *const argv[]) {
 	int argument, i = 0;

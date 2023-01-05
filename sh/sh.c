@@ -55,29 +55,23 @@
 #define COMPILETIME
 #endif
 
-#warning "This shell implementation is really buggy and incomplete. \
- Please don't use this as a /bin/sh replacement."
-
 void  commandLoop();
 int   getopt(int argc, char *const argv[], const char *optstring);
 char *pathSearch(const char *path, const char *name);
 void  printUsage();
 
 int main(int argc, char *const argv[]) {
-	int argument, i = 1;
+	int argument;
 	FILE *file;
-	char param[256];
 	struct sigaction signal_action;
 	signal_action.sa_handler = SIG_IGN;
 	sigemptyset(&signal_action.sa_mask);
-	for (; i <= 256; i++) param[i] = 0;
 
 	while ((argument = getopt(argc, argv, "c")) != -1) {
 		if (argument == '?') {
 			printUsage();
 			return 1;
 		}
-		param[(uint8_t)argument] = argument;
 	}
 	argc -= optind;
 	argv += optind;
@@ -104,14 +98,10 @@ int main(int argc, char *const argv[]) {
  */
 
 void commandLoop(FILE *filstr) {
-	struct sigaction signal_action;
 	char *prompt = getenv("PS1");
-	char *path   = getenv("PATH");
 	char *token, *tokenstate;
 	char *command[4096];
-	pid_t isparent;
 	char name[4096], tempstr[4096];
-	int return_code;
 	int command_argc;
 	if (prompt == NULL) prompt = "$ ";
 	for (;;) {

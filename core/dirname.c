@@ -31,10 +31,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
 #define DESCRIPTION "Return directory portion of <string>."
 #define OPERANDS    "string"
+#include "common.h"
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 

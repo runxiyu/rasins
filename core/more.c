@@ -33,10 +33,12 @@
 #include <string.h>
 #include <termios.h>
 #include <sys/ioctl.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Display files in a page-by-page basis."
 #define OPERANDS    "file ..."
+#include "common.h"
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -63,7 +65,7 @@ int main(int argc, char *const argv[]) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION); return 1;
 	}
 	file = fopen(argv[1], "r");
-	if (errno) return errno;
+	if (errno) return errprint(argv[0], argv[1], errno);
 	success = 0;
 	while (!success) {
 		if (!read_file) read_file = 1; /* 1 => read on a page-by-page basis
@@ -74,7 +76,7 @@ int main(int argc, char *const argv[]) {
 			if (fgets(buffer, 4096, file) != NULL) {
 				printf("%s", buffer);
 			}
-			else if (errno) return errno;
+			else if (errno) return errprint(argv[0], "fgets()", errno);
 			else {
 				success = 1;
 				break;
@@ -89,11 +91,11 @@ int main(int argc, char *const argv[]) {
 		tcgetattr(0, &oldattr); /* Get previous terminal parameters */
 		newattr = oldattr;
 		newattr.c_lflag &= ~( ICANON | ECHO ); /* Disable ECHO and ICANON */
-		tcsetattr( 0, TCSANOW, &newattr); /* Set net parameters */
+		tcsetattr(0, TCSANOW, &newattr); /* Set net parameters */
 		cmd = getchar();
 		tcsetattr(0, TCSANOW, &oldattr); /* Restore old parameters */
 
-		if (errno) return errno;
+		if (errno) return errprint(argv[0], NULL, errno);
 		switch (cmd) {
 			case 'q':
 				return 0;

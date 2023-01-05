@@ -1,4 +1,4 @@
-/*	print_usage.h - print usage
+/*	common.h - common functions
  *	Copyright (C) 2022 Ferass EL HAFIDI
  *
  *	Redistribution and use in source and binary forms, with or without 
@@ -26,7 +26,14 @@
  *	POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef PRINT_USAGE_H
-#define PRINT_USAGE_H
+#ifndef COMMON_H
+#define COMMON_H
+
+#ifdef REQ_PRINT_USAGE
 int print_usage(char *name, char *desc, char *params, char *version);
-#endif /* PRINT_USAGE_H */
+#endif
+#ifdef REQ_ERRPRINT
+int errprint(char *argv0, char *prefix, int err);
+#endif
+
+#endif /* COMMON_H */

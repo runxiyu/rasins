@@ -40,7 +40,7 @@ config:
 
 .o:
 	@mkdir -p bin
-	$(CC) $(CFLAGS) $< print_usage.c -o bin/$@
+	$(CC) $(CFLAGS) $< common.c -o bin/$@
 
 .c.o:
 	@[ -e $< ] || echo "$@ is not implemented." ;

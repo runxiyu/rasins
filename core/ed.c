@@ -32,11 +32,12 @@
 #include <errno.h>
 #include <signal.h>
 #include <string.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Edit text."
 #define OPERANDS    "[-p prompt]"
-
+#include "common.h"
 
 void   print_error();
 size_t c_append(char buffer[4096]);
@@ -44,7 +45,7 @@ size_t c_append(char buffer[4096]);
 int main(int argc, char *argv[]) {
 	int argument, i = 0, fildes;
 	char buffer[4096], *edit_pathname, *prompt_string = "", 
-		 command_string[4096], *error = "";
+		 command_string[4096], *error = "", *argv0 = strdup(argv[0]);
 	int help_mode = 0;
 	struct sigaction signal_action;
 
@@ -67,7 +68,8 @@ int main(int argc, char *argv[]) {
 	for (;;) {
 		write(STDOUT_FILENO, prompt_string, strlen(prompt_string));
 		//if (fgets(command_string, 4096, stdin) == NULL) return errno;
-		if (read(STDIN_FILENO, command_string, 4096) == -1) return errno;
+		if (read(STDIN_FILENO, command_string, 4096) == -1)
+			return errprint(argv0, "read <stdin>", errno);
 		switch (command_string[i]) { /* Addresses */
 			case '.':
 			case '$':
@@ -93,7 +95,7 @@ int main(int argc, char *argv[]) {
 					continue;
 				}
 				fildes = open(edit_pathname, O_RDONLY | O_CREAT);
-				if (errno) return errno;
+				if (errno) return errprint(argv0, "open()", errno);
 				printf("%ld\n", read(fildes, buffer, 4096));
 				if (fildes) close(fildes);
 				continue;
@@ -115,8 +117,9 @@ int main(int argc, char *argv[]) {
 						print_error((error = "no pathname given"), help_mode);
 					continue;
 				}
-				if (errno) return errno;
+				if (errno) return errprint(argv0, "open()", errno);
 				printf("%ld\n", write(fildes, buffer, strlen(buffer)));
+				if (errno) return errprint(argv0, "write()", errno);
 				if (fildes) close(fildes);
 				continue;	
 			case 'q':

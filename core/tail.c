@@ -33,10 +33,12 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Copy the last part of files."
 #define OPERANDS    "[-n number] [file] ..."
+#include "common.h"
 
 /* Functions Prototypes & Variables */
 extern char *optarg;
@@ -55,7 +57,7 @@ int main(int argc, char *const argv[]) {
 		}
 		else if (argument == 'n') {
 			lines = strtol(optarg, NULL, 10);
-			if (errno) return errno;
+			if (errno) return errprint(argv[0], "strtol()", errno);
 		}
 		else
 			lines = 10;
@@ -69,14 +71,15 @@ int main(int argc, char *const argv[]) {
 		if (strcmp(argv[i], "-n")) {
 			if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
 			else while (read(STDIN_FILENO, s, 4096) > 0) printf("%s", s);
-			if (file == NULL) return errno; /* Something went wrong */
+			if (file == NULL)
+				return errprint(argv[0], argv[i], errno); /* Something went wrong */
 			while (fgets(s, 4096, file) != NULL) 
 				file_lines++; /* Get number of lines */
 			fclose(file);
 			file_lines = file_lines - lines;
 			if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
 			while (fgets(s, 4096, file) != NULL) {
-				if (errno) return errno;
+				if (errno) return errprint(argv[0], argv[i], errno);
 				if (file_lines == 0) printf("%s", s);
 				else file_lines--;
 			}

@@ -30,10 +30,12 @@
 #include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
-#include "print_usage.h"
 
+#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Move files."
 #define OPERANDS    "[-if] source dest"
+#include "common.h"
 
 int  getopt(int argc, char *const argv[], const char *optstring);
 
@@ -68,6 +70,6 @@ int main(int argc, char *const argv[]) {
 	close(file); /* In case it hasn't been closed */
 
 	rename(argv[1], argv[2]); /* Technically, moving files == renaming files */
-	if (errno) return errno;
+	if (errno) return errprint(argv[0], NULL, errno);
 	return 0;
 }

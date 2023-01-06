@@ -193,7 +193,7 @@ int ls(char *path) {
 			}
 			printf("%s ", file_modes);
 			                  /* Number of links */
-			printf("%lu ", file_status.st_nlink);
+			printf("%lu ", (long unsigned int)file_status.st_nlink);
 			                   /* Owner name/uid */
 			if (!param['g']) 
 			/* This recursiveness is needed for whatever reason, 

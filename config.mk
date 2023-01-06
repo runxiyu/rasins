@@ -51,8 +51,8 @@ CORE=\
 	true\
 	uname\
 	unlink\
-	# vi\ doesn't work for now #
 	wc
+	# vi\ doesn't work for now #
 
 INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
 # Extra utilities

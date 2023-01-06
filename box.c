@@ -21,8 +21,8 @@
 #include <libgen.h>
 #include <stdio.h>
 /*  END  */
-int test_main(int, char**);
 int basename_main(int, char**);
+int test_main(int, char**);
 int cat_main(int, char**);
 int chmod_main(int, char**);
 int chown_main(int, char**);
@@ -46,6 +46,7 @@ int test_main(int, char**);
 int true_main(int, char**);
 int uname_main(int, char**);
 int unlink_main(int, char**);
+int wc_main(int, char**);
 /* START */
 int main(int argc, char *argv[]) {
 	if (!strcmp(basename(argv[0]),"box") && argc > 1) {
@@ -53,8 +54,8 @@ int main(int argc, char *argv[]) {
 		argv++;
 	} if(0);
 /*  END  */
-	else if(!strcmp(basename(argv[0]), "[")) return test_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "basename")) return basename_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "[")) return test_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "cat")) return cat_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "chmod")) return chmod_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "chown")) return chown_main(argc, argv);
@@ -78,13 +79,14 @@ int main(int argc, char *argv[]) {
 	else if(!strcmp(basename(argv[0]), "true")) return true_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "uname")) return uname_main(argc, argv);
 	else if(!strcmp(basename(argv[0]), "unlink")) return unlink_main(argc, argv);
+	else if(!strcmp(basename(argv[0]), "wc")) return wc_main(argc, argv);
 /* START */
 	else if (!strcmp(basename(argv[0]), "box") && argc == 1) {
-		printf("Ferass' Base System.\n");
+		printf("fases box.\n");
 		printf("Usage: box command [args] ...\n");
 /*  END  */
-		printf("[ ");
 		printf("basename ");
+		printf("[ ");
 		printf("cat ");
 		printf("chmod ");
 		printf("chown ");
@@ -108,6 +110,7 @@ int main(int argc, char *argv[]) {
 		printf("true ");
 		printf("uname ");
 		printf("unlink ");
+		printf("wc ");
 /* START */
 		printf("\n");
 	}
@@ -117,4 +120,4 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 /*  END  */
-/* Generated on Sun 25 Dec 18:23:08 CET 2022 */
+/* Generated on Fri  6 Jan 19:54:45 CET 2023 */

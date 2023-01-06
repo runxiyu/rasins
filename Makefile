@@ -38,12 +38,12 @@ genbox:
 
 prepbox:
 	mkdir -p box_tmp
-	for f in ${CORE}; do echo "GEN "$$f"_box.c"; sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/\"print_usage/\"core\/print_usage/g" | sed "s/\[_/test_/g" > "box_tmp/"$$f"_box.c"; done
+	for f in ${CORE}; do echo "GEN "$$f"_box.c"; sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/\"common/\"core\/common/g" | sed "s/\[_/test_/g" > "box_tmp/"$$f"_box.c"; done
 	rm -f "box_tmp/[_box.c"
 	test ${INCLUDE_EXTRA} == n || for f in ${EXTRA}; do echo "GEN "$$f"_box.c"; sed "s/^int main(/int $$(echo "$$f")_main(/" < "extras/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
 
 box: box.o
-	$(CC) $(CFLAGS) box_tmp/*.c core/print_usage.c box.o -o box 
+	$(CC) $(CFLAGS) box_tmp/*.c core/common.c box.o -o box 
 	rm -f version.h
 
 clean:

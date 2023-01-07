@@ -38,8 +38,7 @@ $(EXTRA): $(@:=.o)
 $(OBJ): config
 
 .o:
-	@mkdir -p bin
-	$(CC) $(CFLAGS) $< -o bin/$@
+	$(CC) $(CFLAGS) $< -o $@
 
 .c.o:
 	@[ -e $< ] || echo "$@ is not implemented." ;
@@ -47,6 +46,5 @@ $(OBJ): config
 
 # Cleaning
 clean:
-	rm -f *.o version.h
-	rm -Rf bin
+	rm -f *.o version.h $(EXTRA)
 

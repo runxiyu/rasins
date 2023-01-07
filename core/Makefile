@@ -39,16 +39,14 @@ config:
 	@echo "INCLUDE_EXTRA = $(INCLUDE_EXTRA)"
 
 .o:
-	@mkdir -p bin
-	[ ! -e $< ] || $(CC) $(CFLAGS) $< common.c -o bin/$@
+	[ ! -e $< ] || $(CC) $(CFLAGS) $< common.c -o $@
 
 .c.o:
 	[ ! -e $< ] || $(CC) $(CFLAGS) $(NOLINKER) $< -o $@
 
 # Cleaning
 clean:
-	rm -f *.o version.h
-	rm -Rf bin
+	rm -f *.o version.h $(CORE)
 
 # Test Suite
 UTILTOTEST=

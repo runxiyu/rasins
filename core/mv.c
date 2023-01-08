@@ -69,7 +69,8 @@ int main(int argc, char *const argv[]) {
 	}
 	close(file); /* In case it hasn't been closed */
 
-	rename(argv[1], argv[2]); /* Technically, moving files == renaming files */
-	if (errno) return errprint(argv[0], NULL, errno);
+	if (rename(argv[1], argv[2]))
+		/* Technically, moving files == renaming files */
+		return errprint(argv[0], NULL, errno);
 	return 0;
 }

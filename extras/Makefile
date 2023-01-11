@@ -38,7 +38,7 @@ $(EXTRA): $(@:=.o)
 $(OBJ): config
 
 .o:
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< ../common/common.c -o $@
 
 .c.o:
 	@[ -e $< ] || echo "$@ is not implemented." ;

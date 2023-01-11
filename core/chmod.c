@@ -30,6 +30,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define REQ_PRINT_USAGE /* Require print_usage() from common.h */
 #define DESCRIPTION "Change file modes."
@@ -39,6 +40,7 @@
 int main(int argc, char *const argv[]) {
 	int argument, i = 0;
 	mode_t owner_modes, group_modes, other_modes;
+	char *argv0 = strdup(argv[0]);
 	if (argc == 1) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
@@ -48,12 +50,12 @@ int main(int argc, char *const argv[]) {
 			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
-	}
+	} argc -= optind; argv += optind;
 	/* I know there's a better way of doing it, please let me know if you 
 	 * know a better way of doing it 
 	 */
-	if (argv[1][i] == '0') i++;
-	switch (argv[1][i]) {
+	if (argv[0][i] == '0') i++;
+	switch (argv[0][i]) {
 		/* Owner modes */
 		case '7':
 			owner_modes = S_IRWXU;
@@ -68,11 +70,11 @@ int main(int argc, char *const argv[]) {
 			owner_modes = S_IXUSR;
 			break;
 		default:
-			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
+			print_usage(argv0, DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 	}
 	i++;
-	switch (argv[1][i]) {
+	switch (argv[0][i]) {
 		/* Group modes */
 		case '7':
 			group_modes = S_IRWXG;
@@ -87,11 +89,11 @@ int main(int argc, char *const argv[]) {
 			group_modes = S_IXGRP;
 			break;
 		default:
-			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
+			print_usage(argv0, DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 	}
 	i++;
-	switch (argv[1][i]) {
+	switch (argv[0][i]) {
 		/* Other modes */
 		case '7':
 			other_modes = S_IRWXO;
@@ -106,10 +108,10 @@ int main(int argc, char *const argv[]) {
 			other_modes = S_IXOTH;
 			break;
 		default:
-			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
+			print_usage(argv0, DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 	}
 
-	chmod(argv[2], owner_modes | group_modes | other_modes);
+	chmod(argv[1], owner_modes | group_modes | other_modes);
 	return 0;
 }

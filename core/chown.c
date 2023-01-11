@@ -40,19 +40,12 @@
 #include "common.h"
 
 int main(int argc, char *const argv[]) {
-	int argument;
 	struct passwd *user;
 	char *argv0 = strdup(argv[0]);
 	if (argc == 1) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
-	while ((argument = getopt(argc, argv, "")) != -1) {
-		if (argument == '?') {
-			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
-			return 1;
-		}
-	} argc -= optind; argv += optind;
 	if ((user = getpwnam(argv[0])) == NULL && (user = getpwuid(strtol(argv[0], NULL, 10))) == NULL)
 		return errprint(argv0, argv[0], errno); /* User doesn't exist */
 	/* User found! */

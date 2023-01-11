@@ -53,24 +53,22 @@ int main(int argc, char *const argv[]) {
 			return 1;
 		}
 		param[argument] = argument;
-	}
+	} argc -= optind; argv += optind;
 
-	for (int i = 1; i < argc - 1; i++) {
-		if (argv[argc - 1][0] == '-') argc--;
-		if (argv[i][0] != '-') {
-			if (param['f']) remove(argv[argc - 1]);
-			if (param['s']) symlink(argv[i], argv[argc - 1]);
-			/* The -P option is the default behavior (at least on musl), 
-			 * so no if statement. 
-			 */
-			else if (param['L']) {
-				readlink(argv[i], buffer, strlen(buffer)); /* Read the link */
-				if (errno) return errprint(argv0, argv[i], errno);
-				link(buffer, argv[argc - 1]);
-			}
-			else link(argv[i], argv[argc - 1]);
+	for (int i = 0; i < argc; i++) {
+		if (param['f']) remove(argv[argc - 1]);
+		if (param['s']) symlink(argv[i], argv[argc - 1]);
+		/* The -P option is the default behavior (at least on musl), 
+		 * so no if statement. 
+		 */
+		else if (param['L']) {
+			readlink(argv[i], buffer, strlen(buffer)); /* Read the link */
 			if (errno) return errprint(argv0, argv[i], errno);
+			link(buffer, argv[argc - 1]);
 		}
+		else link(argv[i], argv[argc - 1]);
+		if (errno) return errprint(argv0, argv[i], errno);
+		
 	}
 	return 0;
 }

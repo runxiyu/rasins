@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include <sys/utsname.h>
 #include <errno.h>
+#include <string.h>
 
 #define REQ_PRINT_USAGE /* Require print_usage() from common.h */
 #define REQ_ERRPRINT /* Require errprint() from common.h */
@@ -37,14 +38,12 @@
 #define OPERANDS    "[-amnrsv]"
 #include "common.h"
 
-int  getopt(int argc, char *const argv[], const char *optstring);
-
 int main(int argc, char *const argv[]) {
 	int argument;
 	struct utsname name;
 	char param[256];
 	for (int i = 0; i < 256; i++) param[i] = 0;
-
+	char *argv0 = strdup(argv[0]);
 	while ((argument = getopt(argc, argv, "amnrsv")) != -1) {
 		if (argument == '?') {
 			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
@@ -58,10 +57,10 @@ int main(int argc, char *const argv[]) {
 			param['v'] = 'v';
 			param['m'] = 'm';
 		}
-	}
+	} argc -= optind; argv += optind;
 
 	uname(&name);
-	if (errno) return errprint(argv[0], NULL, errno);
+	if (errno) return errprint(argv0, NULL, errno);
 	if (argc > 1) {
 		if (param['s']) printf("%s ", name.sysname);
 		if (param['n']) printf("%s ", name.nodename);

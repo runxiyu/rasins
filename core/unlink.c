@@ -36,8 +36,6 @@
 #define OPERANDS    "file"
 #include "common.h"
 
-int  getopt(int argc, char *const argv[], const char *optstring);
-
 int main(int argc, char *const argv[]) {
 	if (argc != 2) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);

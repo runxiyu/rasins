@@ -40,12 +40,10 @@
 #define OPERANDS    "file ..."
 #include "common.h"
 
-int  getopt(int argc, char *const argv[], const char *optstring);
-
 int main(int argc, char *const argv[]) {
 	int i = 0, argument, success, read_file;
 	long int /* columns, */ lines;
-	char buffer[4096], cmd;
+	char buffer[4096], cmd, *argv0 = strdup(argv[0]);
 	struct winsize w;
 	FILE *file;
 	struct termios oldattr, newattr;
@@ -60,12 +58,12 @@ int main(int argc, char *const argv[]) {
 			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
 		}
+	} argc -= optind; argv += optind;
+	if (argc != 1) {
+		print_usage(argv0, DESCRIPTION, OPERANDS, VERSION); return 1;
 	}
-	if (argc != 2) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION); return 1;
-	}
-	file = fopen(argv[1], "r");
-	if (errno) return errprint(argv[0], argv[1], errno);
+	file = fopen(argv[0], "r");
+	if (errno) return errprint(argv0, argv[0], errno);
 	success = 0;
 	while (!success) {
 		if (!read_file) read_file = 1; /* 1 => read on a page-by-page basis
@@ -76,7 +74,7 @@ int main(int argc, char *const argv[]) {
 			if (fgets(buffer, 4096, file) != NULL) {
 				printf("%s", buffer);
 			}
-			else if (errno) return errprint(argv[0], "fgets()", errno);
+			else if (errno) return errprint(argv0, "fgets()", errno);
 			else {
 				success = 1;
 				break;
@@ -95,12 +93,12 @@ int main(int argc, char *const argv[]) {
 		cmd = getchar();
 		tcsetattr(0, TCSANOW, &oldattr); /* Restore old parameters */
 
-		if (errno) return errprint(argv[0], NULL, errno);
+		if (errno) return errprint(argv0, NULL, errno);
 		switch (cmd) {
 			case 'q':
 				return 0;
 			case 'h':
-				print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
+				print_usage(argv0, DESCRIPTION, OPERANDS, VERSION);
 				read_file = 0;
 				break;
 			case ' ':

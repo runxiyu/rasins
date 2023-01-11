@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <string.h>
 
 #define REQ_PRINT_USAGE /* Require print_usage() from common.h */
 #define REQ_ERRPRINT /* Require errprint() from common.h */
@@ -37,11 +38,9 @@
 #define OPERANDS    "[-if] source dest"
 #include "common.h"
 
-int  getopt(int argc, char *const argv[], const char *optstring);
-
 int main(int argc, char *const argv[]) {
 	int argument, file;
-	char cmd, param[256];
+	char cmd, param[256], *argv0 = strdup(argv[0]);
 	setvbuf(stdout, NULL, _IONBF, 0);
 	for (int i = 0; i < 256; i++) param[i] = 0; /* Initialise param, 
 	                                         * very important. */
@@ -53,13 +52,13 @@ int main(int argc, char *const argv[]) {
 		param[argument] = argument;
 		if (argument == 'f') param['i'] = 0;
 		if (argument == 'i') param['f'] = 0;
-	}
+	} argc -= optind; argv += optind;
 	if (!param['f']) param['i'] = 'i';
-	if (argc < 3) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
+	if (argc < 2) {
+		print_usage(argv0, DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
-	if ((file = open(argv[2], O_RDONLY)) != -1 && param['i']) {
+	if ((file = open(argv[1], O_RDONLY)) != -1 && param['i']) {
 		printf("File exists, override it? (y/n) ");
 		read(STDIN_FILENO, &cmd, 1);
 		if (cmd == 'n' || cmd == 'N') {
@@ -69,8 +68,8 @@ int main(int argc, char *const argv[]) {
 	}
 	close(file); /* In case it hasn't been closed */
 
-	if (rename(argv[1], argv[2]))
+	if (rename(argv[0], argv[1]))
 		/* Technically, moving files == renaming files */
-		return errprint(argv[0], NULL, errno);
+		return errprint(argv0, NULL, errno);
 	return 0;
 }

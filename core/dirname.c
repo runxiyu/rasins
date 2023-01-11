@@ -37,8 +37,6 @@
 #define OPERANDS    "string"
 #include "common.h"
 
-int  getopt(int argc, char *const argv[], const char *optstring);
-
 int main(int argc, char *argv[]) {
 	char *dirnamestr;
 

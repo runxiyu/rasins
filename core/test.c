@@ -36,8 +36,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-int  getopt(int argc, char *const argv[], const char *optstring);
-
 /* For readability reasons, define true, false */
 int true  = 0;
 int false = 1;

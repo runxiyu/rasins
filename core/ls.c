@@ -42,13 +42,14 @@
 #include <sys/ioctl.h>
 
 #define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_ERRPRINT /* Require errprint() from common.h */
 #define DESCRIPTION "Print <directory>'s contents to standard output.\
 	If no directory is specified, print the current directory's contents."
 #define OPERANDS    "[-1aACRimlpgno] [directory]"
 #include "common.h"
 
+char *argv0;
 char param[256];
-int  getopt(int argc, char *const argv[], const char *optstring);
 int  ls(char *path);
 void printUsage(char *params);
 
@@ -57,8 +58,8 @@ int main(int argc, char *argv[]) {
 	int success = 0;
 	int argument, i;
 	char* params = "aACR1imlpgno";
-
-	for(i=0; i<256; i++) {
+	argv0 = strdup(argv[0]);
+	for (i=0; i<256; i++) {
 		param[i]=0;
 	}
 
@@ -84,7 +85,7 @@ int main(int argc, char *argv[]) {
 		if (argument=='o' || argument=='n' || argument=='g') {
 			param['l'] = 'l';
 		}
-	}
+	} argc -= optind; argv += optind;
 	if (status) {
 		if(!param['1']) printf("\n");
 		return status;
@@ -99,7 +100,7 @@ int main(int argc, char *argv[]) {
 		param['1'] = '1';
 	}
 
-	for (i = 1; i < argc; i++) {
+	for (i = 0; i < argc; i++) {
 		if ((success |= (argv[i][0] != '-' ? 1 : 0))) {
 			if (!strcmp(argv[i],".")) status |= ls("./");
 			else status |= ls(argv[i]);
@@ -107,7 +108,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	i = success ? status : ls("./");
-	if(!param['1'])
+	if (!param['1'])
 		printf("\n");
 
 	return i;
@@ -131,10 +132,10 @@ int ls(char *path) {
 
 	if (directory == NULL) {
 		file = open(path, O_RDONLY);
-		if (file == -1) return errno;
+		if (file == -1) return errprint(argv0, path, errno);
 		printf("%s\n", path);
-		close(file);
-		return errno;
+		if (close(file) == -1)
+			return errprint(argv0, path, errno);
 	}
 
 	if (param['R']) {
@@ -245,5 +246,5 @@ int ls(char *path) {
 	}
 	closedir(directory);
 
-	return errno;
+	return errprint(argv0, path, errno);
 }

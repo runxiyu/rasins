@@ -40,15 +40,11 @@
 #define OPERANDS    "[-n number] [file] ..."
 #include "common.h"
 
-/* Functions Prototypes & Variables */
-extern char *optarg;
-int         getopt(int argc, char *const argv[], const char *optstring);
-
 int main(int argc, char *const argv[]) {
 	int argument, i = 1, lines, file_lines;
 	FILE *file;
 
-	char s[4096];
+	char s[4096], *argv0 = strdup(argv[0]);
 
 	while ((argument = getopt(argc, argv, "n:")) != -1) {
 		if (argument == '?' || argument == ':') {
@@ -61,30 +57,27 @@ int main(int argc, char *const argv[]) {
 		}
 		else
 			lines = 10;
-	}
-	if (argc < 2) {
+	} argc -= optind; argv += optind;
+	if (argc < 1) {
 		while (read(STDIN_FILENO, s, 4096) > 0)
 			printf("%s", s);
 	}
 	if (!lines) lines = 10;
-	for (i = 1; i != argc; i++) {
-		if (strcmp(argv[i], "-n")) {
-			if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
-			else while (read(STDIN_FILENO, s, 4096) > 0) printf("%s", s);
-			if (file == NULL)
-				return errprint(argv[0], argv[i], errno); /* Something went wrong */
-			while (fgets(s, 4096, file) != NULL) 
-				file_lines++; /* Get number of lines */
-			fclose(file);
-			file_lines = file_lines - lines;
-			if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
-			while (fgets(s, 4096, file) != NULL) {
-				if (errno) return errprint(argv[0], argv[i], errno);
-				if (file_lines == 0) printf("%s", s);
-				else file_lines--;
-			}
+	for (i = 0; i != argc; i++) {
+		if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
+		else while (read(STDIN_FILENO, s, 4096) > 0) printf("%s", s);
+		if (file == NULL)
+			return errprint(argv[0], argv[i], errno); /* Something went wrong */
+		while (fgets(s, 4096, file) != NULL) 
+			file_lines++; /* Get number of lines */
+		fclose(file);
+		file_lines = file_lines - lines;
+		if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
+		while (fgets(s, 4096, file) != NULL) {
+			if (errno) return errprint(argv0, argv[i], errno);
+			if (file_lines == 0) printf("%s", s);
+			else file_lines--;
 		}
-		else i++;
 	}
 
 	return 0;

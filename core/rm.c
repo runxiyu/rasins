@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include <string.h>
 
 #define REQ_PRINT_USAGE /* Require print_usage() from common.h */
 #define REQ_ERRPRINT /* Require errprint() from common.h */
@@ -37,8 +38,8 @@
 #include "common.h"
 
 int main(int argc, char *const argv[]) {
-	int argument, i = 1;
-	char param[256];
+	int argument, i = 0;
+	char param[256], *argv0 = strdup(argv[0]);
 
 	while ((argument = getopt(argc, argv, "Rr")) != -1) {
 		if (argument == '?') {
@@ -46,8 +47,8 @@ int main(int argc, char *const argv[]) {
 			return 1;
 		}
 		param[argument] = argument;
-	}
-	if (argc <= 1) {
+	} argc -= optind; argv += optind;
+	if (argc < 1) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
@@ -57,7 +58,7 @@ int main(int argc, char *const argv[]) {
 		else                            remove(argv[i]); /* TODO: Actually 
 		                                                  * recursively remove 
 		                                                  * the directory */
-		if (errno) return errprint(argv[0], argv[i], errno);
+		if (errno) return errprint(argv0, argv[i], errno);
 	}
 
 	return 0;

@@ -41,7 +41,7 @@
 #include "common.h"
 
 int main(int argc, char *const argv[]) {
-	int argument, i = 1, lines, lines_printed;
+	int argument, i, lines, lines_printed;
 	FILE *file;
 	char s[4096], *argv0 = strdup(argv[0]);
 
@@ -62,7 +62,7 @@ int main(int argc, char *const argv[]) {
 			printf("%s", s);
 	}
 	if (!lines) lines = 10;
-	for (i = 1; i != argc; i++) {
+	for (i = 0; i != argc; i++) {
 		if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
 		else while (read(STDIN_FILENO, s, 4096) > 0) printf("%s", s);
 		if (file == NULL) 

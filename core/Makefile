@@ -39,7 +39,7 @@ config:
 	@echo "INCLUDE_EXTRA = $(INCLUDE_EXTRA)"
 
 .o:
-	[ ! -e $< ] || $(CC) $(CFLAGS) $< common.c -o $@
+	[ ! -e $< ] || $(CC) $(CFLAGS) $< ../common/common.c -o $@
 
 .c.o:
 	[ ! -e $< ] || $(CC) $(CFLAGS) $(NOLINKER) $< -o $@

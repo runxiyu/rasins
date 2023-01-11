@@ -30,10 +30,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
 #define DESCRIPTION "Suspend execution for an interval."
 #define OPERANDS    "time"
-#include "common.h"
+#include "../common/common.h"
 
 int main(int argc, char *argv[]) {
 	long unsigned int seconds;

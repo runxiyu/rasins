@@ -33,11 +33,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
-#define REQ_ERRPRINT /* Require errprint() from common.h */
+#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Change file ownership."
 #define OPERANDS    "owner file"
-#include "common.h"
+#include "../common/common.h"
 
 int main(int argc, char *const argv[]) {
 	struct passwd *user;

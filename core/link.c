@@ -30,11 +30,11 @@
 #include <stdio.h>
 #include <errno.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
-#define REQ_ERRPRINT /* Require errprint() from common.h */
+#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Call the link() function."
 #define OPERANDS    "source dest"
-#include "common.h"
+#include "../common/common.h"
 
 int main(int argc, char *const argv[]) {
 	if (argc == 1) {

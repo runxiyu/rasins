@@ -29,10 +29,10 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
 #define DESCRIPTION "Write formatted strings to standard output."
 #define OPERANDS    "format [string]"
-#include "common.h"
+#include "../common/common.h"
 
 int main(int argc, char *const argv[]) {
 	if (argc == 1) {

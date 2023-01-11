@@ -32,10 +32,10 @@
 #include <string.h>
 #include <libgen.h>
 
-#define REQ_PRINT_USAGE /* print_usage() from common.h */
+#define REQ_PRINT_USAGE /* print_usage() from ../common/common.h */
 #define DESCRIPTION "Return non-directory portion of <string>."
 #define OPERANDS    "string [suffix]"
-#include "common.h"
+#include "../common/common.h"
 
 int main(int argc, char *argv[]) {
 	int status;

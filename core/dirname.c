@@ -32,10 +32,10 @@
 #include <string.h>
 #include <libgen.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
+#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
 #define DESCRIPTION "Return directory portion of <string>."
 #define OPERANDS    "string"
-#include "common.h"
+#include "../common/common.h"
 
 int main(int argc, char *argv[]) {
 	char *dirnamestr;

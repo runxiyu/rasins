@@ -33,11 +33,11 @@
 #include <signal.h>
 #include <string.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
-#define REQ_ERRPRINT /* Require errprint() from common.h */
+#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Edit text."
 #define OPERANDS    "[-p prompt]"
-#include "common.h"
+#include "../common/common.h"
 
 void   print_error();
 size_t c_append(char buffer[4096]);

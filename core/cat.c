@@ -33,12 +33,12 @@
 #include <errno.h>
 #include <string.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
-#define REQ_ERRPRINT /* Require errprint() from common.h */
+#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Concatenate a file to standard output. \
 	If no file is specified or file is '-', read standard input."
 #define OPERANDS    "[-u] [file] ..."
-#include "common.h"
+#include "../common/common.h"
 
 int cat(int flides, int unbuffered);
 

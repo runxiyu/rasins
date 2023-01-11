@@ -41,12 +41,12 @@
 #include <time.h>
 #include <sys/ioctl.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from common.h */
-#define REQ_ERRPRINT /* Require errprint() from common.h */
+#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Print <directory>'s contents to standard output.\
 	If no directory is specified, print the current directory's contents."
 #define OPERANDS    "[-1aACRimlpgno] [directory]"
-#include "common.h"
+#include "../common/common.h"
 
 char *argv0;
 char param[256];

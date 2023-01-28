@@ -45,7 +45,7 @@
 #define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Print <directory>'s contents to standard output.\
 	If no directory is specified, print the current directory's contents."
-#define OPERANDS    "[-1aACRimlpgno] [directory]"
+#define OPERANDS    "[-1aACimlpgno] [directory]"
 #include "../common/common.h"
 
 char *argv0;
@@ -57,13 +57,12 @@ int main(int argc, char *argv[]) {
 	int status = 0;
 	int success = 0;
 	int argument, i;
-	char* params = "aACR1imlpgno";
 	argv0 = strdup(argv[0]);
 	for (i=0; i<256; i++) {
 		param[i]=0;
 	}
 
-	while ((argument = getopt(argc, argv, params)) != -1) {
+	while ((argument = getopt(argc, argv, OPERANDS)) != -1) {
 		if (argument == '?') {
 			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
@@ -138,11 +137,6 @@ int ls(char *path) {
 			return errprint(argv0, path, errno);
 	}
 
-	if (param['R']) {
-		printf("The previous ls -R implementation had so much "
-		"flaws that it got removed from the ls codebase.\n");
-		return 0;
-	}
 	while ((dirtree = readdir(directory)) != NULL) {
 		name = dirtree->d_name;
 

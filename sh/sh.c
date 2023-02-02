@@ -88,15 +88,10 @@ int main(int argc, char *const argv[]) {
 	return 0;
 }
 
-/* USAGE
- * -----
- * commandLoop()
- *
- * DESCRIPTION
- * -----------
- * This function is the actual command prompt.
+/* This function is the actual command prompt. 
+ * It basically enters in a for(;;) loop where it reads the user's input. 
+ * When the input is NULL, it exits. 
  */
-
 void commandLoop(FILE *filstr) {
 	char *prompt = getenv("PS1");
 	char *token, *tokenstate;

@@ -44,13 +44,7 @@
 int parseCommand(int, char **);
 int splitCommand(char [4096], char *[4096]);
 
-/* USAGE
- * -----
- * parseCommand(name);
- *
- * DESCRIPTION
- * -----------
- * Parse a shell command and determine if the command to run is built-in or
+/* Parse a shell command and determine if the command to run is built-in or
  * external. It then runs the command accordinately. 
  * <It also could in the future handle tokens.>
  */
@@ -88,13 +82,7 @@ int parseCommand(int argc, char *argv[]) {
 	return err;
 }
 
-/* USAGE
- * -----
- * splitCommand(name, dest);
- *
- * DESCRIPTION
- * -----------
- * This splits a command string in multiple words.
+/* This splits a command string in multiple words.
  * The array command can then be ran using execvp(3). It 
  * also returns an int that can be used as argc.
  */

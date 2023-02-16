@@ -1,0 +1,36 @@
+# (You can modify this file as you wish)
+# The syntax of this file is simple.
+# <maintainer's IRC or XMPP nick>:
+#   name: <real name or "None">
+#   status: <contributor/founder/maintainer>
+#   files:
+#     <all files the maintainer owns or has contributed to>
+#   cr: <copyright>
+# Please use tab characters for indenting.
+
+"f_":
+	name: Ferass El Hafidi
+	status: founder
+	files: *
+	cr: Copyright (C) 2022, 2023 Ferass El Hafidi <vitali64pmemail@protonmail.com>
+
+"Noisytoot":
+	name: Ron Nazarov
+	status: contributor
+	files:
+		extras/yes.c
+	cr: Copyright (C) 2022 Ron Nazarov <ron@noisytoot.org>
+
+"leah":
+	name: Leah Rowe
+	status: contributor
+	files:
+		core/ls.c
+		core/cat.c
+		core/date.c
+		extras/yes.c
+		core/head.c
+		Makefile
+		*/Makefile
+		config.mk
+	cr: Copyright (C) 2022 Leah Rowe <leah@libreboot.org>

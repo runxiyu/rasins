@@ -32,6 +32,7 @@ CORE=\
 	tail\
 	test\
 	true\
+	tty\
 	uname\
 	unlink\
 	wc

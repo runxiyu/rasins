@@ -37,7 +37,9 @@ CORE=\
 	wc
 	# vi\ doesn't work for now #
 
-INCLUDE_EXTRA=n # Should extra utils be included inside fasesiab?
+# Include core/extra utilities in fases-box
+INCLUDE_EXTRA=n
+INCLUDE_CORE=y
 # Extra utilities
 EXTRA=\
 	errno\

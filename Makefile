@@ -16,25 +16,26 @@ config:
 
 genbox:
 	cat "box-templates/box_1-23.c"                                    > box.c
-	for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);" | sed "s/\[_/test_/g"; done>> box.c
+	test ${INCLUDE_CORE} == n || for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);" | sed "s/\[_/test_/g"; done>> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "int $${u%.c}_main(int, char**);"; done>> box.c
 	cat "box-templates/box_45-49.c"                                  >> box.c
-	for u in ${CORE}; do echo "	else if(!strcmp(basename(argv[0]), \"$${u%.c}\")) return $${u%.c}_main(argc, argv);" | sed "s/\[_/test_/g"; done >> box.c
+	test ${INCLUDE_CORE} == n || for u in ${CORE}; do echo "	else if(!strcmp(basename(argv[0]), \"$${u%.c}\")) return $${u%.c}_main(argc, argv);" | sed "s/\[_/test_/g"; done >> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "	else if(!strcmp(argv[0], \"$${u%.c}\")) return $${u%.c}_main(argc, argv);"; done >> box.c
 	cat "box-templates/box_70-73.c"                                  >> box.c
-	for u in ${CORE}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
+	test ${INCLUDE_CORE} == n || for u in ${CORE}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
+	test ${INCLUDE_CORE} == n && test ${INCLUDE_EXTRA} == n && echo "		printf(\"¯\\\\_(ツ)_/¯ No commands found.\");" >> box.c
 	cat "box-templates/box_94-96.c"                                  >> box.c
 	echo "/* Generated on $$(date) */"                               >> box.c
 
 prepbox:
 	mkdir -p box_tmp
-	for f in ${CORE}; do (sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/\"..\/common/\"common/g" | sed "s/\[_/test_/g") > "box_tmp/"$$f"_box.c"; done
+	test ${INCLUDE_CORE} == n || for f in ${CORE}; do (sed "s/^int main(/int $$(echo "$$f")_main(/" < "core/"$$f".c" | sed "s/\"..\/common/\"common/g" | sed "s/\[_/test_/g") > "box_tmp/"$$f"_box.c"; done
 	rm -f "box_tmp/[_box.c"
 	test ${INCLUDE_EXTRA} == n || for f in ${EXTRA}; do sed "s/^int main(/int $$(echo "$$f")_main(/" < "extras/"$$f".c" | sed "s/printUsage()/$$(echo "$$f")_printUsage()/g" > "box_tmp/"$$f"_box.c"; done
 
 box: box.o
-	$(CC) $(CFLAGS) box_tmp/*.c common/common.c box.o -o box 
+	test ${INCLUDE_CORE} = n && test ${INCLUDE_EXTRA} = n && $(CC) $(CFLAGS) common/common.c box.o -o box || $(CC) $(CFLAGS) box_tmp/*.c common/common.c box.o -o box
 	rm -f version.h
 
 clean:

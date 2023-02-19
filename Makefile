@@ -6,6 +6,14 @@
 all: config clean prepbox genbox box
 include ./config.mk
 
+config:
+	@echo "VERSION       = $(VERSION)"
+	@echo "CFLAGS        = $(CFLAGS)"
+	@echo "CC            = $(CC)"
+	@echo "DESTDIR       = $(DESTDIR)"
+	@echo "PREFIX        = $(PREFIX)"
+	@echo "INCLUDE_EXTRA = $(INCLUDE_EXTRA)"
+
 genbox:
 	cat "box-templates/box_1-23.c"                                    > box.c
 	for u in ${CORE}; do echo "int $${u%.c}_main(int, char**);" | sed "s/\[_/test_/g"; done>> box.c

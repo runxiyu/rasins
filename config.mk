@@ -14,6 +14,7 @@ CORE=\
 	cat\
 	chmod\
 	chown\
+	cmp\
 	date\
 	dirname\
 	echo\

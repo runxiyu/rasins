@@ -9,8 +9,8 @@ CFLAGS=-D_POSIX_C_SOURCE=200809L -DVERSION=\"$(VERSION)\" -I. -Wall -Werror -Wex
 NOLINKER=-c # C Compiler flag to disable the linker
 # Core utilities
 CORE=\
-	basename\
 	[\
+	basename\
 	cat\
 	chmod\
 	chown\

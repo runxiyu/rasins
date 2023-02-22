@@ -24,7 +24,7 @@ genbox:
 	cat "box-templates/box_70-73.c"                                  >> box.c
 	test ${INCLUDE_CORE} == n || for u in ${CORE}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
 	test ${INCLUDE_EXTRA} == n || for u in ${EXTRA}; do echo "		printf(\"$${u%.c} \");"; done    >> box.c
-	test ${INCLUDE_CORE} == n && test ${INCLUDE_EXTRA} == n && echo "		printf(\"¯\\\\_(ツ)_/¯ No commands found.\");" >> box.c
+	test ${INCLUDE_CORE} == n && test ${INCLUDE_EXTRA} == n && echo "		printf(\"¯\\\\_(ツ)_/¯ No commands found.\");" >> box.c || true
 	cat "box-templates/box_94-96.c"                                  >> box.c
 	echo "/* Generated on $$(date) */"                               >> box.c
 

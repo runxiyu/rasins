@@ -1,0 +1,39 @@
+CMP(1) "fases core"
+
+# NAME
+
+cmp - compare two files
+
+# SYNOPSIS
+
+*cmp* [*-l*|*-s*] *file1* *file2*
+
+# DESCRIPTION
+
+Compare two files. If the files are identical, *cmp* doesn't write anything 
+to standard output and returns 0. Else, with no options, it writes to 
+standard output the byte and line number at which it found the first 
+difference and returns 1.
+
+*-l*
+	Write the byte number and the differing bytes for each difference in 
+	decimal and octal respectively.
+
+*-s*
+	Write nothing to standard output or standard error when the files 
+	differ. Only write diagnostic messages to standard error.
+
+# EXAMPLES
+
+*cmp -s foo.txt bar.txt*
+	Compare foo.txt to bar.txt and return 1 if the files are different.
+
+# AUTHOR
+
+Written by Ferass El Hafidi as part of the fases project.
+
+Source code is at http://git.vitali64.duckdns.org/utils/fases.git.
+
+# COPYRIGHT
+
+Copyright (C) 2023 Ferass El Hafidi

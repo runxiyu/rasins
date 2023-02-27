@@ -31,6 +31,7 @@ CORE=\
 	rm\
 	sleep\
 	tail\
+	tee\
 	test\
 	true\
 	tty\

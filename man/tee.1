@@ -1,0 +1,38 @@
+TEE(1) "fases core"
+
+# NAME
+
+tee - duplicate standard input
+
+# SYNOPSIS
+
+*tee* [*-ai*] [*file...*]
+
+# DESCRIPTION
+
+Duplicate standard input. By default, with no options or files specified, tee 
+acts just like cat; it copies standard input to standard output. With files 
+specified, tee not only copies standard input to standard output, but it also 
+copies it to the files specified by the user.
+
+*-a*
+	Append the output to the files instead of overriding them.
+
+*-i*
+	Ignore the SIGINT signal, which is triggered by <Ctrl> + <C> on the keyboard.
+
+# EXAMPLES
+
+*cat file.txt | tee one.txt two.txt three.txt four.txt five.txt*
+	Copy cat's output to the files one.txt, two.txt, three.txt, four.txt,
+	five.txt.
+
+# AUTHOR
+
+Written by Ferass El Hafidi as part of the fases project.
+
+Source code is at http://git.vitali64.duckdns.org/utils/fases.git.
+
+# COPYRIGHT
+
+Copyright (C) 2023 Ferass El Hafidi

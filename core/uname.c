@@ -34,16 +34,12 @@ int main(int argc, char *const argv[]) {
 
 	uname(&name);
 	if (errno) return errprint(argv0, NULL, errno);
-	if (argc > 1) {
-		if (param['s']) printf("%s ", name.sysname);
-		if (param['n']) printf("%s ", name.nodename);
-		if (param['r']) printf("%s ", name.release);
-		if (param['v']) printf("%s ", name.version);
-		if (param['m']) printf("%s", name.machine);
-		printf("\n");
-	}
-	else
-		printf("%s\n", name.sysname);
-
+	if (param['s']) printf("%s ", name.sysname);
+	if (param['n']) printf("%s ", name.nodename);
+	if (param['r']) printf("%s ", name.release);
+	if (param['v']) printf("%s ", name.version);
+	if (param['m']) printf("%s", name.machine);
+	if (argc == 0)  printf("%s ", name.sysname);
+	printf("\n");
 	return 0;
 }

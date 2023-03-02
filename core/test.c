@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 	if (argc == 3) {
 		param[(uint8_t)argv[1][1]] = argv[1][1];
 		                            /*     Files     */
-		stat(argv[2], &file_status);
+		lstat(argv[2], &file_status);
 		if (!errno) {
 			if (param['b'] && S_ISBLK(file_status.st_mode) != 0)       return true;
 			else if (param['c'] && S_ISCHR(file_status.st_mode) != 0)  return true;

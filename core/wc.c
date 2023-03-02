@@ -37,6 +37,7 @@ int main(int argc, char *const argv[]) {
 	}
 
 	for (int i = 0; i != argc; i++) {
+		words = 0; bytes = 0; newlines = 0;
 		file = fopen(argv[i], "r");
 		if (errno) return errprint(argv0, argv[i], errno);
 		while ((length = getline(&line, &len_getd, file)) != -1) {
@@ -57,7 +58,6 @@ int main(int argc, char *const argv[]) {
 		total_bytes += bytes;
 		total_words += words;
 		total_newlines += newlines;
-		words = 0; bytes = 0; newlines = 0;
 	}
 	if (total_bytes != bytes) {
 		if (param['l']) printf("%zu ", total_newlines);

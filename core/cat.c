@@ -49,7 +49,8 @@ int cat(int fildes, int unbuffered) {
 	if (unbuffered) while ((length = read(fildes, s, 4096)) > 0)
 		write(STDOUT_FILENO, s, length);
 	else {
-		filstr = fdopen(fildes, "r");
+		if (fildes != STDIN_FILENO) filstr = fdopen(fildes, "r");
+		else filstr = stdin;
 		while ((length = fread(s, 4096, 1, filstr)) > 0)
 			fwrite(s, length, 1, stdout);
 	}

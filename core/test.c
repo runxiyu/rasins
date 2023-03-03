@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
-#include <libgen.h>
 #include <sys/stat.h>
 #include <stdint.h>
 #include <string.h>
@@ -19,7 +18,7 @@ int main(int argc, char *argv[]) {
 
 	for (int i = 0; i < 256; i++) param[i] = 0;
 	
-	if (!strcmp(basename(argv[0]), "[")) {
+	if (!strcmp(argv[0], "[")) {
 		if (strcmp(argv[argc - 1], "]")) {
 			/* FIXME: Is printing an error message POSIX-compliant? */
 			fprintf(stderr, "[: No matching ]\n");

@@ -29,7 +29,7 @@ int main(int argc, char *const argv[]) {
 		else
 			lines = 10;
 	} argc -= optind; argv += optind;
-	if (argc < 2) {
+	if (argc < 1) {
 		while (read(STDIN_FILENO, s, 4096) > 0)
 			printf("%s", s);
 	}
@@ -44,8 +44,8 @@ int main(int argc, char *const argv[]) {
 				printf("%s", s);
 			else if (errno)
 				return errprint(argv0, "fgets()", errno);
-			fclose(file);
 		}
+		fclose(file);
 	}
 	return 0;
 }

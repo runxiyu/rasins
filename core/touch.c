@@ -78,4 +78,5 @@ int main(int argc, char *argv[]) {
 			utimensat(AT_FDCWD, argv[i], times, 0);
 		else if (errno != ENOENT) return errprint(argv0, argv[i], errno);
 	}
+	return 0;
 }

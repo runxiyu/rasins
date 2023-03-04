@@ -33,6 +33,7 @@ CORE=\
 	tail\
 	tee\
 	test\
+	touch\
 	true\
 	tty\
 	uname\

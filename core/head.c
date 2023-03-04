@@ -13,7 +13,7 @@
 #include "../common/common.h"
 
 int main(int argc, char *const argv[]) {
-	int argument, i, lines, lines_printed;
+	int argument, i, lines = 10, lines_printed;
 	FILE *file;
 	char s[4096], *argv0 = strdup(argv[0]);
 
@@ -29,23 +29,20 @@ int main(int argc, char *const argv[]) {
 		else
 			lines = 10;
 	} argc -= optind; argv += optind;
-	if (argc < 1) {
-		while (read(STDIN_FILENO, s, 4096) > 0)
-			printf("%s", s);
-	}
-	if (!lines) lines = 10;
-	for (i = 0; i != argc; i++) {
-		if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
-		else while (read(STDIN_FILENO, s, 4096) > 0) printf("%s", s);
+
+	for (i = 0; i != argc || argc == 0; i++) {
+		if (argc == 0 || !strcmp(argv[i], "-"))
+			file = stdin;
+		else file = fopen(argv[i], "r");
 		if (file == NULL) 
 			return errprint(argv0, argv[i], errno); /* Something went wrong */
 		for (lines_printed = 1; lines_printed <= lines; lines_printed++) {
 			if (fgets(s, 4096, file) != NULL)
 				printf("%s", s);
-			else if (errno)
-				return errprint(argv0, "fgets()", errno);
+			else return errprint(argv0, "fgets()", errno);
 		}
-		fclose(file);
+		if (file != stdin) fclose(file);
+		if (argc == 0) return 0; /* TODO: Remove this stupid hack. */
 	}
 	return 0;
 }

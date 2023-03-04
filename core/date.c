@@ -1,6 +1,10 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 #include <time.h>
 #include <stdio.h>
+#include <errno.h>
+
+#define REQ_ERRPRINT
+#include "../common/common.h"
 
 int main(int argc, char *argv[]) {
 	time_t epoch = time(NULL);
@@ -16,5 +20,5 @@ int main(int argc, char *argv[]) {
 	}
 	strftime(date_s, 31, format, date);
 	printf("%s\n", date_s);
-	return 0;
+	return errprint(argv[0], NULL, errno);
 }

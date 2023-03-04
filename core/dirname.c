@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
+#include <errno.h>
 
 #define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Return directory portion of <string>."
 #define OPERANDS    "string"
 #include "../common/common.h"
@@ -20,5 +22,5 @@ int main(int argc, char *argv[]) {
 	dirnamestr = dirname(argv[1]);
 
 	printf("%s\n", dirnamestr);
-	return 0;
+	return errprint(argv[0], NULL, errno);
 }

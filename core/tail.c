@@ -52,5 +52,5 @@ int main(int argc, char *const argv[]) {
 		}
 	}
 
-	return 0;
+	return errprint(argv0, NULL, errno);
 }

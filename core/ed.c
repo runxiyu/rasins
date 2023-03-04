@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
 				continue;	
 			case 'q':
 				if (fildes) close(fildes);
-				return 0;
+				return errprint(argv0, NULL, errno);
 			case 'H': /* Help mode */
 				if (i < 0) {
 					print_error((error = "unexpected address"), help_mode);

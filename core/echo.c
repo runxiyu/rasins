@@ -1,6 +1,10 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
+
+#define REQ_ERRPRINT
+#include "../common/common.h"
 
 int main(int argc, char *const argv[]) {
 	int i = 1;
@@ -9,5 +13,5 @@ int main(int argc, char *const argv[]) {
 		printf("%s ", argv[i]);
 	}
 	printf("\n");
-	return 0;
+	return errprint(argv[0], NULL, errno);
 }

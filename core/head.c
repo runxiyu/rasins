@@ -44,5 +44,5 @@ int main(int argc, char *const argv[]) {
 		if (file != stdin) fclose(file);
 		if (argc == 0) return 0; /* TODO: Remove this stupid hack. */
 	}
-	return 0;
+	return errprint(argv0, NULL, errno);
 }

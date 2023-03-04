@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Change file modes."
 #define OPERANDS    "mode file"
 #include "../common/common.h"
@@ -86,5 +88,5 @@ int main(int argc, char *const argv[]) {
 	}
 
 	chmod(argv[1], owner_modes | group_modes | other_modes);
-	return 0;
+	return errprint(argv[0], "chmod()", errno);
 }

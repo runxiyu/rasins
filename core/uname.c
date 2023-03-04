@@ -41,5 +41,5 @@ int main(int argc, char *const argv[]) {
 	if (param['m']) printf("%s", name.machine);
 	if (argc == 0)  printf("%s ", name.sysname);
 	printf("\n");
-	return 0;
+	return errprint(argv0, NULL, errno);
 }

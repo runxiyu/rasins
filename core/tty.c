@@ -17,5 +17,5 @@ int main(int, char *argv[]) {
 		return 1;
 	} else if (errno) return errprint(argv[0], NULL, errno);
 	printf("%s\n", terminalname);
-	return 0;
+	return errprint(argv[0], NULL, errno);
 }

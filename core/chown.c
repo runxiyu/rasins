@@ -14,19 +14,18 @@
 
 int main(int argc, char *const argv[]) {
 	struct passwd *user;
-	char *argv0 = strdup(argv[0]);
 	if (argc == 1) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
-	if ((user = getpwnam(argv[0])) == NULL && (user = getpwuid(strtol(argv[0], NULL, 10))) == NULL)
-		return errprint(argv0, argv[0], errno); /* User doesn't exist */
+	if ((user = getpwnam(argv[1])) == NULL && (user = getpwuid(strtol(argv[1], NULL, 10))) == NULL)
+		return errprint(argv[0], argv[1], errno); /* User doesn't exist */
 	/* User found! */
-	else if ((user = getpwnam(argv[0])) != NULL)
+	else if ((user = getpwnam(argv[1])) != NULL)
 		chown(argv[2], user->pw_uid, user->pw_gid);
-	else if ((user = getpwuid(strtol(argv[0], NULL, 10))) != NULL)
+	else if ((user = getpwuid(strtol(argv[1], NULL, 10))) != NULL)
 		chown(argv[2], user->pw_uid, user->pw_gid);
-	if (errno) return errprint(argv0, argv[0], errno);
+	if (errno) return errprint(argv[0], argv[2], errno);
 
 	return 0;
 }

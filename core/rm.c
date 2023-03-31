@@ -22,7 +22,7 @@ int main(int argc, char *const argv[]) {
 		param[argument] = argument;
 	} argc -= optind; argv += optind;
 	if (argc < 1) {
-		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
+		print_usage(argv0, DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
 

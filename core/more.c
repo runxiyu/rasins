@@ -48,10 +48,8 @@ int main(int argc, char *const argv[]) {
 				printf("%s", buffer);
 			}
 			else if (errno) return errprint(argv0, "fgets()", errno);
-			else {
-				success = 1;
-				break;
-			} /* EOF, end while and for loop */
+			else
+				putchar((int)'\n');
 			if (read_file == 2) {
 				break;
 			}

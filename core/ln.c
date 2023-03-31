@@ -27,7 +27,7 @@ int main(int argc, char *const argv[]) {
 		}
 		param[argument] = argument;
 	} argc -= optind; argv += optind;
-
+	/* TODO: Fix error handling. */
 	for (int i = 0; i < argc; i++) {
 		if (param['f']) remove(argv[argc - 1]);
 		if (param['s']) symlink(argv[i], argv[argc - 1]);

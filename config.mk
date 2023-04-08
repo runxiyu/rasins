@@ -39,7 +39,6 @@ CORE=\
 	uname\
 	unlink\
 	wc
-	# vi\ doesn't work for now #
 
 # Include core/extra utilities in fases-box
 INCLUDE_EXTRA=n

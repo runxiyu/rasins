@@ -14,7 +14,7 @@ int  getopt(int argc, char *const argv[], const char *optstring);
 
 int main(int argc, char *const argv[]) {
 	int argument;
-	char param[256], *params = "s", *buffer = NULL, *argv0 = strdup(argv[0]);
+	char param[256], *buffer = NULL, *argv0 = strdup(argv[0]);
 
 	if (argc == 1) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);

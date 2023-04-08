@@ -30,6 +30,7 @@ int main(int argc, char *const argv[]) {
 	/* TODO: Fix error handling. */
 	for (int i = 0; i < argc; i++) {
 		if (param['f']) remove(argv[argc - 1]);
+		if (errno) return errprint(argv0, argv[i], errno);
 		if (param['s']) symlink(argv[i], argv[argc - 1]);
 		/* The -P option is the default behavior (at least on musl), 
 		 * so no if statement. 
@@ -41,7 +42,6 @@ int main(int argc, char *const argv[]) {
 		}
 		else link(argv[i], argv[argc - 1]);
 		if (errno) return errprint(argv0, argv[i], errno);
-		
 	}
 	return 0;
 }

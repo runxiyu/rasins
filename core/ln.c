@@ -27,10 +27,10 @@ int main(int argc, char *const argv[]) {
 		}
 		param[argument] = argument;
 	} argc -= optind; argv += optind;
-	/* TODO: Fix error handling. */
-	for (int i = 0; i < argc; i++) {
+	for (int i = 0; i < (argc - 1); i++) {
 		if (param['f']) remove(argv[argc - 1]);
-		if (errno) return errprint(argv0, argv[i], errno);
+		if (errno && errno != ENOENT) return errprint(argv0, argv[i], errno);
+		errno = 0; /* Not reached if errno == ENOENT (no such file) */
 		if (param['s']) symlink(argv[i], argv[argc - 1]);
 		/* The -P option is the default behavior (at least on musl), 
 		 * so no if statement. 

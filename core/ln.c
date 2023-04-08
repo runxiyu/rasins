@@ -20,7 +20,7 @@ int main(int argc, char *const argv[]) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
-	while ((argument = getopt(argc, argv, params)) != -1) {
+	while ((argument = getopt(argc, argv, "fsPL")) != -1) {
 		if (argument == '?') {
 			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;

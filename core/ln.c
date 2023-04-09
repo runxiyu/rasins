@@ -40,6 +40,5 @@ int main(int argc, char *const argv[]) {
 		link(buffer, argv[1]);
 	}
 	else link(argv[0], argv[1]);
-	if (errno) return errprint(argv0, argv[1], errno);
-	return 0;
+	return errprint(argv0, argv[1], errno);
 }

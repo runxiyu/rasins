@@ -16,7 +16,7 @@ int main(int argc, char *const argv[]) {
 	int argument;
 	char param[256], *buffer = NULL, *argv0 = strdup(argv[0]);
 
-	if (argc == 1) {
+	if (argc != 3) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}

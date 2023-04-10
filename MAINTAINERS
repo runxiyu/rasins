@@ -28,7 +28,6 @@
 		core/ls.c
 		core/cat.c
 		core/date.c
-		extras/yes.c
 		core/head.c
 		Makefile
 		*/Makefile

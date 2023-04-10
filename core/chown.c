@@ -1,4 +1,7 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
+/*
+ * Copyright (C) 2022, 2023 Ferass El Hafidi <vitali64pmemail@protonmail.com>
+ */
 #include <errno.h>
 #include <unistd.h>
 #include <stdio.h>

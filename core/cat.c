@@ -1,4 +1,8 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
+/*
+ * Copyright (C) 2022, 2023 Ferass El Hafidi <vitali64pmemail@protonmail.com>
+ * Copyright (C) 2022 Leah Rowe <leah@libreboot.org>
+ */
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>

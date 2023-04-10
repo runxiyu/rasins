@@ -1,4 +1,7 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
+/*
+ * Copyright (C) 2022, 2023 Ferass El Hafidi <vitali64pmemail@protonmail.com>
+ */
 /* Here's the POSIX specification of sh: */
 /* https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html */
 

@@ -46,7 +46,7 @@ int main(int argc, char *const argv[]) {
 		while ((length = getline(&line, &len_getd, file)) != -1) {
 			if (param['l']) newlines++;
 			if (param['c'] || param['m']) bytes += length;
-		} rewind(file);
+		} rewind(file); /* XXX: Won't work with standard input */
 		if (errno) return errprint(argv0, argv[i], errno);
 		if (param['w']) while ((length = getdelim(&line, &len_getd, (int)' ', file)) != -1) {
 			words++;

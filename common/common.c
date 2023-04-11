@@ -7,9 +7,8 @@
 #include "common.h"
 
 int print_usage(char *name, char *desc, char *params, char *version) {
-	printf("fases (%s)\n"
-	"Usage: %s %s\n"
-	"%s\n", version, name, params, desc);
+	printf("fases %s (%s): %s\n"
+	"Usage: %s %s\n", name, version, name, desc, params);
 	return 1; /* This function is mostly called on error so return 1 */
 }
 

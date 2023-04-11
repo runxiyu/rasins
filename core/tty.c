@@ -10,8 +10,9 @@
 #define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
 #include "../common/common.h"
 
-int main(int, char *argv[]) {
+int main(int argc, char *argv[]) {
 	char *terminalname = ttyname(STDIN_FILENO);
+	if (argc != 1) {} /* workaround... */
 	if (errno == ENOTTY) {
 		/* POSIX says that if the stdin isn't a tty then the error shall be 
 		 * written to stdout, not stderr.

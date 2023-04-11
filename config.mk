@@ -5,7 +5,7 @@
 
 # Configuration
 # =============
-VERSION=r"$$(git rev-list --count HEAD)"."$$(git rev-parse --short HEAD)"
+VERSION="ducks v0.1r"$$(git rev-list --count HEAD)"."$$(git rev-parse --short HEAD)""
 CC=cc # C Compiler
 FORCEC99=-std=c99 # Force POSIX C99
 # OPTIMIZE=-O3 # Experimental optimizations (Disabled by default)

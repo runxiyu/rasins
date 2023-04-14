@@ -38,6 +38,7 @@ CORE=\
 	tee\
 	test\
 	touch\
+	tput\
 	true\
 	tty\
 	uname\

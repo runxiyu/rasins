@@ -1,0 +1,10 @@
+Please check the comments at the top of each file for the license. They
+are usually one of the following:
+
+* The FreeBSD Documentation License, for documentation;
+* The 3-clause BSD License, for core utilities;
+* The GNU General Public License, version 3 or any later version,
+  for Makefiles and extra utilities.
+
+The license texts are included in the source tree as COPYING.FBDL,
+COPYING.3BSD, and COPYING.GPLv3.

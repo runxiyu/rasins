@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /*
+ * Copyright (C) 2024 Runxi Yu <me@runxiyu.org>
  * Copyright (C) 2022, 2023 Ferass El Hafidi <vitali64pmemail@protonmail.com>
  */
 #include <stdio.h>

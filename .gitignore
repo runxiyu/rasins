@@ -1,5 +1,6 @@
 *.o
 box
+core/\[
 core/admin
 core/alias
 core/ar

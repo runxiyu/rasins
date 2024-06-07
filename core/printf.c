@@ -6,13 +6,14 @@
 #include <stdio.h>
 #include <errno.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
-#define REQ_ERRPRINT /* Require print_usage() from ../common/common.h */
+#define REQ_PRINT_USAGE		/* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT		/* Require print_usage() from ../common/common.h */
 #define DESCRIPTION "Write formatted strings to standard output."
 #define OPERANDS    "format [string]"
 #include "../common/common.h"
 
-int main(int argc, char *const argv[]) {
+int main(int argc, char *const argv[])
+{
 	if (argc == 1) {
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;

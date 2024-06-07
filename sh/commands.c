@@ -17,7 +17,8 @@ int builtin_cd(int argc, char *argv[]);
 
 /* cd - change directory */
 
-int builtin_cd(int argc, char *argv[]) {
+int builtin_cd(int argc, char *argv[])
+{
 	if (argc > 1 && chdir(argv[1]) == -1 && errno) {
 		printf("sh: cd: %s\n", strerror(errno));
 		return errno;

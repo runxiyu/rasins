@@ -9,13 +9,14 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
-#define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
+#define REQ_PRINT_USAGE		/* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT		/* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Copy the last part of files."
 #define OPERANDS    "[-n number] [file] ..."
 #include "../common/common.h"
 
-int main(int argc, char *const argv[]) {
+int main(int argc, char *const argv[])
+{
 	int argument, i = 1, lines, file_lines;
 	FILE *file;
 
@@ -25,33 +26,42 @@ int main(int argc, char *const argv[]) {
 		if (argument == '?' || argument == ':') {
 			print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 			return 1;
-		}
-		else if (argument == 'n') {
+		} else if (argument == 'n') {
 			lines = strtol(optarg, NULL, 10);
-			if (errno) return errprint(argv[0], "strtol()", errno);
-		}
-		else
+			if (errno)
+				return errprint(argv[0], "strtol()", errno);
+		} else
 			lines = 10;
-	} argc -= optind; argv += optind;
+	}
+	argc -= optind;
+	argv += optind;
 	if (argc < 1) {
 		while (read(STDIN_FILENO, s, 4096) > 0)
 			printf("%s", s);
 	}
-	if (!lines) lines = 10;
+	if (!lines)
+		lines = 10;
 	for (i = 0; i != argc; i++) {
-		if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
-		else while (read(STDIN_FILENO, s, 4096) > 0) printf("%s", s);
+		if (strcmp(argv[i], "-"))
+			file = fopen(argv[i], "r");
+		else
+			while (read(STDIN_FILENO, s, 4096) > 0)
+				printf("%s", s);
 		if (file == NULL)
-			return errprint(argv[0], argv[i], errno); /* Something went wrong */
-		while (fgets(s, 4096, file) != NULL) 
-			file_lines++; /* Get number of lines */
+			return errprint(argv[0], argv[i], errno);	/* Something went wrong */
+		while (fgets(s, 4096, file) != NULL)
+			file_lines++;	/* Get number of lines */
 		fclose(file);
 		file_lines = file_lines - lines;
-		if (strcmp(argv[i], "-")) file = fopen(argv[i], "r");
+		if (strcmp(argv[i], "-"))
+			file = fopen(argv[i], "r");
 		while (fgets(s, 4096, file) != NULL) {
-			if (errno) return errprint(argv0, argv[i], errno);
-			if (file_lines == 0) printf("%s", s);
-			else file_lines--;
+			if (errno)
+				return errprint(argv0, argv[i], errno);
+			if (file_lines == 0)
+				printf("%s", s);
+			else
+				file_lines--;
 		}
 	}
 

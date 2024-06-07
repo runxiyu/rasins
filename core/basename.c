@@ -8,12 +8,13 @@
 #include <string.h>
 #include <libgen.h>
 
-#define REQ_PRINT_USAGE /* print_usage() from ../common/common.h */
+#define REQ_PRINT_USAGE		/* print_usage() from ../common/common.h */
 #define DESCRIPTION "Return non-directory portion of <string>."
 #define OPERANDS    "string [suffix]"
 #include "../common/common.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 	int status;
 	long unsigned int i;
 	char *basenamestr;
@@ -26,19 +27,20 @@ int main(int argc, char *argv[]) {
 	if (argc == 3) {
 		for (i = 1; i <= strlen(argv[2]); ++i) {
 			if (argv[1][strlen(argv[1]) - i] ==
-				argv[2][strlen(argv[2]) - i])
+			    argv[2][strlen(argv[2]) - i])
 				/* Check */
 				status = 0;
-			else status = 1;
+			else
+				status = 1;
 		}
-		
+
 		if (status == 0) {
 			for (i = 1; i <= strlen(argv[2]); ++i) {
 				if (argv[1][strlen(argv[1]) - i] ==
-					argv[2][strlen(argv[2]) - i]) {
+				    argv[2][strlen(argv[2]) - i]) {
 					/* Replace with spaces for now ... */
-					argv[1][strlen(argv[1]) - i] = ' '; 
-				} // = '\0';
+					argv[1][strlen(argv[1]) - i] = ' ';
+				}	// = '\0';
 			}
 		}
 	}

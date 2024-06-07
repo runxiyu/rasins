@@ -2,6 +2,7 @@
 /*
  * Copyright (C) 2022, 2023 Ferass El Hafidi <vitali64pmemail@protonmail.com>
  */
-int main() {
+int main()
+{
 	return 1;
 }

@@ -9,13 +9,14 @@
 
 /* Requirements in common.h */
 #define REQ_PRINT_USAGE
-#define REQ_ERRPRINT 
+#define REQ_ERRPRINT
 #include "../common/common.h"
 
 #define DESCRIPTION "Compare two files."
 #define OPERANDS    "[-l|-s] file1 file2"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 	FILE *file1, *file2;
 	int argument, char_pos = 1, line_pos = 1, param_l, param_s, differ;
 	char *argv0 = strdup(argv[0]);
@@ -23,11 +24,17 @@ int main(int argc, char *argv[]) {
 
 	while ((argument = getopt(argc, argv, "ls")) != -1) {
 		if (argument == '?')
-			return print_usage(argv0, DESCRIPTION, OPERANDS, VERSION);
-		else if (argument == 'l') param_l = 1;
-		else if (argument == 's') param_s = 1;
-	} argc -= optind; argv += optind;
-	if (argc != 2) return print_usage(argv0, DESCRIPTION, OPERANDS, VERSION);
+			return print_usage(argv0, DESCRIPTION, OPERANDS,
+					   VERSION);
+		else if (argument == 'l')
+			param_l = 1;
+		else if (argument == 's')
+			param_s = 1;
+	}
+	argc -= optind;
+	argv += optind;
+	if (argc != 2)
+		return print_usage(argv0, DESCRIPTION, OPERANDS, VERSION);
 
 	/* Open the files. */
 	file1 = fopen(argv[0], "r");
@@ -44,9 +51,10 @@ int main(int argc, char *argv[]) {
 			if (param_l)
 				printf("%d %o %o\n", char_pos, ch1, ch2);
 			else if (!param_s)
-				printf("%s %s differ: char %d, line %d\n", argv[0], argv[1], 
-					char_pos, line_pos);
-			if (!param_l) break;
+				printf("%s %s differ: char %d, line %d\n",
+				       argv[0], argv[1], char_pos, line_pos);
+			if (!param_l)
+				break;
 		}
 		if (ch1 == '\n' && ch2 == '\n')
 			line_pos++;

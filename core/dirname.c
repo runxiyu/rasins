@@ -9,13 +9,14 @@
 #include <libgen.h>
 #include <errno.h>
 
-#define REQ_PRINT_USAGE /* Require print_usage() from ../common/common.h */
-#define REQ_ERRPRINT /* Require errprint() from ../common/common.h */
+#define REQ_PRINT_USAGE		/* Require print_usage() from ../common/common.h */
+#define REQ_ERRPRINT		/* Require errprint() from ../common/common.h */
 #define DESCRIPTION "Return directory portion of <string>."
 #define OPERANDS    "string"
 #include "../common/common.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 	char *dirnamestr;
 
 	if (argc != 2) {

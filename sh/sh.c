@@ -31,12 +31,13 @@
 #define COMPILETIME
 #endif
 
-void  commandLoop();
-int   getopt(int argc, char *const argv[], const char *optstring);
+void commandLoop();
+int getopt(int argc, char *const argv[], const char *optstring);
 char *pathSearch(const char *path, const char *name);
-void  printUsage();
+void printUsage();
 
-int main(int argc, char *const argv[]) {
+int main(int argc, char *const argv[])
+{
 	int argument;
 	FILE *file;
 	struct sigaction signal_action;
@@ -53,14 +54,16 @@ int main(int argc, char *const argv[]) {
 	argv += optind;
 
 	sigaction(SIGINT, &signal_action, NULL);
-	if (errno) return errno;
+	if (errno)
+		return errno;
 
 	if (argv[0]) {
 		file = fopen(argv[0], "r");
-		if (errno) return errno;
+		if (errno)
+			return errno;
 		commandLoop(file);
-	}
-	else commandLoop(stdin);
+	} else
+		commandLoop(stdin);
 	return 0;
 }
 
@@ -68,21 +71,24 @@ int main(int argc, char *const argv[]) {
  * It basically enters in a for(;;) loop where it reads the user's input. 
  * When the input is NULL, it exits. 
  */
-void commandLoop(FILE *filstr) {
+void commandLoop(FILE *filstr)
+{
 	char *prompt = getenv("PS1");
 	char *token, *tokenstate;
 	char *command[4096];
 	char name[4096], tempstr[4096];
 	int command_argc;
-	if (prompt == NULL) prompt = "$ ";
+	if (prompt == NULL)
+		prompt = "$ ";
 	for (;;) {
 		for (int i = 0; i <= 4096; i++) {
-			name[i]    = 0; /* (Re)Initialise name and command, 
-			                 * very important. */
+			name[i] = 0;	/* (Re)Initialise name and command, 
+					 * very important. */
 			command[i] = 0;
 		}
 		setvbuf(stdout, NULL, _IONBF, 0);
-		if (filstr == stdin && isatty(STDIN_FILENO)) printf(prompt);
+		if (filstr == stdin && isatty(STDIN_FILENO))
+			printf(prompt);
 		if (fgets(name, 4096, filstr) == NULL)
 			break;
 		//read(fildes, name, 4096);
@@ -93,27 +99,28 @@ void commandLoop(FILE *filstr) {
 			break;
 		}
 		name[strlen(name) - 1] = 0;
-		strcpy(tempstr, name); /* We don't want to override `name`. */
+		strcpy(tempstr, name);	/* We don't want to override `name`. */
 		if (strtok(tempstr, ";") != NULL && strtok(NULL, ";") != NULL) {
 			/* Hacky wacky hack. */
 			strcpy(tempstr, name);
 			token = strtok_r(tempstr, ";", &tokenstate);
 			for (; token != NULL;) {
-				command_argc = splitCommand(token, command); /* See parser.c */
-				parseCommand(command_argc, command); /* See parser.c */
+				command_argc = splitCommand(token, command);	/* See parser.c */
+				parseCommand(command_argc, command);	/* See parser.c */
 				token = strtok_r(NULL, ";", &tokenstate);
 			}
-		}
-		else {
-			command_argc = splitCommand(name, command); /* See parser.c */
-			parseCommand(command_argc, command); /* See parser.c */
+		} else {
+			command_argc = splitCommand(name, command);	/* See parser.c */
+			parseCommand(command_argc, command);	/* See parser.c */
 		}
 	}
 }
 
-void printUsage() {
+void printUsage()
+{
 	printf("Ferass' Base System. (%s)\n\n"
-	"Usage: sh [-c command_string]\n\n"
-	"The standard command language interpreter.\n\n"
-	"\t-c command_string\tExecute command_string and exit.\n", COMPILETIME);
+	       "Usage: sh [-c command_string]\n\n"
+	       "The standard command language interpreter.\n\n"
+	       "\t-c command_string\tExecute command_string and exit.\n",
+	       COMPILETIME);
 }

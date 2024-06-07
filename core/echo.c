@@ -9,7 +9,8 @@
 #define REQ_ERRPRINT
 #include "../common/common.h"
 
-int main(int argc, char *const argv[]) {
+int main(int argc, char *const argv[])
+{
 	int i = 1;
 
 	for (i = 1; i != argc; i++) {

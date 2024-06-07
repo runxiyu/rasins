@@ -38,10 +38,8 @@ int main(int argc, char *argv[]) {
 		return errprint(argv0, argv[1], errno);
 
 	/* Compare! */
-	while ((ch1 = fgetc(file1)) && (ch2 = fgetc(file2))) {
-		if (ch1 == EOF || ch2 == EOF) {
-			return errprint(argv0, "fgetc()", errno);
-		} else if (ch1 != ch2) {
+	while ((ch1 = fgetc(file1) != EOF) && (ch2 = fgetc(file2)) != EOF) {
+		if (ch1 != ch2) {
 			differ = 1;
 			if (param_l)
 				printf("%d %o %o\n", char_pos, ch1, ch2);

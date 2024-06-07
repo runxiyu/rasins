@@ -5,14 +5,14 @@
 
 # Configuration
 # =============
-VERSION="ducks v0.1r"$$(git rev-list --count HEAD)"."$$(git rev-parse --short HEAD)""
+VERSION="rasins v0.1r"$$(git rev-list --count HEAD)"."$$(git rev-parse --short HEAD)""
 CC=cc # C Compiler
 FORCEC99=-std=c99 # Force POSIX C99
 # OPTIMIZE=-O3 # Experimental optimizations (Disabled by default)
 CFLAGS=-D_POSIX_C_SOURCE=200809L -DVERSION=\"$(VERSION)\" -I. -Wall -Werror -Wextra -g -pedantic $(FORCEC99) $(OPTIMIZE) # C Compiler flags
 NOLINKER=-c # C Compiler flag to disable the linker
 # Core utilities
-CORE=\
+UTILS=\
 	[\
 	basename\
 	cat\
@@ -43,13 +43,7 @@ CORE=\
 	tty\
 	uname\
 	unlink\
-	wc
-
-# Include core/extra utilities in fases-box
-INCLUDE_EXTRA=n
-INCLUDE_CORE=y
-# Extra utilities
-EXTRA=\
+	wc\
 	errno\
 	yes
 

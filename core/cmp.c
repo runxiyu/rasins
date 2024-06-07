@@ -18,7 +18,8 @@
 int main(int argc, char *argv[]) {
 	FILE *file1, *file2;
 	int argument, char_pos = 1, line_pos = 1, param_l, param_s, differ;
-	char *argv0 = strdup(argv[0]), ch1, ch2;
+	char *argv0 = strdup(argv[0]);
+	int ch1, ch2;
 
 	while ((argument = getopt(argc, argv, "ls")) != -1) {
 		if (argument == '?')
@@ -38,7 +39,7 @@ int main(int argc, char *argv[]) {
 
 	/* Compare! */
 	while ((ch1 = fgetc(file1)) && (ch2 = fgetc(file2))) {
-		if (ch1 == -1 || ch2 == -1) {
+		if (ch1 == EOF || ch2 == EOF) {
 			return errprint(argv0, "fgetc()", errno);
 		} else if (ch1 != ch2) {
 			differ = 1;

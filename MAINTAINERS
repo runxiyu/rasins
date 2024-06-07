@@ -14,6 +14,12 @@
 	files: *
 	cr: Copyright (C) 2022, 2023 Ferass El Hafidi <vitali64pmemail@protonmail.com>
 
+"runxiyu":
+	name: Runxi Yu
+	status: fork maintainer
+	files: *
+	cr: Copyright (C) 2024 Runxi Yu <me@runxiyu.org>
+
 "Noisytoot":
 	name: Ron Nazarov
 	status: contributor

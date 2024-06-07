@@ -16,6 +16,6 @@ int main(int argc, char *const argv[])
 	for (i = 1; i != argc; i++) {
 		printf("%s ", argv[i]);
 	}
-	printf("\n");
+	putchar('\n');
 	return errprint(argv[0], NULL, errno);
 }

@@ -53,6 +53,6 @@ int main(int argc, char *const argv[])
 		printf("%s ", name.version);
 	if (param['m'])
 		printf("%s", name.machine);
-	printf("\n");
+	putchar('\n');
 	return errprint(argv0, NULL, errno);
 }

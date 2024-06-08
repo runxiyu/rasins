@@ -87,7 +87,7 @@ int main(int argc, char *const argv[])
 			printf("%zu ", total_words);
 		if (param['m'] || param['c'])
 			printf("%zu ", total_bytes);
-		printf("total\n");
+		puts("total");
 	}
 	free(line);
 	if (errno)

@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	} else {
  yes:
 		while (1)
-			printf("y\n");
+			puts("y");
 	}
 	return 0;
 }

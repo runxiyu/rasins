@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 	argv += optind;
 	if (status) {
 		if (!param['1'])
-			printf("\n");
+			putchar('\n');
 		return status;
 	}
 

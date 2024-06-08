@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 		/* POSIX says that if the stdin isn't a tty then the error shall be 
 		 * written to stdout, not stderr.
 		 */
-		printf("not a tty\n");
+		puts("not a tty");
 		return 1;
 	} else if (errno)
 		return errprint(argv[0], NULL, errno);

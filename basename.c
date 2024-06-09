@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 	basenamestr = basename(argv[1]);
-	if (argc == 3) {
+	if ((argc == 3) && strlen(argv[2]) >= 1) {
 		for (i = 1; i <= strlen(argv[2]); ++i) {
 			if (argv[1][strlen(argv[1]) - i] ==
 			    argv[2][strlen(argv[2]) - i])

@@ -17,7 +17,7 @@
 
 int main(int argc, char *const argv[])
 {
-	int argument, i = 1, lines, file_lines;
+	int argument, i = 1, lines = 10, file_lines;
 	FILE *file;
 
 	char s[4096], *argv0 = strdup(argv[0]);
@@ -30,8 +30,7 @@ int main(int argc, char *const argv[])
 			lines = strtol(optarg, NULL, 10);
 			if (errno)
 				return errprint(argv[0], "strtol()", errno);
-		} else
-			lines = 10;
+		}
 	}
 	argc -= optind;
 	argv += optind;
@@ -39,8 +38,6 @@ int main(int argc, char *const argv[])
 		while (read(STDIN_FILENO, s, 4096) > 0)
 			printf("%s", s);
 	}
-	if (!lines)
-		lines = 10;
 	for (i = 0; i != argc; i++) {
 		if (strcmp(argv[i], "-"))
 			file = fopen(argv[i], "r");

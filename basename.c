@@ -23,8 +23,14 @@ int main(int argc, char *argv[])
 		print_usage(argv[0], DESCRIPTION, OPERANDS, VERSION);
 		return 1;
 	}
+
+	if (!strlen(argv[1])) {
+		putchar('\n');
+		return 0;
+	}
+
 	basenamestr = basename(argv[1]);
-	if ((argc == 3) && strlen(argv[2]) >= 1) {
+	if ((argc == 3) && strlen(argv[2])) {
 		for (i = 1; i <= strlen(argv[2]); ++i) {
 			if (argv[1][strlen(argv[1]) - i] ==
 			    argv[2][strlen(argv[2]) - i])

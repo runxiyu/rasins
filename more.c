@@ -18,7 +18,7 @@
 
 int main(int argc, char *const argv[])
 {
-	int i = 0, argument, success, read_file;
+	int i = 0, argument, success, read_file = 1;
 	long int /* columns, */ lines;
 	char buffer[4096], cmd, *argv0 = strdup(argv[0]);
 	struct winsize w;

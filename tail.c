@@ -18,7 +18,7 @@
 int main(int argc, char *const argv[])
 {
 	int argument, i = 1, lines = 10, file_lines;
-	FILE *file;
+	FILE *file = NULL;
 
 	char s[4096], *argv0 = strdup(argv[0]);
 

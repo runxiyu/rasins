@@ -6,10 +6,10 @@
 # Configuration
 # =============
 VERSION="rasins v0.1r"$$(git rev-list --count HEAD)"."$$(git rev-parse --short HEAD)""
-CC=cc # C Compiler
-FORCEC99=-std=c99 # Force POSIX C99
+CC=cc
+FORCEC99=-std=c99
 # OPTIMIZE=-O3 # Experimental optimizations (Disabled by default)
-CFLAGS=-D_POSIX_C_SOURCE=200809L -DVERSION=\"$(VERSION)\" -I. -Wall -Werror -Wextra -g -pedantic $(FORCEC99) $(OPTIMIZE) # C Compiler flags
+CFLAGS=-Os -D_POSIX_C_SOURCE=200809L -DVERSION=\"$(VERSION)\" -I. -Wall -Wextra -g -pedantic $(FORCEC99) $(OPTIMIZE)
 NOLINKER=-c # C Compiler flag to disable the linker
 # Core utilities
 UTILS=\

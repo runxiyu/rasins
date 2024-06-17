@@ -1,6 +1,10 @@
 The rasins project is a fork of the fases project. Most of the work is
 done in the upstream fases project maintained by Ferass El Hafidi.
 
+Please note that both this fork and the upstream project are work in
+progress and have strange behavior. Do not use this in any production
+environment.
+
 These projects try to provide friendly, functioning, and simple core
 utilities for a UNIX-like Operating System. They try to be entirely
 portable and should work on any UNIX-like Operating System and kernel

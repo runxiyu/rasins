@@ -20,7 +20,7 @@ size_t c_append(char buffer[4096]);
 
 int main(int argc, char *argv[])
 {
-	int argument, i = 0, fd;
+	int argument, i = 0, fd = -1;
 	char buffer[4096], *edit_pathname, *prompt_string = "",
 	    command_string[4096], *error = "", *argv0 = strdup(argv[0]);
 	int help_mode = 0;
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 			if (errno)
 				return errprint(argv0, "open()", errno);
 			printf("%ld\n", read(fd, buffer, 4096));
-			if (fd)
+			if (fd > -1)
 				close(fd);
 			continue;
 		case 'a':
@@ -106,11 +106,11 @@ int main(int argc, char *argv[])
 			printf("%ld\n", write(fd, buffer, strlen(buffer)));
 			if (errno)
 				return errprint(argv0, "write()", errno);
-			if (fd)
+			if (fd > -1)
 				close(fd);
 			continue;
 		case 'q':
-			if (fd)
+			if (fd > -1)
 				close(fd);
 			return errprint(argv0, NULL, errno);
 		case 'H':	/* Help mode */

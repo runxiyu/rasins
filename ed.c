@@ -20,7 +20,7 @@ size_t c_append(char buffer[4096]);
 
 int main(int argc, char *argv[])
 {
-	int argument, i = 0, fildes;
+	int argument, i = 0, fd;
 	char buffer[4096], *edit_pathname, *prompt_string = "",
 	    command_string[4096], *error = "", *argv0 = strdup(argv[0]);
 	int help_mode = 0;
@@ -72,12 +72,12 @@ int main(int argc, char *argv[])
 					     "no pathname given"), help_mode);
 				continue;
 			}
-			fildes = open(edit_pathname, O_RDONLY | O_CREAT);
+			fd = open(edit_pathname, O_RDONLY | O_CREAT);
 			if (errno)
 				return errprint(argv0, "open()", errno);
-			printf("%ld\n", read(fildes, buffer, 4096));
-			if (fildes)
-				close(fildes);
+			printf("%ld\n", read(fd, buffer, 4096));
+			if (fd)
+				close(fd);
 			continue;
 		case 'a':
 			c_append(buffer);
@@ -87,9 +87,9 @@ int main(int argc, char *argv[])
 			    && strtok(NULL, " ") != NULL && i == 0) {
 				edit_pathname = command_string + 2;
 				edit_pathname[strlen(edit_pathname) - 1] = '\0';
-				fildes = open(edit_pathname, O_RDWR | O_CREAT);
+				fd = open(edit_pathname, O_RDWR | O_CREAT);
 			} else if (edit_pathname) {
-				fildes = open(edit_pathname, O_RDWR);
+				fd = open(edit_pathname, O_RDWR);
 			} else {
 				if (i != 0)
 					print_error((error =
@@ -103,15 +103,15 @@ int main(int argc, char *argv[])
 			}
 			if (errno)
 				return errprint(argv0, "open()", errno);
-			printf("%ld\n", write(fildes, buffer, strlen(buffer)));
+			printf("%ld\n", write(fd, buffer, strlen(buffer)));
 			if (errno)
 				return errprint(argv0, "write()", errno);
-			if (fildes)
-				close(fildes);
+			if (fd)
+				close(fd);
 			continue;
 		case 'q':
-			if (fildes)
-				close(fildes);
+			if (fd)
+				close(fd);
 			return errprint(argv0, NULL, errno);
 		case 'H':	/* Help mode */
 			if (i < 0) {

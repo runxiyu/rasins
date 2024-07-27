@@ -4,7 +4,7 @@ steps:
   build:
     when:
       branch: []
-      event: [manual]
+      event: []
     image: archlinux
     commands:
       - pacman --noconfirm -Sy make gcc pkgconf

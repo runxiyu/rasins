@@ -1,5 +1,10 @@
 # rasins – simple core utilities
 
+**Update: I now co-maintain the upstream
+[fases](https://utils.vitali64.duckdns.org) project. Please use upstream rather
+than this fork.**
+
+
 The rasins project is a fork of the
 [fases](https://utils.vitali64.duckdns.org) project. Most of the work is
 done in the upstream fases project maintained by Ferass El Hafidi.

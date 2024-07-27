@@ -1,0 +1,11 @@
+skip_clone: false
+
+steps:
+  build:
+    when:
+      branch: []
+      event: [manual]
+    image: archlinux
+    commands:
+      - pacman --noconfirm -Sy make gcc pkgconf
+      - make

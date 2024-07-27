@@ -1,0 +1,11 @@
+skip_clone: false
+
+steps:
+  build:
+    when:
+      branch: []
+      event: [manual]
+    image: alpine
+    commands:
+      - apk add --no-cache build-base alpine-sdk gcc
+      - make
